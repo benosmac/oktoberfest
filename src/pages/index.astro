@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Logo from '../components/Logo.astro';
+---
+
+<Layout title="Oktoberfest Geelong">
+	<div class="bg">
+		<div class="sky">
+			<nav>
+				<ul>
+					<li><a href="#">Food</a></li>
+					<li><a href="#">Beer</a></li>
+					<li><a href="#">Activities</a></li>
+					<li><a href="#">Location</a></li>
+				</ul>
+			</nav>
+			<div class="logo">
+				<Logo></Logo>
+			</div>
+		</div>
+		<div class="ground">
+			<img src="./public/statues-shadows.svg" class="statues-shadows">
+			<img src="./public/statues.svg" class="statues">
+			<div class="water">
+				<div class="waves">
+
+				</div>
+			</div>
+			<div class="sand">
+			</div>
+		</div>
+	</div>
+	<section class="content">
+		<div class="hero">
+			<h2 class="hero-title">Beer, Bratwurst, Beach.</h2>
+			<a href="#">Get Tickets</a>
+		</div>
+	</section>
+	<main>
+
+	</main>
+</Layout>
+<script>
+	import { gsap } from "gsap";
+	const logo = document.querySelector('.logo');
+	const ground = document.querySelector('.ground');
+	const waves = document.querySelector('.waves');
+	const hero = document.querySelector('.hero');
+	const sand = document.querySelector('.sand');
+	const statues = document.querySelector('.statues');
+	const nav = document.querySelector('nav');
+
+	let hptl = gsap.timeline({repeat: 0, paused:true});
+	let groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
+	console.log(groundHeight);
+	// gsap.to(waves, {y:10, duration:2, repeat:-1, yoyo: true, ease:"power1.in"});
+	gsap.to(waves, {x:"-50%", duration:180, repeat:-1, yoyo: true, ease:"linear"});
+	
+	 hptl.from(logo, {y:120, duration: 1.75, delay: 1.5,ease:"power1"},'intro');
+	 hptl.from(ground, {y:groundHeight, duration: 1.75, delay: 1.5,ease:"power1"},'intro');
+	 hptl.from(sand, {y:100, duration: 2, delay: 1.5,ease:"power1"},'intro');
+	 hptl.from(statues, {y:120, duration: 2, delay: 1.5,ease:"power1"},'intro');
+	 hptl.from(hero, {opacity:0, duration: .66, ease:"power1"}); 
+	 hptl.fromTo(nav, {y:-100},{y:0, duration: .5, ease:"power1"});
+
+	hptl.play(); 
+
+</script>
+<style>
+	main {
+		background: #fff;
+		min-height: 300vh;
+
+	}
+	nav{
+		grid-column: 1 / span all;
+		width: 100%;
+		/* background: #fff; */
+		& ul{
+			max-width: 800px;
+			list-style: none;
+			display: flex;
+			justify-content: space-between;
+			padding: 1rem;
+			margin: 0 auto;
+			& li{
+				/* margin: 1rem; */
+			}
+		}
+		a{
+			text-transform: uppercase;
+			text-decoration: none;
+			font-weight: 700;
+			letter-spacing: .025em;
+			color: var(--brightblue);
+			padding: .5rem;
+		}
+	}
+	.content{
+		padding-top: 250px;
+		z-index: 10;
+		position: relative;
+	}
+	.hero{
+		grid-column: 1 / span all;
+		color: #fff;
+		
+		text-align: center;
+		padding: 1rem;
+		& h2{
+			font-size: 2.5rem;
+			color: var(--brightblue)
+		}
+		p{
+			font-size: 1.25rem;
+			margin: .5rem 0 2rem 0;
+			color: var(--brightblue)
+		}
+		& a{
+			text-decoration: none;
+			font-weight: 700;
+			font-size: 1.25rem;
+			letter-spacing: .025em;
+			color: #fff;
+			padding: .5rem 2rem;
+			background: var(--red);
+			border-radius: .25em;
+			/* border: 2px solid #fff; */
+		}
+	}
+	.bg{
+		position: fixed;
+		z-index: 1;
+		display: grid;
+		grid-template-rows: 1fr minmax(300px, 33%);
+		height: 100%;
+		width: 100%;
+		background: var(--sky) url(./public/texture.png);
+	}
+	.ground{
+		display: grid;
+		grid-template-rows: 33.33% 66.66%;
+		grid-template-columns: 1fr auto 1fr;
+		background: var(--water) url(./public/texture-i.png);
+		/* justify-content: center; */
+	}
+	.water{
+		grid-column: 1 / span all;
+		grid-row: 1;
+	}
+	.waves{
+		height: 10px;
+		width: 200%;
+		position: absolute;
+		top: -10px;
+		background-image: url(./public/waves.svg);
+		background-repeat: repeat-x;
+	}
+	.sand{
+		position: relative;
+		background: var(--sand) url(./public/texture.png);
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-column: 1 / span all;
+		grid-row: 2;
+	}
+	.sky{
+		display: grid;
+		grid-template-columns: 1fr 350px 1fr;
+		grid-template-rows: min-content min-content 1fr;
+		justify-items: center;
+
+	}
+	.statues, .statues-shadows{
+		grid-column: 2;
+		grid-row: 1 / span all;
+		align-self: center;
+		min-width: 300px;
+		z-index: 10;
+
+		
+	}
+	.statues{
+
+	}
+	.statues-shadows{
+		opacity: .2;
+		transform: skewX(-45deg) scaleY(.5);
+		transform-origin: bottom center;
+	}
+	.logo{
+	grid-column: 2;
+    width: 250px;
+	margin-top: 2rem;
+}
+</style>
