@@ -330,18 +330,18 @@ import CloudsSVG from "../components/CloudsSVG.astro";
     grid-template-rows: 1fr minmax(250px, 33%);
     height: 100lvh;
     width: 100%;
-    background: var(--sky) url(texture.png);
+    background: var(--sky) url(./texture.png);
     background-blend-mode: overlay;
   }
   .overlay {
     position: absolute;
     inset: 0;
-    background: url(texture.png);
+    background: url(./texture.png);
     height: 100%;
     z-index: 10;
   }
   .gradient-overlay {
-    background-image: url(texture-i.png),
+    background-image: url(./texture-i.png),
       linear-gradient(
         180deg in oklab,
         oklch(19.84% 0.0911 281.68) 10% 10%,
@@ -392,19 +392,19 @@ import CloudsSVG from "../components/CloudsSVG.astro";
   .water {
     grid-column: 1 / -1;
     grid-row: 2 / 4;
-    background: var(--water) url(texture-i.png);
+    background: var(--water) url(./texture-i.png);
     background-blend-mode: overlay;
   }
   .waves {
     height: 5px;
     margin-top: -5px;
     width: 200%;
-    background-image: url(waves.svg);
+    background-image: url(./waves.svg);
     background-repeat: repeat-x;
   }
   .sand {
     position: relative;
-    background: var(--sand) url(texture.png);
+    background: var(--sand) url(./texture.png);
     background-blend-mode: overlay;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
