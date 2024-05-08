@@ -6,7 +6,7 @@ import CloudsSVG from "../components/CloudsSVG.astro";
 ---
 
 <Layout title="Oktoberfest Geelong">
-  <div class="bg">
+  <div class="bg" aria-hidden="true">
     <div class="darkness-overlay"></div>
     <div class="sky">
       <div class="clouds">
@@ -14,7 +14,7 @@ import CloudsSVG from "../components/CloudsSVG.astro";
       </div>
       <div class="gradient-overlay"></div>
     </div>
-    <div class="ground" aria-hidden="true">
+    <div class="ground">
       <div class="overlay"></div>
       <img src="statues-shadows.svg" class="statues-shadows" />
       <img src="statues.svg" class="statues" />
@@ -35,19 +35,19 @@ import CloudsSVG from "../components/CloudsSVG.astro";
   </header>
 
   <main id="main">
-    <section class="content hero">
+    <section class="content hero" tabindex="0">
       <h2>Beer, Bratwurst, Beach.</h2>
     </section>
-    <section id="whats-on" class="content date">
+    <section id="whats-on" class="content date" tabindex="0">
       <h2>Saturday October 4</h2>
       <h4>Cunningham Pier, Geelong Waterfront</h4>
     </section>
-    <section class="content time-card">
+    <section class="content time-card" tabindex="0">
       <h2>10am</h2>
       <h3>Brezeln for breakfast</h3>
       <p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
     </section>
-    <section class="content time-card">
+    <section class="content time-card" tabindex="0">
       <h2>12pm</h2>
       <h3>Frühschoppen by the bay</h3>
       <p>
@@ -55,7 +55,7 @@ import CloudsSVG from "../components/CloudsSVG.astro";
         the 3 Bierhalles.
       </p>
     </section>
-    <section class="content time-card">
+    <section class="content time-card" tabindex="0">
       <h2>3pm</h2>
       <h3>Schuhplattler on the pier</h3>
       <p>
@@ -63,7 +63,7 @@ import CloudsSVG from "../components/CloudsSVG.astro";
         and music.
       </p>
     </section>
-    <section class="content time-card">
+    <section class="content time-card" tabindex="0">
       <h2>7pm</h2>
       <h3>Abendessen</h3>
       <p>
