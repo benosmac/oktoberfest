@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
 import Logo from "../components/Logo.astro";
 import ShoreleftSVG from "../components/ShoreLeftSVG.astro";
 import CloudsSVG from "../components/CloudsSVG.astro";
@@ -17,12 +16,12 @@ import CloudsSVG from "../components/CloudsSVG.astro";
     </div>
     <div class="ground" aria-hidden="true">
       <div class="overlay"></div>
-      <img src="./public/statues-shadows.svg" class="statues-shadows" />
-      <img src="./public/statues.svg" class="statues" />
+      <img src="statues-shadows.svg" class="statues-shadows" />
+      <img src="statues.svg" class="statues" />
       <div class="water">
         <div class="waves"></div>
       </div>
-      <img src="./public/jetty.svg" class="jetty" />
+      <img src="jetty.svg" class="jetty" />
       <div class="shore-l">
         <ShoreleftSVG />
       </div>
@@ -331,18 +330,18 @@ import CloudsSVG from "../components/CloudsSVG.astro";
     grid-template-rows: 1fr minmax(250px, 33%);
     height: 100lvh;
     width: 100%;
-    background: var(--sky) url(./public/texture.png);
+    background: var(--sky) url(texture.png);
     background-blend-mode: overlay;
   }
   .overlay {
     position: absolute;
     inset: 0;
-    background: url(./public/texture.png);
+    background: url(texture.png);
     height: 100%;
     z-index: 10;
   }
   .gradient-overlay {
-    background-image: url(./public/texture-i.png),
+    background-image: url(texture-i.png),
       linear-gradient(
         180deg in oklab,
         oklch(19.84% 0.0911 281.68) 10% 10%,
@@ -393,19 +392,19 @@ import CloudsSVG from "../components/CloudsSVG.astro";
   .water {
     grid-column: 1 / -1;
     grid-row: 2 / 4;
-    background: var(--water) url(./public/texture-i.png);
+    background: var(--water) url(texture-i.png);
     background-blend-mode: overlay;
   }
   .waves {
     height: 5px;
     margin-top: -5px;
     width: 200%;
-    background-image: url(./public/waves.svg);
+    background-image: url(waves.svg);
     background-repeat: repeat-x;
   }
   .sand {
     position: relative;
-    background: var(--sand) url(./public/texture.png);
+    background: var(--sand) url(texture.png);
     background-blend-mode: overlay;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
