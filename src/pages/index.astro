@@ -1,177 +1,199 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import Logo from '../components/Logo.astro';
-import ShoreleftSVG from '../components/ShoreLeftSVG.astro';
-import CloudsSVG from '../components/CloudsSVG.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Logo from "../components/Logo.astro";
+import ShoreleftSVG from "../components/ShoreLeftSVG.astro";
+import CloudsSVG from "../components/CloudsSVG.astro";
 ---
 
 <Layout title="Oktoberfest Geelong">
-	<div class="bg">
-		<div class="darkness-overlay"></div>
-		<div class="sky">
-			<div class="clouds">
-			<CloudsSVG />
-		</div>
-			<div class="gradient-overlay"></div>
-		</div>
-		<div class="ground" aria-hidden="true">
-			
-			<div class="overlay"></div>
-			<img src="./public/statues-shadows.svg" class="statues-shadows">
-			<img src="./public/statues.svg" class="statues">
-			<div class="water">
-				<div class="waves"></div>
-			</div>
-			<img src="./public/jetty.svg" class="jetty">
-			<div class="shore-l">
-				<ShoreleftSVG />
-			</div>
-			<div class="sand"></div>
-		</div>
-	</div>
-	<header>
-		<div class="logo">
-			<Logo></Logo>
-		</div>
-</header>
+  <div class="bg">
+    <div class="darkness-overlay"></div>
+    <div class="sky">
+      <div class="clouds">
+        <CloudsSVG />
+      </div>
+      <div class="gradient-overlay"></div>
+    </div>
+    <div class="ground" aria-hidden="true">
+      <div class="overlay"></div>
+      <img src="./public/statues-shadows.svg" class="statues-shadows" />
+      <img src="./public/statues.svg" class="statues" />
+      <div class="water">
+        <div class="waves"></div>
+      </div>
+      <img src="./public/jetty.svg" class="jetty" />
+      <div class="shore-l">
+        <ShoreleftSVG />
+      </div>
+      <div class="sand"></div>
+    </div>
+  </div>
+  <header>
+    <div class="logo">
+      <Logo />
+    </div>
+  </header>
 
-	<main id="main">
-		<section class="content hero">
-				<h2>Beer, Bratwurst, Beach.</h2>
-				
-		</section>
-		<section id="whats-on" class="content date">
-			<h2>Saturday October 4</h2>
-			<h4>Cunningham Pier, Geelong Waterfront</h4>
-	</section>
-		<section class="content time-card">
-			<h2>10am</h2>
-			<h3>Brezeln for breakfast</h3>
-			<p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
-		</section>
-		<section class="content time-card">
-			<h2>12pm</h2>
-			<h3>Frühschoppen by the bay</h3>
-			<p>From Amber Ale to Weizenbock, you will find a huge variety of beer in the 3 Bierhalles.</p>
-		</section>
-		<section class="content time-card">
-			<h2>3pm</h2>
-			<h3>Schuhplattler on the pier</h3>
-			<p>Live performances on the main stage, featuring traditional folk dancing and music.</p>
-		</section>
-		<section class="content time-card">
-			<h2>7pm</h2>
-			<h3>Abendessen</h3>
-			<p>Explore food stalls along the waterfront, or sit for a traditional Oktoberfest meal at one of the 3 Bierhalles.</p>
-		</section>
-	</section>
-	</main>
+  <main id="main">
+    <section class="content hero">
+      <h2>Beer, Bratwurst, Beach.</h2>
+    </section>
+    <section id="whats-on" class="content date">
+      <h2>Saturday October 4</h2>
+      <h4>Cunningham Pier, Geelong Waterfront</h4>
+    </section>
+    <section class="content time-card">
+      <h2>10am</h2>
+      <h3>Brezeln for breakfast</h3>
+      <p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
+    </section>
+    <section class="content time-card">
+      <h2>12pm</h2>
+      <h3>Frühschoppen by the bay</h3>
+      <p>
+        From Amber Ale to Weizenbock, you will find a huge variety of beer in
+        the 3 Bierhalles.
+      </p>
+    </section>
+    <section class="content time-card">
+      <h2>3pm</h2>
+      <h3>Schuhplattler on the pier</h3>
+      <p>
+        Live performances on the main stage, featuring traditional folk dancing
+        and music.
+      </p>
+    </section>
+    <section class="content time-card">
+      <h2>7pm</h2>
+      <h3>Abendessen</h3>
+      <p>
+        Explore food stalls along the waterfront, or sit for a traditional
+        Oktoberfest meal at one of the 3 Bierhalles.
+      </p>
+    </section>
+  </main>
 </Layout>
+
 <script>
-	import { gsap } from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	gsap.registerPlugin(ScrollTrigger);
-	const ground = document.querySelector('.ground');
-	const darknessOverlay = document.querySelector('.darkness-overlay');
-	const clouds = document.querySelector('.clouds');
-	const waves = document.querySelector('.waves');
-	// const hero = document.querySelector('.hero');
-	const gradientOverlay = document.querySelector('.gradient-overlay');
-	const statues = document.querySelector('.statues');
-	const statuesShadows = document.querySelector('.statues-shadows');
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+  const ground = document.querySelector(".ground");
+  const darknessOverlay = document.querySelector(".darkness-overlay");
+  const clouds = document.querySelector(".clouds");
+  const waves = document.querySelector(".waves");
+  // const hero = document.querySelector('.hero');
+  const gradientOverlay = document.querySelector(".gradient-overlay");
+  const statues = document.querySelector(".statues");
+  const statuesShadows = document.querySelector(".statues-shadows");
 
-	gsap.to(waves, {x:"-10%", duration:60, repeat:-1, yoyo: true, ease:"linear"});
+  gsap.to(waves, {
+    x: "-10%",
+    duration: 60,
+    repeat: -1,
+    yoyo: true,
+    ease: "linear",
+  });
 
-	let hptl = gsap.timeline({repeat: 0, paused:true});
+  let hptl = gsap.timeline({ repeat: 0, paused: true });
 
-	let groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
-	hptl.fromTo(clouds, {y:50},{y:0, duration: 2, delay: 1.5,ease:"power1"},'intro');
-	hptl.from(ground, {y:groundHeight, duration: 2, delay: 1.75,ease:"power1"},'intro');
-	hptl.from(statues, {y:120, duration: 2, delay: 1.5,ease:"power1"},'intro');
-	hptl.from("#main", {opacity:0, duration: .66, ease:"power1"}, 'content'); 
-	hptl.from(".hero h2", {opacity:0, duration: .66, ease:"power1"}, 'content');
-	hptl.from(".hero h4", {opacity:0, duration: .66, ease:"power1"}); 
-	// hptl.fromTo(nav, {y:-100},{y:0, duration: .5, ease:"power1"});
+  let groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
+  hptl.fromTo(
+    clouds,
+    { y: 50 },
+    { y: 0, duration: 2, delay: 1.5, ease: "power1" },
+    "intro"
+  );
+  hptl.from(
+    ground,
+    { y: groundHeight, duration: 2, delay: 1.75, ease: "power1" },
+    "intro"
+  );
+  hptl.from(
+    statues,
+    { y: 120, duration: 2, delay: 1.5, ease: "power1" },
+    "intro"
+  );
+  hptl.from("#main", { opacity: 0, duration: 0.66, ease: "power1" }, "content");
+  hptl.from(
+    ".hero h2",
+    { opacity: 0, duration: 0.66, ease: "power1" },
+    "content"
+  );
+  hptl.from(".hero h4", { opacity: 0, duration: 0.66, ease: "power1" });
+  // hptl.fromTo(nav, {y:-100},{y:0, duration: .5, ease:"power1"});
 
-	hptl.play(); 
+  hptl.play();
 
+  gsap.to(statuesShadows, {
+    skewX: "-90deg",
+    ease: "none",
+    scrollTrigger: {
+      trigger: "main",
+      scrub: 0.5,
+    },
+  });
 
-	 gsap.to(statuesShadows, {
-		skewX:"-90deg",
-		ease: "none",
-		scrollTrigger: {
-			trigger: "main",
-			scrub:.5,
-		}
-		
-	 });
+  const darknessTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "body",
+      start: "80% bottom",
+      end: "100% bottom",
+      scrub: 0.5,
+      // markers: true,
+    },
+  });
 
-	 const darknessTl = gsap.timeline({
-		scrollTrigger:{
-			trigger: "body",
-			start: "80% bottom",
-			end: "100% bottom",
-			scrub:.5,
-			// markers: true,
-		}
-	 });
+  darknessTl
+    .to(darknessOverlay, { opacity: 0.3, ease: "linear", duration: 2 }, "night")
+    .to(".content:last-child > *", { color: "#fff" }, "night")
+    .to(
+      gradientOverlay,
+      { opacity: 0.8, ease: "linear", duration: 2 },
+      "night"
+    );
 
-	 darknessTl
-	 .to(darknessOverlay, {opacity:.3, ease:"linear", duration: 2},'night')
-	 .to(".content:last-child > *", {color:"#fff"},'night')
-	 .to(gradientOverlay, {opacity:.8, ease:"linear", duration: 2 },'night');
-	 
+  const content = document.querySelectorAll(".content");
 
-	 const content = document.querySelectorAll('.content');
-
-	 content.forEach(item => {
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: item,
-				start: "top 50%",
-				end: "bottom 60%",
-				 scrub:.25,
-				 snap:{snapTo: "labels", duration: .5, delay: 0, ease: "power1.out"},
-				
-			}
-		})
-		let h3 = item.querySelector("h3");
-		tl.from(item, {opacity: 0, y:10, duration:.25, ease:"power1.in"})
-		.from(h3, {opacity:0, x:20,duration:1}).addLabel("text")
-		.to(item, {opacity: 0, y:-30, duration:.25, ease:"power1.in"});
-	});
-
-
-	 
-
-
-
-
-
+  content.forEach((item) => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: item,
+        start: "top 50%",
+        end: "bottom 60%",
+        scrub: 0.25,
+        snap: { snapTo: "labels", duration: 0.5, delay: 0, ease: "power1.out" },
+      },
+    });
+    let h3 = item.querySelector("h3");
+    tl.from(item, { opacity: 0, y: 10, duration: 0.25, ease: "power1.in" })
+      .from(h3, { opacity: 0, x: 20, duration: 1 })
+      .addLabel("text")
+      .to(item, { opacity: 0, y: -30, duration: 0.25, ease: "power1.in" });
+  });
 </script>
 <style>
-	main {
-		padding: 200px 1rem;
-		position: relative;
-		z-index: 11;
-		display: grid;
-	}
-	header{
-		position: fixed;
-		display: grid;
-		grid-template-columns: 1fr 350px 1fr;
-		justify-items: center;
-		z-index: 12;
-		width: 100%;
-
-	}
-	.logo{
-	grid-column: 2;
+  main {
+    padding: 200px 1rem;
+    position: relative;
+    z-index: 11;
+    display: grid;
+  }
+  header {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr 350px 1fr;
+    justify-items: center;
+    z-index: 12;
+    width: 100%;
+  }
+  .logo {
+    grid-column: 2;
     width: 250px;
-	margin-top: 2rem;
-}
-	/* nav{
+    margin-top: 2rem;
+  }
+  /* nav{
 		grid-column: 1 / -1;
 		grid-row: 1 / -1;
 		width: 100%;
@@ -195,238 +217,241 @@ import CloudsSVG from '../components/CloudsSVG.astro';
 		}
 
 	} */
-	.time-card{
-		& h2{
-			grid-column: 2;
-			grid-row: 1;
-			align-self: center;
-		}
-		& h3{
-			grid-column: 3;
-			grid-row: 2 / -1;
-			align-self: center;
-			color: var(--red);
-		}
-		& p {
-			text-align: center;
-			margin: 0;
-			grid-column: 2 / 4;
-			border-top: 2px solid rgba(255,255,255,.5);
-			padding: 2rem 0;
-		}
-	}
-	.content{
-		position: relative;
-		display: grid;
-		grid-template-columns: 1fr min-content minmax(min-content, 14em) 1fr;
-		gap: 2rem;
-		align-content: center;
-		color: #fff;
-		height: 45lvh;
-		padding: 0;
-		z-index: 11;
-		& > *{
-			grid-column: 2 / 4;
-		}
-		& h2{
-			font-size: 3rem;
-			line-height: 1.125;
-			margin: 0;
-			color: var(--brightblue);
-		}
-		& h3{
-			font-weight: 700;
-			line-height: 1.25;
-			margin: 0;
-			font-size: 2rem;
-			color: var(--brightblue);
-			
-		}
-		& h4,h5{
-			font-family: "Source Sans 3";
-			font-weight: 500;
-			
-			font-size: 1.25rem;
-			line-height: 1.33;
-			margin: 0;
-		}
-		& p {
+  .time-card {
+    & h2 {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+    }
+    & h3 {
+      grid-column: 3;
+      grid-row: 2 / -1;
+      align-self: center;
+      color: var(--red);
+    }
+    & p {
+      text-align: center;
+      margin: 0;
+      grid-column: 2 / 4;
+      border-top: 2px solid rgba(255, 255, 255, 0.5);
+      padding: 2rem 0;
+    }
+  }
+  .content {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr min-content minmax(min-content, 14em) 1fr;
+    gap: 2rem;
+    align-content: center;
+    color: #fff;
+    height: 45lvh;
+    padding: 0;
+    z-index: 11;
+    & > * {
+      grid-column: 2 / 4;
+    }
+    & h2 {
+      font-size: 3rem;
+      line-height: 1.125;
+      margin: 0;
+      color: var(--brightblue);
+    }
+    & h3 {
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0;
+      font-size: 2rem;
+      color: var(--brightblue);
+    }
+    & h4,
+    h5 {
+      font-family: "Source Sans 3";
+      font-weight: 500;
 
-		}
-		@media (min-width: 600px){
-			& h2{
-				font-size: 3.5rem;
-			}
-			& h3{
-			font-size: 2.5rem;
-			}
-			& p {
-				font-size: 1.25rem;
-			}
-		}
+      font-size: 1.25rem;
+      line-height: 1.33;
+      margin: 0;
+    }
+    & p {
+    }
+    @media (min-width: 600px) {
+      & h2 {
+        font-size: 3.5rem;
+      }
+      & h3 {
+        font-size: 2.5rem;
+      }
+      & p {
+        font-size: 1.25rem;
+      }
+    }
 
-		&:last-child{
-			margin-bottom: 25%;
-		}
-	}
-	.hero{
-		& h2{
-			grid-column: 2 / 3;
-			grid-row: 1;
-		}
-		h3, h4{
-			grid-column: 3 / -1;
-			align-self: end;
-			& span{
-				font-weight: 700;
-			}
-		}
-		& a{
-			text-decoration: none;
-			font-weight: 700;
-			font-size: 1.25rem;
-			letter-spacing: .025em;
-			color: #fff;
-			padding: .5rem 2rem;
-			background: var(--red);
-			border-radius: .25em;
-			/* border: 2px solid #fff; */
-		}
-	}
-	.date{
-		text-align: center;
-		& h2,h3,h4,h5{
-		font-family:"Source Sans 3";
-		}
-	}
-	.bg{
-		position: fixed;
-		z-index: 1;
-		display: grid;
-		grid-template-rows: 1fr minmax(250px, 33%);
-		height: 100lvh;
-		width: 100%;
-		background: var(--sky) url(./public/texture.png);
-		background-blend-mode: overlay ;
-	}
-	.overlay{
+    &:last-child {
+      margin-bottom: 25%;
+    }
+  }
+  .hero {
+    & h2 {
+      grid-column: 2 / 3;
+      grid-row: 1;
+    }
+    h3,
+    h4 {
+      grid-column: 3 / -1;
+      align-self: end;
+      & span {
+        font-weight: 700;
+      }
+    }
+    & a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.025em;
+      color: #fff;
+      padding: 0.5rem 2rem;
+      background: var(--red);
+      border-radius: 0.25em;
+      /* border: 2px solid #fff; */
+    }
+  }
+  .date {
+    text-align: center;
+    & h2,
+    h3,
+    h4,
+    h5 {
+      font-family: "Source Sans 3";
+    }
+  }
+  .bg {
+    position: fixed;
+    z-index: 1;
+    display: grid;
+    grid-template-rows: 1fr minmax(250px, 33%);
+    height: 100lvh;
+    width: 100%;
+    background: var(--sky) url(./public/texture.png);
+    background-blend-mode: overlay;
+  }
+  .overlay {
     position: absolute;
     inset: 0;
     background: url(./public/texture.png);
     height: 100%;
-	z-index: 10;
+    z-index: 10;
   }
-  .gradient-overlay{
-	background-image: url(./public/texture-i.png), linear-gradient(
-      180deg in oklab,
-      oklch(19.84% 0.0911 281.68) 10% 10%, oklch(49% 0.1 232) 50%, oklch(81% 0.31 39) 85% 85%
-    );
-	background-blend-mode: overlay ;
-	opacity: 0;
-	position: absolute;
-	inset: 0;
-	height: 100%;
+  .gradient-overlay {
+    background-image: url(./public/texture-i.png),
+      linear-gradient(
+        180deg in oklab,
+        oklch(19.84% 0.0911 281.68) 10% 10%,
+        oklch(49% 0.1 232) 50%,
+        oklch(81% 0.31 39) 85% 85%
+      );
+    background-blend-mode: overlay;
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    height: 100%;
   }
-  .darkness-overlay{
-	background: oklch(20.3% 0.0837 32.82);
-	mix-blend-mode: overlay;
-	grid-column: 1 / -1;
-	grid-row: 1 / -1;
-	opacity: 0;
-	/* position: absolute; */
-	/* inset: 0; */
-	/* height: 100%; */
-	z-index: 10;
+  .darkness-overlay {
+    background: oklch(20.3% 0.0837 32.82);
+    mix-blend-mode: overlay;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    opacity: 0;
+    /* position: absolute; */
+    /* inset: 0; */
+    /* height: 100%; */
+    z-index: 10;
   }
-  .sky{
-		grid-column: 1 / 1;
-		grid-row: 1;
-		display: grid;
-		grid-template-columns: 1fr 350px 1fr;
-		grid-template-rows: min-content min-content 1fr;
-		justify-items: center;
+  .sky {
+    grid-column: 1 / 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 350px 1fr;
+    grid-template-rows: min-content min-content 1fr;
+    justify-items: center;
+  }
+  .clouds {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-self: end;
+    width: 90%;
+    padding: 2rem;
+  }
+  .ground {
+    grid-column: 1 / -1;
+    grid-row: 2 / -1;
+    display: grid;
+    grid-template-rows: 15% 35% 50%;
+    grid-template-columns: 1fr auto 1fr;
 
-	}
-	.clouds{
-		grid-column: 1 / -1;
-		grid-row: 3;
-		align-self: end;
-		width: 90%;
-		padding: 2rem;
-	}
-	.ground{
-		grid-column: 1 / -1;
-		grid-row: 2 / -1;
-		display: grid;
-		grid-template-rows: 15% 35% 50%;
-		grid-template-columns: 1fr auto 1fr;
-		
-		/* justify-content: center; */
-	}
-	.water{
-		grid-column: 1 / -1;
-		grid-row: 2 / 4;
-		background: var(--water) url(./public/texture-i.png);
-		background-blend-mode: overlay ;
-	}
-	.waves{
-		height: 5px;
-		margin-top: -5px;
-		width: 200%;
-		background-image: url(./public/waves.svg);
-		background-repeat: repeat-x;
-	}
-	.sand{
-		position: relative;
-		background: var(--sand) url(./public/texture.png);
-		background-blend-mode: overlay ;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-column: 1 / -1;
-		grid-row: 3 / 4;
-	}
-	.statues, .statues-shadows{
-		grid-column: 2;
-		grid-row: 1 / span all;
-		align-self: center;
-		min-width: 260px;
-		z-index: 11;
-	}
-	.statues{
+    /* justify-content: center; */
+  }
+  .water {
+    grid-column: 1 / -1;
+    grid-row: 2 / 4;
+    background: var(--water) url(./public/texture-i.png);
+    background-blend-mode: overlay;
+  }
+  .waves {
+    height: 5px;
+    margin-top: -5px;
+    width: 200%;
+    background-image: url(./public/waves.svg);
+    background-repeat: repeat-x;
+  }
+  .sand {
+    position: relative;
+    background: var(--sand) url(./public/texture.png);
+    background-blend-mode: overlay;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column: 1 / -1;
+    grid-row: 3 / 4;
+  }
+  .statues,
+  .statues-shadows {
+    grid-column: 2;
+    grid-row: 1 / span all;
+    align-self: center;
+    min-width: 260px;
+    z-index: 11;
+  }
+  .statues {
+  }
+  .statues-shadows {
+    opacity: 0.2;
+    transform: skewX(90deg) scaleY(0.4);
+    transform-origin: bottom center;
+  }
+  .shore-l {
+    grid-row: 1 / 3;
+    grid-column: 1 / -1;
+    height: 101%;
+    z-index: 5;
+  }
+  .jetty {
+    grid-row: 1 / 3;
+    grid-column: 2 / -1;
+    align-self: end;
+    justify-self: end;
+    max-width: 200px;
+    margin-bottom: 1rem;
+  }
 
-	}
-	.statues-shadows{
-		opacity: .2;
-		transform: skewX(90deg) scaleY(.4);
-		transform-origin: bottom center;
-	}
-	.shore-l{
-		grid-row: 1 / 3;
-		grid-column: 1 / -1;
-		height: 101%;
-		z-index: 5;
-
-	}
-	.jetty{
-		grid-row: 1 / 3;
-		grid-column: 2 / -1;
-		align-self:end;
-		justify-self: end;
-		max-width: 200px;
-		margin-bottom: 1rem;
-	}
-
-
-@media (min-width: 700px) and (min-height: 700px){
-		.bg{
-			grid-template-rows: 1fr minmax(280px, 30%);
-		}
-		.statues, .statues-shadows{
-			min-width: 280px;
-		}
-		.jetty{
-			max-width: 280px;
-		}
-			
-	}
+  @media (min-width: 700px) and (min-height: 700px) {
+    .bg {
+      grid-template-rows: 1fr minmax(280px, 30%);
+    }
+    .statues,
+    .statues-shadows {
+      min-width: 280px;
+    }
+    .jetty {
+      max-width: 280px;
+    }
+  }
 </style>
