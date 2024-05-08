@@ -1,0 +1,194 @@
+---
+interface Props {
+
+}
+
+const { } = Astro.props;
+---
+<script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+const wheel = document.querySelector('.wheel');
+const seatsGroup = document.querySelectorAll('.wheel-seats');
+const seats = document.querySelectorAll('.wheel-seats > g');
+const lines = document.querySelectorAll('.lines > rect');
+
+gsap.to(wheel, {rotate:360, transformOrigin:"center", duration:120, repeat:-1, ease:"linear"});
+gsap.to(seatsGroup, {rotate:360, transformOrigin:"center", duration:120, repeat:-1, ease:"linear"});
+seats.forEach(seat => {
+  gsap.to(seat, {rotate:-360, transformOrigin:"center", duration:120, repeat:-1, ease:"linear"});
+});
+
+lines.forEach((line, index) => {
+  let fill = "#ff90d9";
+  if (index % 2 === 0 ) {
+    fill = "#ffbc4a"
+  }
+  else if (index % 3 === 0 ) {
+    fill = "#4edeff"
+  }
+gsap.to(line, {
+    fill:fill, 
+    duration:2, 
+    repeat:-1, 
+    ease:"linear", 
+    yoyo:true, 
+    scrollTrigger: {
+			trigger: "body",
+      scrub: false,
+			start: "80% bottom",
+      toggleActions: "restart pause resume complete",
+		}
+  });
+});
+</script>
+<style>
+  svg{
+    height: 100%;
+  }
+  .wheel{
+    z-index: 15;
+  }
+  .b {
+    fill: #652d90;
+  }
+
+  .b, .c, .d, .e, .f, .g, .h, .i {
+    stroke-width: 0px;
+  }
+
+  .c {
+    fill: oklch(67.45% 0.0999 158.54);
+  }
+
+  .d {
+    fill: #d5c399;
+  }
+
+  .e {
+    fill: #672e8f;
+  }
+
+  .f {
+    fill: #f1f1f2;
+  }
+
+  .g {
+    fill: #fdbe66;
+  }
+
+  .h {
+    fill: #e6e7e8;
+  }
+
+  .i {
+    fill: var(--sand);
+  }
+</style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 598.56 157.68">
+
+  <path class="i" d="m346.3,47.05c-56.62,0-160.75,18.68-142.94,43.87,47.35,66.99,224.29,65.11,395.2,66.76H0V47.05h346.3Z"/>
+  <path class="d" d="m314.54,47.05c-61.04,0-118.19,5.08-157.27,40.44C87.82,150.33,0,157.68,0,157.68V47.05h314.54Z"/>
+  <path class="c" d="m314.54,47.05c-61.04,0-118.19,4.12-157.27,32.79C87.82,130.79,0,136.75,0,136.75V38s106.55,10.1,170-4,144.54,13.05,144.54,13.05Z"/>
+  <g>
+    <g class="wheel">
+      <path class="f" d="m88.49,85.48c-23.57,0-42.74-19.17-42.74-42.74S64.92,0,88.49,0s42.74,19.17,42.74,42.74-19.17,42.74-42.74,42.74Zm0-82.04c-21.67,0-39.3,17.63-39.3,39.3s17.63,39.3,39.3,39.3,39.3-17.63,39.3-39.3S110.16,3.43,88.49,3.43Z"/>
+      <path class="f" d="m88.49,64.14c-11.8,0-21.41-9.6-21.41-21.41s9.6-21.41,21.41-21.41,21.41,9.6,21.41,21.41-9.6,21.41-21.41,21.41Zm0-40.52c-10.54,0-19.12,8.58-19.12,19.12s8.58,19.12,19.12,19.12,19.12-8.58,19.12-19.12-8.58-19.12-19.12-19.12Z"/>
+      <g class="lines">
+        <rect class="f" x="87.63" y="3.19" width="1.72" height="82.08" transform="translate(-5.35 75.52) rotate(-45)"/>
+        <rect class="f" x="47.45" y="43.37" width="82.08" height="1.72" transform="translate(-5.35 75.52) rotate(-45)"/>
+        <rect class="f" x="47.45" y="43.37" width="82.08" height="1.72"/>
+        <rect class="f" x="87.63" y="3.19" width="1.72" height="82.08"/>
+        <rect class="f" x="47.45" y="43.37" width="82.08" height="1.72" transform="translate(13.76 109.04) rotate(-67.49)"/>
+        <rect class="f" x="87.63" y="3.19" width="1.72" height="82.08" transform="translate(13.75 109.03) rotate(-67.49)"/>
+        <rect class="f" x="87.63" y="3.19" width="1.72" height="82.08" transform="translate(-10.19 37.21) rotate(-22.49)"/>
+        <rect class="f" x="47.45" y="43.37" width="82.08" height="1.72" transform="translate(-10.19 37.21) rotate(-22.49)"/>
+      </g>
+    </g>
+    <g class="wheel-seats">
+      <g>
+        <path class="g" d="m91.79,3.62h-6.61v-1.01s2.46-.69,3.3-.69,3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="85.94" y="6.41" width="5.03" height="2.11"/>
+        <polygon class="h" points="90.94 6.41 86.03 6.41 85.18 3.62 91.79 3.62 90.94 6.41"/>
+      </g>
+      <g>
+        <path class="g" d="m91.79,86.19h-6.61v-1.01s2.46-.69,3.3-.69,3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="85.94" y="88.98" width="5.03" height="2.11"/>
+        <polygon class="h" points="90.94 88.98 86.03 88.98 85.18 86.19 91.79 86.19 90.94 88.98"/>
+      </g>
+      <g>
+        <path class="g" d="m50.51,44.91h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="44.65" y="47.69" width="5.03" height="2.11"/>
+        <polygon class="h" points="49.66 47.69 44.75 47.69 43.9 44.91 50.51 44.91 49.66 47.69"/>
+      </g>
+      <g>
+        <path class="g" d="m133.08,44.91h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="127.22" y="47.69" width="5.03" height="2.11"/>
+        <polygon class="h" points="132.23 47.69 127.32 47.69 126.47 44.91 133.08 44.91 132.23 47.69"/>
+      </g>
+      <g>
+        <path class="g" d="m62.6,15.72h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="56.75" y="18.5" width="5.03" height="2.11"/>
+        <polygon class="h" points="61.75 18.5 56.84 18.5 55.99 15.72 62.6 15.72 61.75 18.5"/>
+      </g>
+      <g>
+        <path class="g" d="m120.98,74.1h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="115.13" y="76.88" width="5.03" height="2.11"/>
+        <polygon class="h" points="120.13 76.88 115.23 76.88 114.38 74.1 120.98 74.1 120.13 76.88"/>
+      </g>
+      <g>
+        <path class="g" d="m62.6,74.1h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="56.75" y="76.88" width="5.03" height="2.11"/>
+        <polygon class="h" points="61.75 76.88 56.84 76.88 55.99 74.1 62.6 74.1 61.75 76.88"/>
+      </g>
+      <g>
+        <path class="g" d="m120.98,15.72h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="115.13" y="18.5" width="5.03" height="2.11"/>
+        <polygon class="h" points="120.13 18.5 115.23 18.5 114.38 15.72 120.98 15.72 120.13 18.5"/>
+      </g>
+      <g>
+        <path class="g" d="m76,6.76h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="70.15" y="9.54" width="5.03" height="2.11"/>
+        <polygon class="h" points="75.15 9.54 70.24 9.54 69.39 6.76 76 6.76 75.15 9.54"/>
+      </g>
+      <g>
+        <path class="g" d="m107.58,83.06h-6.61v-1.01s2.46-.69,3.3-.69,3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="101.73" y="85.84" width="5.03" height="2.11"/>
+        <polygon class="h" points="106.73 85.84 101.82 85.84 100.97 83.06 107.58 83.06 106.73 85.84"/>
+      </g>
+      <g>
+        <path class="g" d="m53.64,60.7h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="47.79" y="63.48" width="5.03" height="2.11"/>
+        <polygon class="h" points="52.79 63.48 47.89 63.48 47.04 60.7 53.64 60.7 52.79 63.48"/>
+      </g>
+      <g>
+        <path class="g" d="m129.94,29.12h-6.61v-1.01s2.46-.69,3.3-.69,3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="124.09" y="31.9" width="5.03" height="2.11"/>
+        <polygon class="h" points="129.09 31.9 124.18 31.9 123.33 29.12 129.94 29.12 129.09 31.9"/>
+      </g>
+      <g>
+        <path class="g" d="m53.65,29.1h-6.61v-1.01s2.46-.69,3.3-.69,3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="47.8" y="31.88" width="5.03" height="2.11"/>
+        <polygon class="h" points="52.8 31.88 47.89 31.88 47.04 29.1 53.65 29.1 52.8 31.88"/>
+      </g>
+      <g>
+        <path class="g" d="m129.93,60.72h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="124.08" y="63.5" width="5.03" height="2.11"/>
+        <polygon class="h" points="129.08 63.5 124.17 63.5 123.32 60.72 129.93 60.72 129.08 63.5"/>
+      </g>
+      <g>
+        <path class="g" d="m75.98,83.05h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="70.13" y="85.83" width="5.03" height="2.11"/>
+        <polygon class="h" points="75.13 85.83 70.22 85.83 69.37 83.05 75.98 83.05 75.13 85.83"/>
+      </g>
+      <g>
+        <path class="g" d="m107.6,6.77h-6.61s0-1.01,0-1.01c0,0,2.46-.69,3.3-.69s3.3.69,3.3.69v1.01Z"/>
+        <rect class="e" x="101.75" y="9.55" width="5.03" height="2.11"/>
+        <polygon class="h" points="106.75 9.55 101.84 9.55 100.99 6.77 107.6 6.77 106.75 9.55"/>
+      </g>
+    </g>
+  </g>
+  <path class="b" d="m124.44,89.13c-1.14-1.51-2.28-3.02-3.43-4.54-2.74-3.63-5.48-7.26-8.23-10.89-3.32-4.39-6.63-8.78-9.95-13.17l-8.57-11.34-2.84-3.76c-.44-.59-.85-1.24-1.35-1.79-.02-.02-.04-.05-.06-.08-.31-.41-1.14-.33-1.55-.25-.59.12-1.17.37-1.54.86-1.14,1.51-2.28,3.02-3.43,4.54l-8.23,10.89c-3.32,4.39-6.63,8.78-9.95,13.17l-8.57,11.34-2.84,3.76c-.45.59-.95,1.17-1.35,1.79-.02.03-.04.05-.06.08-.48.64.41,1,.91,1.03.78.03,1.7-.28,2.19-.92,1.14-1.51,2.28-3.02,3.43-4.54,2.74-3.63,5.48-7.26,8.23-10.89,3.32-4.39,6.63-8.78,9.95-13.17l8.57-11.34c1.39-1.84,2.9-3.64,4.19-5.55.02-.03.04-.05.06-.08l-3.09.61c1.14,1.51,2.28,3.02,3.43,4.54l8.23,10.89c3.32,4.39,6.63,8.78,9.95,13.17,2.86,3.78,5.71,7.56,8.57,11.34l2.84,3.76c.44.59.85,1.24,1.35,1.79.02.02.04.05.06.08.7.93,3.91-.22,3.08-1.32h0Z"/>
+</svg>
+
