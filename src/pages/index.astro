@@ -81,7 +81,7 @@ import BirdSVG from "../components/BirdSVG.astro";
   <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
-    gsap.registerPlugin(ScrollTrigger);
+
     const content = document.querySelectorAll(".content");
     const ground = document.querySelector(".ground");
     const darknessOverlay = document.querySelector(".darkness-overlay");
@@ -92,6 +92,8 @@ import BirdSVG from "../components/BirdSVG.astro";
     const gradientOverlay = document.querySelector(".gradient-overlay");
     const statues = document.querySelector(".statues");
     const statuesShadows = document.querySelector(".statues-shadows");
+
+    gsap.registerPlugin(ScrollTrigger);
 
     // Waves
     gsap.to(waves, {
@@ -111,6 +113,7 @@ import BirdSVG from "../components/BirdSVG.astro";
         { y: "-2", duration: 2, ease: "power1.inOut", repeat: -1, yoyo: true },
         "boating"
       );
+
     // Bird
     let birdtl = gsap.timeline({ repeat: -1, paused: false });
     birdtl.fromTo(
@@ -155,7 +158,6 @@ import BirdSVG from "../components/BirdSVG.astro";
       { opacity: 0, duration: 0.66, ease: "power1" },
       "content"
     );
-    hptl.from(".hero h4", { opacity: 0, duration: 0.66, ease: "power1" });
     // Start the timeline
     hptl.play();
 
@@ -170,7 +172,7 @@ import BirdSVG from "../components/BirdSVG.astro";
     });
 
     // Darkness & gradient overlay
-    const darknessTl = gsap.timeline({
+    let darknessTl = gsap.timeline({
       scrollTrigger: {
         trigger: "body",
         start: "80% bottom",
