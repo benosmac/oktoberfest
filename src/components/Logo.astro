@@ -8,14 +8,9 @@ const {} = Astro.props;
   import { gsap } from "gsap";
   const steinL = document.querySelector('[data-name="stein-l"]');
   const steinR = document.querySelector('[data-name="stein-r"]');
-  const dropL = document.querySelector('[data-name="droplet-l"]');
-  const dropR = document.querySelector('[data-name="droplet-r"]');
   const foamR = document.querySelector('[data-name="foam-r"]');
   const foamL = document.querySelector('[data-name="foam-l"]');
   const banner = document.querySelector('[data-name="text-banner"]');
-  const letters = document.querySelector('[data-name="letters"]');
-  const lettersS = document.querySelector('[data-name="letters-shadows"]');
-  const lettersH = document.querySelector('[data-name="letters-highlights"]');
   const date = document.querySelector('[data-name="date"]');
   const ribbonR = document.querySelector('[data-name="ribbon-right"]');
   const ribbonL = document.querySelector('[data-name="ribbon-left"]');
@@ -45,10 +40,7 @@ const {} = Astro.props;
     { y: -2, transformOrigin: "center", duration: 2, repeat: -1, yoyo: true }
   );
 
-  gsap.to("#logo", {
-    y: -80,
-    scale: 0.9,
-    ease: "power1:out",
+  let scrollFromTopTL = gsap.timeline({
     scrollTrigger: {
       trigger: "main",
       start: "+=75",
@@ -56,27 +48,39 @@ const {} = Astro.props;
       scrub: 0.5,
     },
   });
-  gsap.to([date, steinL, steinR], {
-    opacity: 0,
-    ease: "power1:out",
-    scrollTrigger: {
-      trigger: "main",
-      start: "+=75",
-      end: "+=150",
-      scrub: 0.5,
+  //Scale down on scroll
+  scrollFromTopTL.to(
+    "#logo",
+    {
+      y: -80,
+      scale: 0.9,
+      ease: "power1:out",
     },
-  });
-  gsap.to('[data-name="geelong"]', {
-    opacity: 1,
-    ease: "power1:out",
-    scrollTrigger: {
-      trigger: "main",
-      start: "+=75",
-      end: "+=150",
-      scrub: 0.5,
+    "hideStuff"
+  );
+  // Hide graphical elements on scroll
+  scrollFromTopTL.to(
+    [date, steinL, steinR],
+    {
+      opacity: 0,
+      ease: "power1:out",
     },
-  });
+    "hideStuff"
+  );
+  // Show "Geelong"
+  scrollFromTopTL.to(
+    '[data-name="geelong"]',
+    {
+      opacity: 1,
+      scale: 1.5,
+      y: -15,
+      transformOrigin: "top center",
+      ease: "power1:out",
+    },
+    "hideStuff"
+  );
 
+  // Loading timeline (plays immediately on page load)
   let ltl = gsap.timeline({ repeat: 0, paused: true });
 
   ltl.fromTo(
@@ -85,7 +89,6 @@ const {} = Astro.props;
     { y: 0, duration: 0.66 },
     "cheers"
   );
-  // ltl.fromTo(letters, {opacity:0, scaleX:1.1, transformOrigin:"center"}, {opacity:1,scaleX:1, duration: .5});
   ltl.fromTo(
     steinL,
     { x: -20, y: -3 },
@@ -130,8 +133,6 @@ const {} = Astro.props;
     { opacity: 1, rotate: 0, duration: 0.66 },
     "foam"
   );
-
-  // let tween = gsap.to(steinL, {x: -20, duration: 1, ease: "elastic"});
 
   ltl.play();
 </script>

@@ -12,7 +12,7 @@ const {} = Astro.props;
   const seatsGroup = document.querySelectorAll(".wheel-seats");
   const seats = document.querySelectorAll(".wheel-seats > g");
   const lines = document.querySelectorAll(".lines > rect");
-
+  // Rotate the wheel
   gsap.to(wheel, {
     rotate: 360,
     transformOrigin: "center",
@@ -20,6 +20,7 @@ const {} = Astro.props;
     repeat: -1,
     ease: "linear",
   });
+  // Rotate all the seats around with the wheel
   gsap.to(seatsGroup, {
     rotate: 360,
     transformOrigin: "center",
@@ -27,6 +28,7 @@ const {} = Astro.props;
     repeat: -1,
     ease: "linear",
   });
+  //To keep the seats upright and aligned with the main wheel we rotate them individually the opposite way to the wheel.
   seats.forEach((seat) => {
     gsap.to(seat, {
       rotate: -360,
@@ -36,7 +38,7 @@ const {} = Astro.props;
       ease: "linear",
     });
   });
-
+  // Assign colours to lines
   lines.forEach((line, index) => {
     let fill = "#ff90d9";
     if (index % 2 === 0) {
@@ -44,6 +46,7 @@ const {} = Astro.props;
     } else if (index % 3 === 0) {
       fill = "#4edeff";
     }
+    // Transition colours when scrolled into night time
     gsap.to(line, {
       fill: fill,
       duration: 2,
