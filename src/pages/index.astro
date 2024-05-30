@@ -35,54 +35,72 @@ import BirdSVG from "../components/BirdSVG.astro";
   </div>
   <header>
     <div class="logo">
-      <Logo />
+      <a href="/" title="Oktoberfest Geelong Homepage">
+        <Logo />
+      </a>
     </div>
   </header>
 
   <main id="main">
-    <section class="content hero" tabindex="0">
-      <h2>Beer, Bratwurst, Beach.</h2>
+    <section class="content hero">
+      <h2>
+        <span>Beer,</span>
+        <span>Bratwurst,</span>
+        <span>Beach.</span>
+      </h2>
+      <div class="details">
+        <a class="btn tickets" href="#">Get tickets</a>
+        <span>
+          <h3>Saturday October 4</h3>
+          <h4>Cunningham Pier, Geelong Waterfront</h4>
+        </span>
+      </div>
     </section>
-    <section id="whats-on" class="content date" tabindex="0">
+    <!-- <section id="whats-on" class="content date scroll-trigger" tabindex="0">
       <h2>Saturday October 4</h2>
       <h4>Cunningham Pier, Geelong Waterfront</h4>
-    </section>
-    <section class="content time-card" tabindex="0">
-      <h2>10am</h2>
-      <h3>Brezeln for breakfast</h3>
-      <p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
-    </section>
-    <section class="content time-card" tabindex="0">
-      <h2>12pm</h2>
-      <h3>Frühschoppen by the bay</h3>
-      <p>
-        From Amber Ale to Weizenbock, you will find a huge variety of beer in
-        the 3 Bierhalles.
-      </p>
-    </section>
-    <section class="content time-card" tabindex="0">
-      <h2>3pm</h2>
-      <h3>Schuhplattler on the pier</h3>
-      <p>
-        Live performances on the main stage, featuring traditional folk dancing
-        and music.
-      </p>
-    </section>
-    <section class="content time-card" tabindex="0">
-      <h2>7pm</h2>
-      <h3>Abendessen</h3>
-      <p>
-        Explore food stalls along the waterfront, or sit for a traditional
-        Oktoberfest meal at one of the 3 Bierhalles.
-      </p>
-    </section>
+    </section> -->
+    <div class="time-cards-wrapper">
+      <section class="content time-card scroll-trigger" tabindex="0">
+        <h2>10am</h2>
+        <h3>Brezeln for breakfast</h3>
+        <p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
+      </section>
+      <section class="content time-card scroll-trigger" tabindex="0">
+        <h2>12pm</h2>
+        <h3>Frühschoppen by the bay</h3>
+        <p>
+          From Amber Ale to Weizenbock, you will find a huge variety of beer in
+          the 3 Bierhalles.
+        </p>
+      </section>
+      <section class="content time-card scroll-trigger" tabindex="0">
+        <h2>3pm</h2>
+        <h3>Schuhplattler on the pier</h3>
+        <p>
+          Live performances on the main stage, featuring traditional folk
+          dancing and music.
+        </p>
+      </section>
+      <section class="content time-card scroll-trigger" tabindex="0">
+        <h2>7pm</h2>
+        <h3>Abendessen</h3>
+        <p>
+          Explore food stalls along the waterfront, or sit for a traditional
+          Oktoberfest meal at one of the 3 Bierhalles.
+        </p>
+      </section>
+    </div>
   </main>
 
   <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-    const content = document.querySelectorAll(".content");
+    const content = document.querySelectorAll(".scroll-trigger");
+    const hero = document.querySelectorAll(".hero");
+    const heroSpans = document.querySelectorAll(".hero > h2 > span");
     const ground = document.querySelector(".ground");
     const darknessOverlay = document.querySelector(".darkness-overlay");
     const clouds = document.querySelector(".clouds");
@@ -93,7 +111,7 @@ import BirdSVG from "../components/BirdSVG.astro";
     const statues = document.querySelector(".statues");
     const statuesShadows = document.querySelector(".statues-shadows");
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // Waves
     gsap.to(waves, {
@@ -110,7 +128,13 @@ import BirdSVG from "../components/BirdSVG.astro";
       .to(boat, { x: "-20vw", duration: 120, ease: "linear" }, "boating")
       .to(
         boat,
-        { y: "-2", duration: 2, ease: "power1.inOut", repeat: -1, yoyo: true },
+        {
+          y: "-2",
+          duration: 2,
+          ease: "power1.inOut",
+          repeat: -1,
+          yoyo: true,
+        },
         "boating"
       );
 
@@ -125,7 +149,13 @@ import BirdSVG from "../components/BirdSVG.astro";
     birdtl.fromTo(
       bird,
       { y: "-40px" },
-      { y: "40px", duration: 30, yoyo: true, repeat: -1, ease: "power1.inOut" },
+      {
+        y: "40px",
+        duration: 30,
+        yoyo: true,
+        repeat: -1,
+        ease: "power1.inOut",
+      },
       "flying"
     );
 
@@ -150,17 +180,46 @@ import BirdSVG from "../components/BirdSVG.astro";
     );
     hptl.from(
       "#main",
-      { opacity: 0, duration: 0.66, ease: "power1" },
+      { opacity: 0, duration: 0.1, ease: "power1" },
       "content"
     );
+    heroSpans.forEach((span, i) => {
+      hptl.from(
+        span,
+        {
+          opacity: 0,
+          scale: 1.1,
+          duration: 0.25,
+          delay: i * 0.5,
+          ease: "power1",
+        },
+        "contentShow"
+      );
+    });
     hptl.from(
-      ".hero h2",
-      { opacity: 0, duration: 0.66, ease: "power1" },
-      "content"
+      ".hero > div",
+      {
+        opacity: 0,
+        duration: 0.25,
+        delay: 0.25,
+        ease: "power1",
+      },
+      "contentAfter"
     );
+    // hptl.from(hero, { opacity: 0, duration: 0.66, ease: "power1" }, "content");
     // Start the timeline
     hptl.play();
-
+    gsap.to(hero, {
+      opacity: 0,
+      filter: "blur(5px)",
+      ease: "power1",
+      scrollTrigger: {
+        trigger: hero,
+        scrub: 0.5,
+        start: "top top",
+        end: "bottom center",
+      },
+    });
     // Statue shadows
     gsap.to(statuesShadows, {
       skewX: "-90deg",
@@ -172,58 +231,120 @@ import BirdSVG from "../components/BirdSVG.astro";
     });
 
     // Darkness & gradient overlay
-    let darknessTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "80% bottom",
-        end: "100% bottom",
-        scrub: 0.5,
-      },
-    });
+    // let darknessTl = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: "body",
+    //     start: "80% bottom",
+    //     end: "100% bottom",
+    //     scrub: 0.5,
+    //   },
+    // });
 
-    darknessTl
-      .to(
-        darknessOverlay,
-        { opacity: 0.3, ease: "linear", duration: 2 },
-        "night"
-      )
-      .to(clouds, { filter: "blur(3px)", opacity: 0.3 }, "night")
-      .to(".content:last-child > *", { color: "#fff" }, "night")
-      .to(
-        gradientOverlay,
-        { opacity: 0.8, ease: "linear", duration: 2 },
-        "night"
-      );
+    // darknessTl
+    //   .to(
+    //     darknessOverlay,
+    //     { opacity: 0.3, ease: "linear", duration: 2 },
+    //     "night"
+    //   )
+    //   .to(clouds, { filter: "blur(3px)", opacity: 0.3 }, "night")
+    //   .to(
+    //     gradientOverlay,
+    //     { opacity: 0.8, ease: "linear", duration: 2 },
+    //     "night"
+    //   );
 
     // Content sections
-    content.forEach((item) => {
+    content.forEach((item, i) => {
+      let isSecondLastItem = i === content.length - 2;
+      let isLastItem = i === content.length - 1;
+      let h3 = item.querySelector("h3");
+      const startPoint = "top center";
+      const endPoint = isLastItem ? "center center" : "bottom center";
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: item,
-          start: "top 50%",
-          end: "bottom 60%",
-          scrub: 0.25,
+          start: startPoint,
+          end: endPoint,
+          fastScrollEnd: 1000,
+          scrub: 0.5,
+          pin: false,
+          markers: false,
           snap: {
-            snapTo: "labelsDirectional",
-            duration: 0.5,
+            snapTo: "labels",
+            directional: true,
+            duration: { min: 0.1, max: 0.5 },
             delay: 0,
-            ease: "power1.out",
+            ease: "power1.inOut",
           },
         },
       });
-      let h3 = item.querySelector("h3");
-      tl.from(item, { opacity: 0, y: 10, duration: 0.25, ease: "power1.in" })
-        .from(h3, { opacity: 0, x: 20, duration: 1 })
-        .addLabel("text")
-        .to(item, { opacity: 0, y: -30, duration: 0.25, ease: "power1.in" });
+
+      if (isLastItem) {
+        tl.to(
+          darknessOverlay,
+          { opacity: 0.3, ease: "linear", duration: 2 },
+          "entry"
+        )
+          .to(clouds, { filter: "blur(3px)", opacity: 0.3 }, "entry")
+          .to(
+            gradientOverlay,
+            { opacity: 0.8, ease: "linear", duration: 2 },
+            "entry"
+          )
+          .from(item, { opacity: 0, duration: 0.5, ease: "power1.in" }, "entry")
+          .from(h3, { opacity: 0, x: 20, duration: 0.5 }, "entry")
+          .addLabel("entry");
+      } else if (isSecondLastItem) {
+        tl.to(
+          darknessOverlay,
+          { opacity: 0.05, ease: "linear", duration: 0.5 },
+          "entry"
+        )
+          .to(clouds, { filter: "blur(1px)", opacity: 0.5 }, "entry")
+          .to(
+            gradientOverlay,
+            { opacity: 0.3, ease: "linear", duration: 0.5 },
+            "entry"
+          )
+          .from(item, { opacity: 0, duration: 0.5, ease: "power1.in" }, "entry")
+          .from(h3, { opacity: 0, x: 20, duration: 0.5 }, "entry")
+          .addLabel("entry")
+          .to(item, { opacity: 0, duration: 0.25, ease: "power1.Out" });
+      } else {
+        tl.from(item, { opacity: 0, duration: 0.5, ease: "power1.in" }, "entry")
+          .from(h3, { opacity: 0, x: 20, duration: 0.5 }, "entry")
+          .addLabel("entry")
+          .to(item, { opacity: 0, duration: 0.25, ease: "power1.Out" });
+      }
+      // Make sure focused element gets snapped to
+      item.addEventListener("focus", () => {
+        gsap.to(window, {
+          scrollTo: tl.scrollTrigger?.labelToScroll("entry"),
+        });
+      });
     });
   </script>
   <style>
+    :root {
+      --groundHeight: 200px;
+      --contentAreaHeight: calc(100vh - var(--groundHeight));
+    }
+    @media (min-width: 750px) and (min-height: 750px) {
+      :root {
+        --groundHeight: 250px;
+      }
+    }
+    @media (min-width: 900px) and (min-height: 900px) {
+      :root {
+        --groundHeight: 300px;
+      }
+    }
     main {
-      padding: 200px 1rem;
+      padding: 2rem 2rem var(--groundHeight) 2rem;
       position: relative;
       z-index: 11;
       display: grid;
+      grid-template-columns: 1fr auto 1fr;
     }
     header {
       position: fixed;
@@ -235,23 +356,20 @@ import BirdSVG from "../components/BirdSVG.astro";
     }
     .logo {
       grid-column: 2;
-      width: 250px;
+      width: 200px;
       margin-top: 2rem;
+      @media (min-width: 750px) {
+        width: 250px;
+      }
     }
 
     .content {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr min-content minmax(min-content, 14em) 1fr;
       gap: 2rem;
-      align-content: center;
-      color: #fff;
-      height: 45lvh;
-      padding: 0;
       z-index: 11;
-      & > * {
-        grid-column: 2 / 4;
-      }
+      color: #fff;
+
       & h2 {
         font-size: 3rem;
         line-height: 1.125;
@@ -263,18 +381,15 @@ import BirdSVG from "../components/BirdSVG.astro";
         line-height: 1.25;
         margin: 0;
         font-size: 2rem;
-        color: var(--brightblue);
+        /* color: var(--brightblue); */
       }
       & h4,
       h5 {
         font-family: "Source Sans 3";
         font-weight: 500;
-
         font-size: 1.25rem;
         line-height: 1.33;
         margin: 0;
-      }
-      & p {
       }
       @media (min-width: 600px) {
         & h2 {
@@ -292,44 +407,124 @@ import BirdSVG from "../components/BirdSVG.astro";
         margin-bottom: 25%;
       }
     }
-
+    .time-cards-wrapper {
+      margin-top: var(--contentAreaHeight);
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+      justify-items: center;
+    }
     .time-card {
+      grid-template-columns: min-content minmax(min-content, 14em);
+      grid-column: 2 / 3;
+      align-content: center;
+      padding: 2rem;
+      &:nth-last-child(2) {
+        & h2 {
+          color: color-mix(in oklab, var(--red), #fff 10%);
+        }
+        & h3 {
+          color: color-mix(in oklab, var(--brightblue), #000 20%);
+        }
+      }
+      &:last-child {
+        color: var(--sand);
+        & h2 {
+          color: color-mix(in oklab, var(--red), #fff 30%);
+        }
+        & h3 {
+          color: color-mix(in oklab, var(--brightblue), #fff 30%);
+        }
+      }
+      & > * {
+        grid-column: 1 / 3;
+      }
       & h2 {
-        grid-column: 2;
+        grid-column: 1;
         grid-row: 1;
         align-self: center;
         color: var(--red);
       }
       & h3 {
-        grid-column: 3;
+        grid-column: 2;
         grid-row: 2 / -1;
         align-self: center;
+        color: var(--brightblue);
       }
       & p {
         text-align: center;
         margin: 0;
-        grid-column: 2 / 4;
-        border-top: 2px solid rgba(255, 255, 255, 0.33);
-        border-bottom: 2px solid rgba(255, 255, 255, 0.33);
-        padding: 2rem 0;
+        grid-column: 1 / 3;
+        color: #231f20;
+        /* border-top: 2px solid rgba(0, 0, 0, 0.05); */
+        border-top: 2px dotted rgba(255, 255, 255, 0.33);
+        padding: 2rem 0 0 0;
       }
     }
-    .hero {
+    .hero.content {
+      position: fixed;
+      inset: 0;
+      padding: 0 2rem;
+      height: calc(var(--contentAreaHeight) - 2rem);
+      grid-template-columns: min-content 1fr;
+      grid-template-rows: 166px auto auto;
+      grid-column: 1 / -1;
+      gap: 1rem;
+      align-items: end;
+      @media (min-width: 750px) {
+        grid-template-rows: 200px auto;
+        grid-template-columns: min-content 1fr 260px;
+      }
+      @media (min-width: 900px) {
+        padding: 0 4rem;
+        grid-template-columns: min-content 1fr 300px;
+      }
       & h2 {
-        grid-column: 2 / 3;
-        grid-row: 1;
+        grid-column: 1;
+        grid-row: 2;
         font-size: 4rem;
         line-height: 1.1;
-      }
-      h3,
-      h4 {
-        grid-column: 3 / -1;
-        align-self: end;
         & span {
-          font-weight: 700;
+          display: inline-block;
+        }
+        @media (min-width: 900px) {
+          font-size: 5rem;
+          line-height: 1;
+        }
+        @media (min-width: 1280px) {
+          font-size: 6rem;
+        }
+      }
+
+      .details {
+        display: flex;
+        flex-wrap: wrap-reverse;
+        align-self: start;
+        gap: 1rem;
+        grid-column: 1;
+        grid-row: 3;
+        text-shadow: 0em 0em 0.5em rgba(0, 0, 0, 0.1);
+        @media (min-width: 750px) {
+          grid-column: 3;
+          grid-row: 2;
+          text-align: right;
+          justify-content: end;
+          align-self: end;
+          gap: 2rem;
+        }
+        & h3 {
+          font-family: "Source Sans 3";
+          font-size: 1.25rem;
+          font-weight: 600;
+          font-family: var(--);
+        }
+        & h4 {
+          font-size: 1rem;
+          font-weight: 400;
         }
       }
       & a {
+        align-self: center;
         text-decoration: none;
         font-weight: 700;
         font-size: 1.25rem;
@@ -338,7 +533,6 @@ import BirdSVG from "../components/BirdSVG.astro";
         padding: 0.5rem 2rem;
         background: var(--red);
         border-radius: 0.25em;
-        /* border: 2px solid #fff; */
       }
     }
     .date {
@@ -354,7 +548,7 @@ import BirdSVG from "../components/BirdSVG.astro";
       position: fixed;
       z-index: 1;
       display: grid;
-      grid-template-rows: 1fr minmax(250px, 33%);
+      grid-template-rows: 1fr var(--groundHeight);
       height: 100lvh;
       width: 100%;
       background: var(--sky) url(/texture.png);
@@ -403,7 +597,7 @@ import BirdSVG from "../components/BirdSVG.astro";
     .clouds {
       grid-column: 1 / -1;
       grid-row: 3;
-      align-self: end;
+      align-self: center;
       width: 90%;
       padding: 2rem;
       z-index: 11;
@@ -462,7 +656,7 @@ import BirdSVG from "../components/BirdSVG.astro";
       grid-column: 2;
       grid-row: 1 / span all;
       align-self: center;
-      min-width: 260px;
+      min-width: var(--groundHeight);
       z-index: 11;
     }
     .statues {
@@ -489,12 +683,9 @@ import BirdSVG from "../components/BirdSVG.astro";
     }
 
     @media (min-width: 700px) and (min-height: 700px) {
-      .bg {
-        grid-template-rows: 1fr minmax(280px, 30%);
-      }
       .statues,
       .statues-shadows {
-        min-width: 280px;
+        /* min-width: var(--groundHeight); */
       }
       .jetty {
         max-width: 240px;
