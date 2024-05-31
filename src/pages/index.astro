@@ -326,10 +326,10 @@ import BirdSVG from "../components/BirdSVG.astro";
   </script>
   <style>
     :root {
-      --groundHeight: 200px;
+      --groundHeight: 220px;
       --contentAreaHeight: calc(100vh - var(--groundHeight));
     }
-    @media (min-width: 750px) and (min-height: 750px) {
+    @media (min-width: 750px) and (min-height: 700px) {
       :root {
         --groundHeight: 250px;
       }
@@ -418,7 +418,7 @@ import BirdSVG from "../components/BirdSVG.astro";
       grid-template-columns: min-content minmax(min-content, 14em);
       grid-column: 2 / 3;
       align-content: center;
-      padding: 2rem;
+      padding: 4rem 2rem;
       &:nth-last-child(2) {
         & h2 {
           color: color-mix(in oklab, var(--red), #fff 10%);
@@ -471,12 +471,12 @@ import BirdSVG from "../components/BirdSVG.astro";
       padding: 0 2rem;
       height: calc(var(--contentAreaHeight) - 2rem);
       grid-template-columns: min-content 1fr;
-      grid-template-rows: 166px auto auto;
+      grid-template-rows: 150px auto auto;
       grid-column: 1 / -1;
       gap: 1rem;
       align-items: end;
       @media (min-width: 750px) {
-        grid-template-rows: 200px auto;
+        grid-template-rows: 180px auto;
         grid-template-columns: min-content 1fr 260px;
       }
       @media (min-width: 900px) {
@@ -491,11 +491,11 @@ import BirdSVG from "../components/BirdSVG.astro";
         & span {
           display: inline-block;
         }
-        @media (min-width: 900px) {
+        @media (min-width: 900px) and (min-height: 700px) {
           font-size: 5rem;
           line-height: 1;
         }
-        @media (min-width: 1280px) {
+        @media (min-width: 1280px) and (min-height: 900px) {
           font-size: 6rem;
         }
       }
@@ -505,7 +505,7 @@ import BirdSVG from "../components/BirdSVG.astro";
         flex-wrap: wrap-reverse;
         align-self: start;
         gap: 1rem;
-        grid-column: 1;
+        grid-column: 1 / -1;
         grid-row: 3;
         text-shadow: 0em 0em 0.5em rgba(0, 0, 0, 0.1);
         @media (min-width: 750px) {
@@ -662,6 +662,7 @@ import BirdSVG from "../components/BirdSVG.astro";
       align-self: center;
       min-width: var(--groundHeight);
       z-index: 11;
+      margin-bottom: 2rem;
     }
     .statues {
     }
