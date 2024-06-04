@@ -1,142 +1,12 @@
 ---
-interface Props {}
 
-const {} = Astro.props;
 ---
 
-<script>
-  import { gsap } from "gsap";
-  const steinL = document.querySelector('[data-name="stein-l"]');
-  const steinR = document.querySelector('[data-name="stein-r"]');
-  const foamR = document.querySelector('[data-name="foam-r"]');
-  const foamL = document.querySelector('[data-name="foam-l"]');
-  const banner = document.querySelector('[data-name="text-banner"]');
-  const date = document.querySelector('[data-name="date"]');
-  const ribbonR = document.querySelector('[data-name="ribbon-right"]');
-  const ribbonL = document.querySelector('[data-name="ribbon-left"]');
-  const textRing = document.querySelector('[data-name="text-ring"]');
-
-  gsap.to(ribbonR, {
-    skewX: -5,
-    skewY: -5,
-    transformOrigin: "left center",
-    duration: 0.8,
-    repeat: -1,
-    yoyo: true,
-    ease: "power1.in",
-  });
-  gsap.to(ribbonL, {
-    skewX: 5,
-    skewY: 5,
-    transformOrigin: "right center",
-    duration: 0.8,
-    repeat: -1,
-    yoyo: true,
-    ease: "power1.in",
-  });
-  gsap.fromTo(
-    banner,
-    { y: 2 },
-    { y: -2, transformOrigin: "center", duration: 2, repeat: -1, yoyo: true }
-  );
-
-  let scrollFromTopTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: "main",
-      start: "+=75",
-      end: "+=150",
-      scrub: 0.5,
-    },
-  });
-  //Scale down on scroll
-  scrollFromTopTL.to(
-    "#logo",
-    {
-      y: -80,
-      scale: 0.9,
-      ease: "power1:out",
-    },
-    "hideStuff"
-  );
-  // Hide graphical elements on scroll
-  scrollFromTopTL.to(
-    [date, steinL, steinR],
-    {
-      opacity: 0,
-      ease: "power1:out",
-    },
-    "hideStuff"
-  );
-  // Show "Geelong"
-  scrollFromTopTL.to(
-    '[data-name="geelong"]',
-    {
-      opacity: 1,
-      scale: 1.5,
-      y: -15,
-      transformOrigin: "top center",
-      ease: "power1:out",
-    },
-    "hideStuff"
-  );
-
-  // Loading timeline (plays immediately on page load)
-  let ltl = gsap.timeline({ repeat: 0, paused: true });
-
-  ltl.fromTo(
-    banner,
-    { y: 20, transformOrigin: "center" },
-    { y: 0, duration: 0.66 },
-    "cheers"
-  );
-  ltl.fromTo(
-    steinL,
-    { x: -20, y: -3 },
-    {
-      keyframes: [
-        { x: -10, y: 2 },
-        { x: 0, y: 0 },
-      ],
-      duration: 0.66,
-      ease: "power4.in",
-    },
-    "cheers"
-  );
-  ltl.fromTo(
-    foamL,
-    { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
-    { scale: 1, opacity: 1, duration: 0.5 },
-    "foam"
-  );
-  ltl.fromTo(
-    steinR,
-    { x: 20, y: -3 },
-    {
-      keyframes: [
-        { x: 10, y: 2 },
-        { x: 0, y: 0 },
-      ],
-      duration: 0.66,
-      ease: "power4.in",
-    },
-    "cheers"
-  );
-  ltl.fromTo(
-    foamR,
-    { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
-    { scale: 1, opacity: 1, duration: 0.5 },
-    "foam"
-  );
-  ltl.fromTo(
-    textRing,
-    { opacity: 0, rotate: 45, transformOrigin: "center" },
-    { opacity: 1, rotate: 0, duration: 0.66 },
-    "foam"
-  );
-
-  ltl.play();
-</script>
+<script></script>
 <style>
+  svg {
+    overflow: visible;
+  }
   .h {
     opacity: 0.07;
   }
@@ -236,6 +106,9 @@ const {} = Astro.props;
 
   .x {
     fill: #e6e7e8;
+  }
+  .hide {
+    fill: transparent;
   }
 </style>
 <svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 477 301.35">
@@ -685,8 +558,8 @@ const {} = Astro.props;
       </g>
     </g>
     <g id="g" data-name="text-ring">
-      <g data-name="date">
-        <path
+      <!-- <g data-name="date"> -->
+      <!-- <path
           class="w"
           d="m166.19,32.29l.52-2.66c1.25.26,2.61.17,3.58-.37,1.1-.6,1.41-1.33,1.02-2.04-.41-.74-1.2-.61-2.47-.48l-1.89.19c-1.48.18-3.19-.2-4.13-1.92-1.07-1.95-.19-4.46,2.27-5.8,1.36-.74,3.08-.98,4.65-.52l-.44,2.42c-1.1-.17-2.02-.12-2.96.4-.92.51-1.28,1.22-.92,1.89.4.72,1.31.55,2.55.41l1.86-.22c1.75-.2,3.17.26,4.08,1.92,1.07,1.95.37,4.54-2.45,6.09-1.54.84-3.48,1.15-5.29.69Z"
         ></path>
@@ -705,16 +578,16 @@ const {} = Astro.props;
         <path
           class="w"
           d="m208.73,3.29l4.77-.85c2.8-.5,5.27.06,5.83,3.21.35,1.95-.36,3.35-1.67,4.24l3.95,4.76-3.35.6-3.39-4.32-1.64.29.85,4.77-2.99.53-2.36-13.24Zm5.62,5.28c1.56-.28,2.3-1.1,2.06-2.4-.23-1.3-1.17-1.59-2.73-1.31l-1.54.28.66,3.72,1.54-.28Z"
-        ></path>
-        <path
-          class="w"
+        ></path> -->
+      <!-- <path
+          class="hide"
           d="m222.3,1.05l3.78-.33c4.09-.36,6.89,1.44,7.3,6.04.41,4.6-2.03,6.99-5.95,7.33l-3.94.35-1.18-13.39Zm4.56,10.63c2.28-.2,3.7-1.44,3.42-4.65-.28-3.2-1.89-4.05-4.17-3.85l-.58.05.75,8.5.58-.05Z"
         ></path>
         <path
-          class="w"
+          class="hide"
           d="m238.7.01h3.65s4.25,13.42,4.25,13.42h-3.22s-.84-3.18-.84-3.18l-4.1.02-.81,3.2h-3.09S238.7.01,238.7.01Zm.36,7.88h2.87s-.31-1.25-.31-1.25c-.38-1.34-.75-2.93-1.11-4.33h-.08c-.33,1.42-.67,2.99-1.04,4.33l-.33,1.24Z"
-        ></path>
-        <path
+        ></path> -->
+      <!-- <path
           class="w"
           d="m250.28,8.95L246.86.01l3.25.24.97,3.17c.3,1.03.58,1.98.88,3.04h.08c.47-.99.9-1.89,1.35-2.87l1.44-3,3.17.23-4.68,8.35-.34,4.77-3.02-.22.35-4.77Z"
         ></path>
@@ -733,8 +606,8 @@ const {} = Astro.props;
         <path
           class="w"
           d="m307.39,26.06l-5.08-2.52.93-1.86,7.78-4.93,3.33,1.65-3.4,6.85,1.35.67-1.03,2.07-1.35-.67-1.39,2.81-2.53-1.26,1.39-2.81Zm1.03-2.07l.94-1.9c.38-.76,1.01-1.85,1.41-2.57l-.07-.04c-.62.5-1.28,1-1.94,1.5l-2.82,1.78,2.48,1.23Z"
-        ></path>
-      </g>
+        ></path> -->
+      <!-- </g> -->
       <g data-name="geelong">
         <path
           class="w"
