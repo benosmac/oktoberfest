@@ -28,6 +28,18 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
+    <style>
+      body {
+        visibility: hidden;
+      }
+    </style>
+    <noscript>
+      <style>
+        body {
+          visibility: visible;
+        }
+      </style>
+    </noscript>
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
@@ -36,26 +48,87 @@ const { title } = Astro.props;
   </body>
 </html>
 <style is:global>
+  @property --brightblue {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(52% 0.1251 209.4);
+  }
+  @property --brightblueTint50 {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(75% 0.1 209.4);
+  }
+  @property --brightblueShade30 {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(36% 0.2 209.4);
+  }
   :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
     --sand: oklch(87.12% 0.0755 84.45);
     --sky: oklch(79.91% 0.064 203.58);
     --water: oklch(66.8% 0.087 198.2);
-    --brightblue: oklch(54.42% 0.1251 209.4);
-    --brightblue30: oklch(54.42% 0.1251 209.4 / 30%);
+    /* --brightblue: oklch(54.42% 0.1251 209.4); */
+
     --darkred: oklch(46.58% 0.187 33.88);
     --red: oklch(39.9% 0.1582 33.88);
+    --redShade10: color-mix(in oklab, var(--red), #000 10%);
+    --redTint10: color-mix(in oklab, var(--red), #fff 10%);
+    --redTint30: color-mix(in oklab, var(--red), #fff 30%);
+
+    /* --brightblueTint50: color-mix(in oklab, var(--brightblue), #fff 50%);
+    --brightblueShade30: color-mix(in oklab, var(--brightblue), #000 30%); */
+
+    --sans: "Source Sans 3", sans-serif;
+    --serif: "Lora", serif;
   }
+
+  .gradient-overlay {
+    background-image: url(/texture-i.png),
+      linear-gradient(
+        180deg in oklab,
+        oklch(19.84% 0.0911 281.68) 10% 10%,
+        oklch(49% 0.1 232) 50%,
+        oklch(81% 0.31 39) 85% 85%
+      );
+    background-blend-mode: overlay;
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    transition: opacity 1s ease;
+  }
+  .darkness-overlay {
+    transition: opacity 2s ease;
+    background: oklch(20.3% 0.0837 32.82);
+    mix-blend-mode: overlay;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+  }
+  .dusk {
+    --brightblue: var(--brightblueShade30);
+    --red: var(--redTint10);
+    & .darkness-overlay {
+      opacity: 0.05;
+    }
+    & .gradient-overlay {
+      opacity: 0.3;
+    }
+  }
+  .night {
+    --brightblue: var(--brightblueTint50);
+    --red: var(--redTint30);
+    .darkness-overlay {
+      opacity: 0.3;
+    }
+    .gradient-overlay {
+      opacity: 0.7;
+    }
+  }
+
   html {
-    font-family: "Source Sans 3", sans-serif;
+    font-family: var(--sans);
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
@@ -71,8 +144,11 @@ const { title } = Astro.props;
   h4,
   h5,
   h6 {
-    font-family: "Lora", serif;
+    font-family: var(--serif);
     font-weight: 700;
+  }
+  * {
+    transition: color 0.25s ease;
   }
   code {
     font-family:
@@ -84,5 +160,27 @@ const { title } = Astro.props;
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+
+  .btn {
+    min-width: max-content;
+    justify-self: start;
+    align-self: start;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.025em;
+    color: #fff;
+    padding: 0.5rem 2rem;
+    background: var(--red);
+    border-radius: 0.25em;
+  }
+  .btn--small {
+    background-color: transparent;
+    border: 2px solid var(--brightblue);
+    color: var(--brightblue);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
   }
 </style>

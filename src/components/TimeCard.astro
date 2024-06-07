@@ -1,0 +1,106 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  def: string;
+  href: string;
+  time: string;
+}
+
+const { href, title, body, time, def } = Astro.props;
+---
+
+<section class="content time-card scroll-trigger">
+  <h2>{time}</h2>
+  <span class="title">
+    <h3>{title}</h3>
+    <span class="def">{def}</span>
+  </span>
+  <div>
+    <a class="btn btn--small icon-map" href={href} title="View location on map"
+      >View on map</a
+    >
+    <p>
+      {body}
+    </p>
+  </div>
+</section>
+<style>
+  .time-card {
+    grid-template-columns: min-content minmax(min-content, 14em);
+    grid-column: 2 / 3;
+    align-content: center;
+    padding: 3rem 2rem 3rem 2rem;
+    border: 2px dotted rgba(255, 255, 255, 0.5);
+    & :where(h1, h2, h3, h4, h5, h6) {
+      margin: 0;
+    }
+    &:nth-last-child(2) {
+      & h2 {
+        /* color: color-mix(in oklab, var(--red), #fff 10%); */
+      }
+      & h3 {
+        /* color: color-mix(in oklab, var(--brightblue), #000 20%); */
+      }
+    }
+    &:last-child {
+      color: var(--sand);
+      & h2 {
+        /* color: color-mix(in oklab, var(--red), #fff 30%); */
+      }
+      & h3 {
+        /* color: color-mix(in oklab, var(--brightblue), #fff 30%); */
+      }
+
+      & p {
+        color: var(--sand);
+      }
+    }
+    & > * {
+      grid-column: 1 / 3;
+    }
+    & div {
+      display: grid;
+      grid-template-columns: subgrid;
+      border-top: 2px dotted rgba(255, 255, 255, 0.5);
+      padding-top: 2rem;
+    }
+    & h2 {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+      color: var(--red);
+    }
+    & h3 {
+      /* grid-column: 2; */
+      /* grid-row: 2 / -1; */
+      /* align-self: start; */
+      color: var(--brightblue);
+      padding-bottom: 0;
+    }
+    .title {
+      grid-column: 2;
+      grid-row: 2 / -1;
+      text-wrap: pretty;
+    }
+    & p {
+      margin: 0;
+      grid-column: 2;
+      grid-row: 3;
+      color: #231f20;
+      padding: 0;
+    }
+    .def {
+      font-size: 0.875rem;
+      font-style: italic;
+      /* grid-column: 2; */
+      /* grid-row: 1; */
+      /* align-self: end; */
+    }
+    .btn {
+      grid-column: 1;
+      grid-row: 3;
+      align-self: center;
+    }
+  }
+</style>

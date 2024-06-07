@@ -1,0 +1,167 @@
+---
+
+---
+
+<button
+  id="nav-toggle"
+  title="Open Menu"
+  aria-label="Open Menu"
+  aria-expanded="false"
+  aria-controls="nav"
+  class="nav-toggle"
+  data-target="#nav"
+>
+  <svg viewBox="0 0 24 24" class="astro-dmqpwcec" width="48" height="48"
+    ><path fill="#fff" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"
+    ></path></svg
+  >
+</button>
+<nav id="nav">
+  <ul>
+    <li><a href="#whats-on">What's on</a></li>
+    <li><a href="#">Info</a></li>
+    <li><a href="#">Tickets</a></li>
+  </ul>
+</nav>
+
+<script>
+  const navToggle = document.querySelector<HTMLLinkElement>("#nav-toggle");
+  const navLinks = document.querySelectorAll("#nav a");
+  const contentArea = document.querySelectorAll(".content-area")[0];
+
+  window.addEventListener("DOMContentLoaded", () => {
+    // Make nav items unfocusable when offscreen
+    if (window.matchMedia("(max-width: 749px)").matches) {
+      navLinks.forEach((link) => {
+        link.setAttribute("tabindex", "-1");
+      });
+    }
+  });
+
+  function toggleNav() {
+    // Nav is open
+    if (document.body.dataset.navOpen == "true") {
+      //close it
+      document.body.dataset.navOpen = "false";
+      // nav?.classList.remove("open");
+      // navToggle?.classList.remove("open");
+      navLinks.forEach((link, index) => {
+        link.setAttribute("tabindex", "-1");
+      });
+      navToggle?.setAttribute("aria-expanded", "false");
+      contentArea?.removeAttribute("inert");
+    }
+    // Nav is closed
+    else {
+      //open it
+      document.body.dataset.navOpen = "true";
+      navLinks.forEach((link) => {
+        link.setAttribute("tabindex", "0");
+      });
+      // nav?.classList.add("open");
+      // navToggle?.classList.add("open");
+      navToggle?.focus();
+      navToggle?.setAttribute("aria-expanded", "true");
+    }
+  }
+  navToggle?.addEventListener("click", toggleNav);
+</script>
+<style is:global>
+  #nav-toggle {
+    display: none;
+    @media (max-width: 749px) {
+      display: flex;
+      position: fixed;
+      background: none;
+      border: none;
+      justify-self: end;
+      align-self: start;
+      z-index: 5;
+      padding: 1rem;
+      & svg path {
+        fill: var(--brightblue);
+      }
+    }
+  }
+  main > *:not([aria-hidden="true"]) {
+    transition:
+      transform 0.25s ease-in,
+      opacity 0.24s ease-in;
+  }
+  body[data-nav-open="true"] {
+    @media (max-width: 749px) {
+      & nav {
+        transform: translateX(0);
+      }
+      & #nav-toggle {
+        position: fixed;
+        justify-content: end;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      & main > *:not([aria-hidden="true"]) {
+        opacity: 0;
+      }
+    }
+  }
+  nav {
+    display: grid;
+    grid-row: 1;
+    grid-column: 2;
+    width: 100%;
+
+    & ul {
+      margin: 1rem 0 0 0;
+      padding: 1rem 2rem 0 0;
+      font-size: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      & li {
+        & a {
+          text-decoration: none;
+          color: var(--brightblue);
+          font-weight: 700;
+          /* text-transform: uppercase; */
+          padding: 0.5rem;
+        }
+      }
+    }
+    @media (max-width: 749px) {
+      position: fixed;
+      width: 16rem;
+      inset: 4rem 0 auto auto;
+      height: var(--contentAreaHeight);
+      align-items: center;
+      transform: translateX(16rem);
+      transition: transform 0.25s ease-in;
+      /* border-left: 2px dotted #fff; */
+      z-index: 10;
+      & ul {
+        align-items: end;
+        flex-direction: column;
+        gap: 1.5rem;
+        font-size: 2rem;
+
+        & li {
+          & a {
+            /* color: #fff; */
+          }
+        }
+      }
+    }
+    @media (min-width: 750px) {
+      & ul {
+        justify-content: end;
+        gap: 1rem;
+        & li {
+          & a {
+            /* border: 2px solid var(--brightblue); */
+            /* border-radius: 0.25em; */
+          }
+        }
+      }
+    }
+  }
+</style>

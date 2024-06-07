@@ -1,9 +1,41 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Logo from "../components/Logo.astro";
-import ShoreleftSVG from "../components/ShoreLeftSVG.astro";
-import CloudsSVG from "../components/CloudsSVG.astro";
-import BirdSVG from "../components/BirdSVG.astro";
+import BackgroundScene from "../components/BackgroundScene.astro";
+import TimeCard from "../components/TimeCard.astro";
+import Nav from "../components/Nav.astro";
+
+const timeCardData = [
+  {
+    title: "Brezeln",
+    body: "Enjoy food stalls, rides and entertainment on Cunningham Pier",
+    def: "(noun) Pretzel",
+    href: "#map",
+    time: "10am",
+  },
+  {
+    title: "Frühschoppen",
+    body: "From Amber Ale to Weizenbock, you will find a huge variety of beer in the 3 Bierhalles.",
+    def: "(noun) /ˈfryːʃɔpən/ Morning drink",
+    href: "#map",
+    time: "12pm",
+  },
+  {
+    title: "Schuhplattler",
+    body: "Live performances on the main stage, featuring traditional folk dancing and music.",
+    def: "(noun)  ˈshüˌplätlə(r) a Bavarian courtship dance",
+    href: "#map",
+    time: "3pm",
+  },
+  {
+    title: "Abendessen",
+    body: "Explore food stalls along the waterfront, or sit for a traditional Oktoberfest meal at one of the 3 Bierhalles.",
+    def: "(noun) /ˈaːbənt|ɛsən/ Evening meal",
+    href: "#map",
+    time: "7pm",
+  },
+];
+console.log(timeCardData);
 ---
 
 <script src="../lib/timelines.ts"></script>
@@ -15,27 +47,7 @@ import BirdSVG from "../components/BirdSVG.astro";
         <Logo />
       </a>
     </div>
-    <button
-      id="nav-toggle"
-      title="Open Menu"
-      aria-label="Open Menu"
-      aria-expanded="false"
-      aria-controls="nav"
-      class="nav-toggle"
-      data-target="#nav"
-    >
-      <svg viewBox="0 0 24 24" class="astro-dmqpwcec" width="48" height="48"
-        ><path fill="#fff" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"
-        ></path></svg
-      >
-    </button>
-    <nav id="nav">
-      <ul>
-        <li><a href="#">What's On</a></li>
-        <li><a href="#">Info</a></li>
-        <li><a href="#">Tickets</a></li>
-      </ul>
-    </nav>
+    <Nav />
   </header>
 
   <main id="main">
@@ -54,117 +66,31 @@ import BirdSVG from "../components/BirdSVG.astro";
           </span>
         </div>
       </section>
-      <!-- <section id="whats-on" class="content date scroll-trigger" tabindex="0">
-      <h2>Saturday October 4</h2>
-      <h4>Cunningham Pier, Geelong Waterfront</h4>
-    </section> -->
-      <div class="time-cards-wrapper">
-        <section class="content time-card scroll-trigger" tabindex="0">
-          <h2>10am</h2>
-          <h3>Brezeln for breakfast</h3>
-          <p>Enjoy food stalls, rides and entertainment on Cunningham Pier</p>
-        </section>
-        <section class="content time-card scroll-trigger" tabindex="0">
-          <h2>12pm</h2>
-          <h3>Frühschoppen</h3>
-          <p>
-            From Amber Ale to Weizenbock, you will find a huge variety of beer
-            in the 3 Bierhalles.
-          </p>
-        </section>
-        <section class="content time-card scroll-trigger" tabindex="0">
-          <h2>3pm</h2>
-          <h3>Schuhplattler</h3>
-          <p>
-            Live performances on the main stage, featuring traditional folk
-            dancing and music.
-          </p>
-        </section>
-        <section class="content time-card scroll-trigger" tabindex="0">
-          <h2>7pm</h2>
-          <h3>Abendessen</h3>
-          <p>
-            Explore food stalls along the waterfront, or sit for a traditional
-            Oktoberfest meal at one of the 3 Bierhalles.
-          </p>
-        </section>
+
+      <div class="content time-cards-wrapper" id="whats-on">
+        <h3 class="content-heading scroll-trigger">What's on</h3>
+
+        {
+          timeCardData.map((card) => (
+            <TimeCard
+              title={card.title}
+              body={card.body}
+              def={card.def}
+              href={card.href}
+              time={card.time}
+            />
+          ))
+        }
       </div>
     </div>
-    <div class="darkness-overlay" aria-hidden="true"></div>
-    <div class="bg" aria-hidden="true">
-      <div class="sky">
-        <div class="clouds">
-          <CloudsSVG />
-        </div>
-        <div class="bird">
-          <BirdSVG />
-        </div>
-        <div class="gradient-overlay"></div>
-      </div>
-    </div>
-    <div class="fg" aria-hidden="true">
-      <div class="ground">
-        <div class="overlay"></div>
-        <img src="statues-shadows.svg" class="statues-shadows" />
-        <img src="statues.svg" class="statues" />
-        <div class="water">
-          <div class="waves"></div>
-        </div>
-        <img src="jetty.svg" class="jetty" />
-        <img src="boat.svg" class="boat" />
-        <div class="shore-l">
-          <ShoreleftSVG />
-        </div>
-        <div class="sand"></div>
-      </div>
-    </div>
+    <BackgroundScene />
   </main>
 
   <script>
-    const navToggle = document.querySelector<HTMLLinkElement>("#nav-toggle");
-    const nav = document.querySelector("#nav");
-    const navLinks = document.querySelectorAll("#nav a");
-    const contentArea = document.querySelectorAll(".content-area")[0];
     // Setting scrollRestoration to manual to avoid scrollTrigger weirdness
     window.history.scrollRestoration = "manual";
-
-    window.addEventListener("DOMContentLoaded", () => {
-      // Make nav items unfocusable when offscreen
-      if (window.matchMedia("(max-width: 749px)").matches) {
-        navLinks.forEach((link) => {
-          link.setAttribute("tabindex", "-1");
-        });
-      }
-    });
-    function toggleNav() {
-      // Nav is open
-      if (document.body.dataset.navOpen == "true") {
-        //close it
-        document.body.dataset.navOpen = "false";
-        // nav?.classList.remove("open");
-        // navToggle?.classList.remove("open");
-        navLinks.forEach((link, index) => {
-          link.setAttribute("tabindex", "-1");
-        });
-        navToggle?.setAttribute("aria-expanded", "false");
-        contentArea?.removeAttribute("inert");
-      }
-      // Nav is closed
-      else {
-        //open it
-        document.body.dataset.navOpen = "true";
-        navLinks.forEach((link) => {
-          link.setAttribute("tabindex", "0");
-        });
-        // nav?.classList.add("open");
-        // navToggle?.classList.add("open");
-        navToggle?.focus();
-        navToggle?.setAttribute("aria-expanded", "true");
-      }
-    }
-    navToggle?.addEventListener("click", toggleNav);
   </script>
-  <style>
+  <style is:global>
     :root {
       --groundHeight: 220px;
       --contentAreaHeight: calc(100vh - var(--groundHeight));
@@ -189,11 +115,11 @@ import BirdSVG from "../components/BirdSVG.astro";
     .content-area {
       display: grid;
       grid-column: 1 / -1;
-      grid-template-columns: subgrid;
-      z-index: 25;
+      grid-template-columns: auto;
+      z-index: 30;
     }
     header {
-      position: fixed;
+      position: relative;
       display: grid;
       grid-template-columns: auto 16rem;
       justify-items: start;
@@ -201,105 +127,9 @@ import BirdSVG from "../components/BirdSVG.astro";
       width: 100%;
       @media (min-width: 750px) {
         grid-template-columns: min-content 1fr;
+        position: relative;
       }
     }
-    main > *:not([aria-hidden="true"]) {
-      transition:
-        opacity 0.25s ease,
-        filter 0.5s ease;
-    }
-    body[data-nav-open="true"] {
-      @media (max-width: 749px) {
-        & nav {
-          transform: translateX(0);
-        }
-        & #nav-toggle {
-          position: fixed;
-          justify-content: end;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-        }
-        & main > *:not([aria-hidden="true"]) {
-          opacity: 0;
-          filter: blur(2px);
-          /* transform: translateX(-100px); */
-        }
-      }
-    }
-    nav {
-      display: grid;
-      grid-row: 1;
-      grid-column: 2;
-      width: 100%;
-
-      & ul {
-        margin: 1rem 0 0 0;
-        padding: 1rem 2rem 0 0;
-        font-size: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-        & li {
-          & a {
-            text-decoration: none;
-            color: var(--brightblue);
-            font-weight: 700;
-            /* text-transform: uppercase; */
-            padding: 0.5rem;
-          }
-        }
-      }
-      @media (max-width: 749px) {
-        position: absolute;
-        inset: 4rem 0 auto auto;
-        height: var(--contentAreaHeight);
-        align-items: center;
-        transform: translateX(200px);
-        transition: transform 0.25s ease-in;
-        /* border-left: 2px dotted #fff; */
-        z-index: 10;
-        & ul {
-          align-items: end;
-          flex-direction: column;
-          gap: 1.5rem;
-          font-size: 2rem;
-
-          & li {
-            & a {
-              /* color: #fff; */
-            }
-          }
-        }
-      }
-      @media (min-width: 750px) {
-        & ul {
-          justify-content: end;
-          gap: 1rem;
-          & li {
-            & a {
-              border: 2px solid var(--brightblue);
-              border-radius: 0.25em;
-            }
-          }
-        }
-      }
-    }
-    #nav-toggle {
-      display: none;
-      @media (max-width: 749px) {
-        background: none;
-        border: none;
-        display: flex;
-        justify-self: end;
-        align-self: start;
-        z-index: 5;
-        & svg path {
-          fill: var(--brightblue);
-        }
-      }
-    }
-
     .logo {
       grid-row: 1;
       grid-column: 1;
@@ -313,6 +143,7 @@ import BirdSVG from "../components/BirdSVG.astro";
     .content {
       position: relative;
       display: grid;
+      grid-template-columns: subgrid;
       gap: 2rem;
       z-index: 11;
       color: var(--brightblue);
@@ -320,13 +151,13 @@ import BirdSVG from "../components/BirdSVG.astro";
       & h2 {
         font-size: 3rem;
         line-height: 1.125;
-        margin: 0;
+        /* margin: 0; */
         color: var(--brightblue);
       }
       & h3 {
         font-weight: 700;
         line-height: 1.25;
-        margin: 0;
+        /* margin: 0; */
         font-size: 2rem;
         /* color: var(--brightblue); */
       }
@@ -336,7 +167,7 @@ import BirdSVG from "../components/BirdSVG.astro";
         font-weight: 500;
         font-size: 1.25rem;
         line-height: 1.33;
-        margin: 0;
+        /* margin: 0; */
       }
       @media (min-width: 600px) {
         & h2 {
@@ -345,13 +176,27 @@ import BirdSVG from "../components/BirdSVG.astro";
         & h3 {
           font-size: 2.5rem;
         }
-        & p {
-          font-size: 1.25rem;
-        }
       }
 
       &:last-child {
         margin-bottom: var(--groundHeight);
+      }
+    }
+    .content .content-heading {
+      font-size: 1.5rem;
+      font-family: var(--sans);
+      opacity: 0;
+      transition: opacity 0.25s ease-in;
+      position: fixed;
+      inset: 0 auto auto auto;
+      text-align: left;
+      margin-bottom: 2rem;
+      grid-column: 1 / -1;
+      padding: 1rem;
+      /* border-bottom: 2px dotted rgba(255, 255, 255, 0.33); */
+      /* border-top: 2px dotted rgba(255, 255, 255, 0.33); */
+      &.active {
+        opacity: 1;
       }
     }
     .time-cards-wrapper {
@@ -361,79 +206,30 @@ import BirdSVG from "../components/BirdSVG.astro";
       grid-column: 1 / -1;
       justify-items: center;
     }
-    .time-card {
-      grid-template-columns: min-content minmax(min-content, 14em);
-      grid-column: 2 / 3;
-      align-content: center;
-      padding: 0 2rem 6rem 2rem;
-      &:nth-last-child(2) {
-        & h2 {
-          color: color-mix(in oklab, var(--red), #fff 10%);
-        }
-        & h3 {
-          color: color-mix(in oklab, var(--brightblue), #000 20%);
-        }
-      }
-      &:last-child {
-        color: var(--sand);
-        & h2 {
-          color: color-mix(in oklab, var(--red), #fff 30%);
-        }
-        & h3 {
-          color: color-mix(in oklab, var(--brightblue), #fff 30%);
-        }
 
-        & p {
-          color: var(--sand);
-        }
-      }
-      & > * {
-        grid-column: 1 / 3;
-      }
-      & h2 {
-        grid-column: 1;
-        grid-row: 1;
-        align-self: center;
-        color: var(--red);
-      }
-      & h3 {
-        grid-column: 2;
-        grid-row: 2 / -1;
-        align-self: center;
-        color: var(--brightblue);
-      }
-      & p {
-        text-align: center;
-        margin: 0;
-        grid-column: 1 / 3;
-        color: #231f20;
-        /* border-top: 2px solid rgba(0, 0, 0, 0.05); */
-        border-top: 2px dotted rgba(255, 255, 255, 0.33);
-        padding: 2rem 0 0 0;
-      }
-    }
     .hero.content {
-      /* position: fixed; */
-      /* inset: 0; */
-      height: calc(var(--contentAreaHeight) - 4rem);
+      height: calc(var(--contentAreaHeight) - (8rem + 120px));
       grid-template-columns: min-content 1fr;
-      grid-template-rows: 150px auto auto;
+      grid-template-rows: auto;
       grid-column: 1 / -1;
-      gap: 1rem;
+      gap: 2rem;
       align-items: start;
       @media (min-width: 750px) {
-        grid-template-rows: 180px auto;
         grid-template-columns: min-content 1fr 260px;
       }
       @media (min-width: 900px) {
         padding: 0 2rem;
         grid-template-columns: min-content 1fr 300px;
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        margin: 0;
+      }
       & h2 {
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 1;
         font-size: 4rem;
         line-height: 1.1;
+        align-self: end;
         & span {
           display: inline-block;
         }
@@ -448,15 +244,14 @@ import BirdSVG from "../components/BirdSVG.astro";
 
       .details {
         display: flex;
-        flex-wrap: wrap-reverse;
-        /* align-self: start; */
+        flex-wrap: wrap;
         gap: 1rem;
         grid-column: 1 / -1;
-        grid-row: 3;
-        text-shadow: 0em 0em 0.5em rgba(0, 0, 0, 0.1);
+        grid-row: 2;
+        /* text-shadow: 0em 0em 0.5em rgba(255, 255, 255, 0.25); */
         @media (min-width: 750px) {
           grid-column: 3;
-          grid-row: 2;
+          grid-row: 1;
           text-align: right;
           justify-content: end;
           align-self: end;
@@ -475,16 +270,9 @@ import BirdSVG from "../components/BirdSVG.astro";
       }
       & a {
         align-self: center;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 1.25rem;
-        letter-spacing: 0.025em;
-        color: #fff;
-        padding: 0.5rem 2rem;
-        background: var(--red);
-        border-radius: 0.25em;
       }
     }
+
     .date {
       text-align: center;
       & h2,
@@ -492,160 +280,6 @@ import BirdSVG from "../components/BirdSVG.astro";
       h4,
       h5 {
         font-family: "Source Sans 3";
-      }
-    }
-    .bg,
-    .fg {
-      position: fixed;
-      inset: 0;
-
-      display: grid;
-      grid-template-rows: 1fr var(--groundHeight);
-      height: 100lvh;
-      width: 100%;
-      background-blend-mode: overlay;
-    }
-    .fg {
-      z-index: 15;
-    }
-    .bg {
-      z-index: 5;
-      background: var(--sky) url(/texture.png);
-    }
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: url(/texture.png);
-      height: 100%;
-      z-index: 10;
-    }
-    .gradient-overlay {
-      background-image: url(/texture-i.png),
-        linear-gradient(
-          180deg in oklab,
-          oklch(19.84% 0.0911 281.68) 10% 10%,
-          oklch(49% 0.1 232) 50%,
-          oklch(81% 0.31 39) 85% 85%
-        );
-      background-blend-mode: overlay;
-      opacity: 0;
-      position: absolute;
-      inset: 0;
-      height: 100%;
-    }
-    .darkness-overlay {
-      background: oklch(20.3% 0.0837 32.82);
-      mix-blend-mode: overlay;
-      opacity: 0;
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-    }
-    .sky {
-      grid-column: 1 / 1;
-      grid-row: 1;
-      display: grid;
-      grid-template-columns: 1fr 350px 1fr;
-      grid-template-rows: min-content min-content 1fr;
-      justify-items: center;
-    }
-    .clouds {
-      grid-column: 1 / -1;
-      grid-row: 3;
-      align-self: center;
-      width: 110%;
-      padding: 2rem;
-      z-index: 11;
-      mix-blend-mode: overlay;
-    }
-    .bird {
-      grid-column: 1;
-      grid-row: 3;
-      width: 20px;
-      align-self: center;
-      justify-self: start;
-      z-index: 11;
-    }
-    .ground {
-      grid-column: 1 / -1;
-      grid-row: 2 / -1;
-      display: grid;
-      grid-template-rows: 15% 35% 50%;
-      grid-template-columns: 1fr auto 1fr;
-
-      /* justify-content: center; */
-    }
-    .water {
-      grid-column: 1 / -1;
-      grid-row: 2 / 4;
-      background: var(--water) url(/texture-i.png);
-      background-blend-mode: overlay;
-    }
-    .boat {
-      width: 40px;
-      margin-top: -20px;
-      grid-column: 3;
-      grid-row: 2;
-      align-self: start;
-      justify-self: center;
-      z-index: 5;
-    }
-    .waves {
-      height: 5px;
-      margin-top: -5px;
-      width: 200%;
-      background-image: url(/waves.svg);
-      background-repeat: repeat-x;
-    }
-    .sand {
-      position: relative;
-      background: var(--sand) url(/texture.png);
-      background-blend-mode: overlay;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-column: 1 / -1;
-      grid-row: 3 / 4;
-    }
-    .statues,
-    .statues-shadows {
-      grid-column: 2;
-      grid-row: 1 / span all;
-      align-self: center;
-      min-width: var(--groundHeight);
-      z-index: 11;
-      margin-bottom: 2rem;
-    }
-    .statues {
-    }
-    .statues-shadows {
-      opacity: 0.2;
-      transform: skewX(90deg) scaleY(0.4);
-      transform-origin: bottom center;
-    }
-    .shore-l {
-      grid-row: 1 / 3;
-      grid-column: 1 / -1;
-      height: 101%;
-      z-index: 5;
-    }
-    .jetty {
-      grid-row: 1 / 3;
-      grid-column: 2 / -1;
-      align-self: end;
-      justify-self: end;
-      max-width: 200px;
-      margin: 0 -20% 1rem 0;
-      z-index: 10;
-    }
-
-    @media (min-width: 700px) and (min-height: 700px) {
-      .statues,
-      .statues-shadows {
-        /* min-width: var(--groundHeight); */
-      }
-      .jetty {
-        max-width: 240px;
-        margin: 0 0 1rem 0;
       }
     }
   </style>
