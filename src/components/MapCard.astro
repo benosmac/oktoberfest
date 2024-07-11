@@ -1,0 +1,66 @@
+---
+import { Icon } from "astro-icon/components";
+interface Props {
+  name: string;
+  id: string;
+  type: string;
+  gmaps: string;
+  content: string;
+  location: string;
+}
+
+const { name, id, type, gmaps, content, location } = Astro.props;
+---
+
+<div
+  class="card map-card"
+  id={id}
+  data-name={name}
+  data-group={type}
+  aria-current="false"
+>
+  <span>
+    <h3>{name}</h3>
+    <!-- <span class="location">{location}</span> -->
+
+    <a class="btn btn--xs" title="Open in Maps" href={gmaps} target="_blank">
+      <Icon name="icon-map" />
+      Google Maps
+    </a>
+  </span>
+  <p>{content}</p>
+</div>
+
+<style>
+  .map-card {
+    grid-template-columns: minmax(min-content, 10em) 1fr;
+    grid-template-rows: min-content;
+  }
+  h3 {
+    margin: 0;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+  span {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  a {
+    font-size: 0.75rem;
+  }
+  p {
+    font-size: 0.875rem;
+    grid-row: 1;
+    grid-column: 2;
+  }
+  @media (min-width: 900px) {
+    .map-card {
+      grid-template-columns: 1fr;
+      grid-template-rows: min-content;
+    }
+    p {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+</style>

@@ -1,371 +1,283 @@
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-const content = document.querySelectorAll(".scroll-trigger");
-const contentHeadings = document.querySelectorAll(".content-heading");
-const hero = document.querySelectorAll(".hero");
-const heroSpans = document.querySelectorAll(".hero > h2 > span");
-const ground = document.querySelector(".ground");
-const darknessOverlay = document.querySelector(".darkness-overlay");
-const clouds = document.querySelector(".clouds");
-const waves = document.querySelector(".waves");
-const boat = document.querySelector(".boat");
-const bird = document.querySelector(".bird");
-const gradientOverlay = document.querySelector(".gradient-overlay");
-const statues = document.querySelector(".statues");
-const statuesShadows = document.querySelector(".statues-shadows");
-let groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
-let contentAreaHeight = window.innerHeight - groundHeight;
-const steinL = document.querySelector('[data-name="stein-l"]');
-const steinR = document.querySelector('[data-name="stein-r"]');
-const foamR = document.querySelector('[data-name="foam-r"]');
-const foamL = document.querySelector('[data-name="foam-l"]');
-const banner = document.querySelector('[data-name="text-banner"]');
-const ribbonR = document.querySelector('[data-name="ribbon-right"]');
-const ribbonL = document.querySelector('[data-name="ribbon-left"]');
-const logo = document.querySelector('#logo');
-
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-gsap.to( document.body, {
-  autoAlpha:1,
-  duration: .1,
-});
-
-// LOGO SHOW ANIMATION
-function logoTimeline() {
-  let ltl = gsap.timeline();
-  ltl.fromTo("header", { opacity: 0 }, { opacity: 1, duration: 1 }, "start");
-  ltl.fromTo(
-    steinL,
-    { x: -20, y: -3 },
-    {
-      keyframes: [
-        { x: -10, y: 2 },
-        { x: 0, y: 0 },
-      ],
-      duration: 0.66,
-      ease: "power4.in",
-    },
-    "cheers"
-  );
-  ltl.fromTo(
-    foamL,
-    { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
-    { scale: 1, opacity: 1, duration: 0.5 },
-    "foam"
-  );
-  ltl.fromTo(
-    steinR,
-    { x: 20, y: -3 },
-    {
-      keyframes: [
-        { x: 10, y: 2 },
-        { x: 0, y: 0 },
-      ],
-      duration: 0.66,
-      ease: "power4.in",
-    },
-    "cheers"
-  );
-  ltl.fromTo(
-    foamR,
-    { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
-    { scale: 1, opacity: 1, duration: 0.5 },
-    "foam"
-  );
-  ltl.to(steinL, { x: -5, duration: 0.5, ease: "power1.out" }, "foam");
-  ltl.to(steinR, { x: 5, duration: 0.5, ease: "power1.out" }, "foam");
-  return ltl;
-}
+import { CustomEase } from "gsap/CustomEase";
+gsap.registerPlugin(CustomEase);
 
 
-// PAN DOWN SCENE REVEAL
-function panInTimeline() {
-  let panDownTL = gsap.timeline();
-
-  panDownTL.fromTo(
-    clouds,
-    { y: 50 },
-    { y: 0, duration: 2, delay: .25, ease: "sine.out" },
-    "intro"
-  );
-  panDownTL.from(
-    ground,
-    { y: groundHeight, duration: 2, delay: .5, ease: "sine.out" },
-    "intro"
-  );
-  panDownTL.from(
-    statues,
-    { y: 120, duration: 2, delay: .25, ease: "sine.out" },
-    "intro"
-  );
-  panDownTL.from(
-    hero,
-    { opacity: 0, duration: 0.1, ease: "sine.out" },
-    "content"
-  );
-  heroSpans.forEach((span, i) => {
-    panDownTL.from(
-      span,
-      {
-        opacity: 0,
-        scale: 1.1,
-        duration: 0.25,
-        delay: i * 0.5,
-        ease: "power1",
-      },
-      "contentShow"
-    );
-  });
-  return panDownTL;
-}
+// Custom easings 
+export const defaultTimingIn = "0.47,0,0.75,0.72";
+export const defaultTimingOut = "0.39,0.57,0.56,1";
 
 // WAVES
-function wavesTimeline(){
-  let wavestl = gsap.timeline({repeat: -1, paused: false, yoyo: true});
+export function wavesTimeline() {
+    const waves = document.querySelector(".waves");
+    let wavestl = gsap.timeline({ repeat: -1, paused: false, yoyo: true });
 
-  wavestl.to(waves, {
-    x: "-150px",
-    duration: 30,
-    ease: "linear",
-  });
+    wavestl.to(waves, {
+        x: "-150px",
+        duration: 30,
+        ease: "linear",
+    });
 
-  return wavestl;
+    return wavestl;
 }
 
-
-
-// COMPOSE LOAD TIMELINE
-let intialLoadTimeline = gsap.timeline({ repeat: 0, paused: false });
-intialLoadTimeline
-  .add(panInTimeline(), "panIn")
-  .add("content", ">+0.25")
-  .add(logoTimeline(), "content")
-  .from(
-    ".hero > div",
-    {
-      opacity: 0,
-      delay: 0,
-      duration: 1,
-      ease: "power1",
-    },"content"
-  )
-  .add(wavesTimeline(), "content")
-  .add(boatTimeline(), "content");
-
-
-
 // BOAT
-function boatTimeline(){
-let boattl = gsap.timeline({ repeat: -1, paused: false, yoyo: true });
-boattl.to(boat, { x: "-20vw", duration: 120, ease: "linear" }, "boating").to(
-  boat,
-  {
-    y: "-2",
-    duration: 2,
-    ease: "power1.inOut",
-    repeat: -1,
-    yoyo: true,
-  },
-  "boating"
-);
-return boattl;
+export function boatTimeline() {
+    const boat = document.querySelector(".boat");
+    let boattl = gsap.timeline({ repeat: -1, paused: false, yoyo: true });
+    boattl.to(boat, { x: "-20vw", duration: 120, ease: "linear" }, "boating").to(
+        boat,
+        {
+            y: "-2",
+            duration: 2,
+            ease: defaultTimingOut,
+            repeat: -1,
+            yoyo: true,
+        },
+        "boating"
+    );
+    return boattl;
 }
 
 
 // BIRD
-function birdTimeline(){
-  let birdtl = gsap.timeline({ repeat: -1, paused: false });
-birdtl.fromTo(
-  bird,
-  { x: "-80px" },
-  { x: "100vw", duration: 60, repeat: -1, yoyo: false },
-  "flying"
-);
-birdtl.fromTo(
-  bird,
-  { y: "-40px" },
-  {
-    y: "40px",
-    duration: 30,
-    yoyo: true,
-    repeat: -1,
-    ease: "power1.inOut",
-  },
-  "flying"
-);
-return birdtl;
-
-}
-
-
-// LOGO - WAVY RIBBON
-gsap.to(ribbonR, {
-  skewX: -5,
-  skewY: -5,
-  transformOrigin: "left center",
-  duration: 0.8,
-  repeat: -1,
-  yoyo: true,
-  ease: "power1.in",
-});
-
-// LOGO - WAVY RIBBON
-gsap.to(ribbonL, {
-  skewX: 5,
-  skewY: 5,
-  transformOrigin: "right center",
-  duration: 0.8,
-  repeat: -1,
-  yoyo: true,
-  ease: "power1.in",
-});
-
-// LOGO - BANNER MOVEMENT
-gsap.fromTo(
-  banner,
-  { y: 2 },
-  { y: -2, transformOrigin: "center", duration: 2, repeat: -1, yoyo: true }
-);
-
-// STATUE SHADOWS
-gsap.to(statuesShadows, {
-  skewX: "-90deg",
-  ease: "none",
-  scrollTrigger: {
-    trigger: "body",
-    scrub: 0.5,
-  },
-});
-
-
-
-
-// // SCALE LOGO ON SCROLL
-// let scrollFromTopTL = gsap.timeline({
-//   scrollTrigger: {
-//     trigger: "main",
-//     start: "+=75",
-//     end: "+=150",
-//     scrub: 0.5,
-//   },
-// });
-// //Scale down
-// scrollFromTopTL.to(
-//   "#logo",
-//   {
-//     y: -30,
-//     // scale: 0.9,
-//     // transformOrigin: "left center",
-//     ease: "power1:out",
-//   },
-//   "hideStuff"
-// );
-// // Hide graphical elements
-// scrollFromTopTL.to(
-//   [steinL, steinR],
-//   {
-//     opacity: 0,
-//     ease: "power1:out",
-//   },
-//   "hideStuff"
-// );
-// // Show "Geelong"
-// scrollFromTopTL.to(
-//   '[data-name="geelong"]',
-//   {
-//     scale: 1.5,
-//     y: -15,
-//     transformOrigin: "top center",
-//     ease: "power1:out",
-//   },
-//   "hideStuff"
-// );
-
-// FADE OUT HERO ON SCROLL
-let heroOutTL = gsap.timeline({
-  scrollTrigger: {
-    trigger: hero,
-    start: "top 150",
-    end: "bottom center",
-    scrub: 0.1,
-    pin: false,
-  },
-});
-heroOutTL.to(
-  hero,
-  {
-    opacity: 0,
-  },
-  "out"
-);
-
-function setNightColours(self: ScrollTrigger){
-  if(!self.isActive) {
-  document.body.classList.remove('night');
-  return;
-  }
-  document.body.classList.add('night');
-}
-function setDuskColours(self: ScrollTrigger){
-  if(!self.isActive) {
-  document.body.classList.remove('dusk');
-  return;
-  }
-  document.body.classList.add('dusk');
-}
-// CONTENT SECTIONS
-console.log("content area:" + contentAreaHeight);
-
-content.forEach((item, i) => {
-const isFirstItem = i === 0;
-const isSecondLastItem = i === content.length - 2;
-const isLastItem = i === content.length - 1;
-const h3 = item.querySelector("h3");
-let startPoint = `80% ${contentAreaHeight}`;
-let endPoint = `top top`;
-let trigger = item;
-let scrub = true;
-let toggle = undefined;
-  if (isFirstItem){
-      startPoint = `top center`;
-      endPoint = `bottom center`;
-      trigger = item.parentElement ? item.parentElement : item;
-      scrub = false;
-      toggle = (self: ScrollTrigger) => {self.isActive ? item.classList.add('active') : item.classList.remove('active')};
-  } 
-  if (isSecondLastItem){
-    toggle = setDuskColours;
-  }
-  if (isLastItem){
-    toggle = setNightColours;
-  }
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: trigger,
-      start: startPoint,
-      end: endPoint,
-      scrub: scrub,
-      pin: false,
-      pinSpacing: false,
-      markers: true,
-      onToggle: toggle,
-    },
-  });
-  if (!isFirstItem){
-    // show the content
-  tl.from(item, { opacity: 0, duration: 0.5, ease: "power1.in" }, "entry")
-    .from(h3, { opacity: 0, x: 20, duration: 0.5, delay:.25 }, "entry")
-    .addLabel("entry")
-    .to(item, { opacity: 0, duration: 1, delay: 1, ease: "power1.Out" });
-  }
-  // Make sure focused element gets snapped to
-  item.addEventListener("focus", () => {
-    gsap.to(window, {
-      scrollTo: tl.scrollTrigger?.labelToScroll("entry"),
+export function birdTimeline() {
+    const bird = document.querySelector(".bird");
+    const wings = document.querySelectorAll('[data-name="wing"]');
+    let birdtl = gsap.timeline({ repeat: -1, paused: false });
+    birdtl.fromTo(
+        bird,
+        { x: "-80px" },
+        { x: "100vw", duration: 60, repeat: -1, yoyo: false },
+        "flying"
+    );
+    birdtl.fromTo(
+        bird,
+        { y: "-40px" },
+        {
+            y: "40px",
+            duration: 30,
+            yoyo: true,
+            repeat: -1,
+            ease: defaultTimingIn,
+        },
+        "flying"
+    );
+    wings.forEach((wing) => {
+        birdtl.to(wing, {
+            scaleY: ".4",
+            transformOrigin: "bottom center",
+            duration: 1,
+            repeat: -1,
+            yoyo: true,
+            ease: "linear",
+        }, "flying");
     });
-  });
-});
+    return birdtl;
+
+}
+
+// WHEEL
+
+export function wheelTimeline() {
+    let wheeltl = gsap.timeline({ repeat: -1, paused: false });
+    const wheel = document.querySelector(".wheel");
+    const seatsGroup = document.querySelectorAll(".wheel-seats");
+    const seats = document.querySelectorAll(".wheel-seats > g");
+    // Rotate the wheel
+    wheeltl.to(wheel, {
+        rotate: 360,
+        transformOrigin: "center",
+        duration: 120,
+        repeat: -1,
+        ease: "linear",
+    }, 'spinning');
+    // Rotate all the seats around with the wheel
+    wheeltl.to(seatsGroup, {
+        rotate: 360,
+        transformOrigin: "center",
+        duration: 120,
+        repeat: -1,
+        ease: "linear",
+    }, 'spinning');
+    //To keep the seats upright and aligned with the main wheel we rotate them individually the opposite way to the wheel.
+    seats.forEach((seat) => {
+        wheeltl.to(seat, {
+            rotate: -360,
+            transformOrigin: "center",
+            duration: 120,
+            repeat: -1,
+            ease: "linear",
+        }, 'spinning');
+    });
+    return wheeltl;
+}
+export function slideFgUpTimeline() {
+    const fg = document.querySelector('.fg');
+    let slideFgUpTimeline = gsap.timeline({ paused: false });
+    slideFgUpTimeline.to(fg, { y: 0, duration: .5, ease: defaultTimingOut });
+    return slideFgUpTimeline;
+}
+export function slideFgDownTimeline() {
+    const fg = document.querySelector('.fg');
+    const content = document.querySelector('.content-area');
+    const slideFgDownTimeline = gsap.timeline({ paused: false });
+    slideFgDownTimeline.to(content, { opacity: 0, duration: .25, ease: defaultTimingOut });
+    slideFgDownTimeline.to(fg, { yPercent: 100, duration: 1, ease: defaultTimingOut });
+    return slideFgDownTimeline;
+}
+// PAN DOWN SCENE REVEAL
+export function panInTimeline() {
+    const hero = document.querySelectorAll(".hero");
+    const heroSpans = document.querySelectorAll(".hero > h2 > span");
+    const ground = document.querySelector(".ground");
+    const clouds = document.querySelector(".clouds");
+    const statues = document.querySelector(".statues");
+    const groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
+    const panDownTL = gsap.timeline();
+
+    panDownTL.from(
+        clouds,
+        { y: 50, duration: 2, delay: .25, ease: defaultTimingOut },
+        "intro"
+    );
+    panDownTL.from(
+        ground,
+        { y: groundHeight, duration: 2, delay: .5, ease: defaultTimingOut },
+        "intro"
+    );
+    panDownTL.from(
+        statues,
+        { y: 120, duration: 2, delay: .25, ease: defaultTimingOut },
+        "intro"
+    );
+    panDownTL.from(
+        hero,
+        { opacity: 0, duration: 0.1, ease: defaultTimingOut },
+        "content"
+    );
+    heroSpans.forEach((span, i) => {
+        panDownTL.from(
+            span,
+            {
+                opacity: 0,
+                scale: 1.1,
+                duration: 0.25,
+                delay: i * 0.5,
+                ease: defaultTimingOut,
+            },
+            "contentShow"
+        );
+    });
+    return panDownTL;
+}
+
+// HERO
+export function heroDetailsTimeline() {
+    let herodtl = gsap.timeline({ repeat: 0, paused: false });
+    herodtl.from(
+        ".details",
+        {
+            opacity: 0,
+            delay: 0,
+            duration: 0.5,
+            ease: defaultTimingIn,
+        },
+        "content"
+    );
+    return herodtl;
+
+}
+
+// LOGO SHOW ANIMATION
+export function logoTimeline() {
+    const steinL = document.querySelector('[data-name="stein-l"]');
+    const steinR = document.querySelector('[data-name="stein-r"]');
+    const foamR = document.querySelector('[data-name="foam-r"]');
+    const foamL = document.querySelector('[data-name="foam-l"]');
+    let ltl = gsap.timeline();
+    ltl.fromTo("header", { opacity: 0 }, { opacity: 1, duration: .5, ease: defaultTimingIn }, "start");
+    ltl.fromTo(
+        steinL,
+        { x: -20, y: -3 },
+        {
+            keyframes: [
+                { x: -10, y: 2 },
+                { x: 0, y: 0 },
+            ],
+            duration: 0.66,
+            ease: defaultTimingIn,
+        },
+        "cheers"
+    );
+    ltl.fromTo(
+        foamL,
+        { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5 },
+        "foam"
+    );
+    ltl.fromTo(
+        steinR,
+        { x: 20, y: -3 },
+        {
+            keyframes: [
+                { x: 10, y: 2 },
+                { x: 0, y: 0 },
+            ],
+            duration: 0.66,
+            ease: "power4.in",
+        },
+        "cheers"
+    );
+    ltl.fromTo(
+        foamR,
+        { scale: 0.9, transformOrigin: "right bottom", opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5 },
+        "foam"
+    );
+    ltl.to(steinL, { x: -5, duration: 0.5, ease: defaultTimingOut }, "foam");
+    ltl.to(steinR, { x: 5, duration: 0.5, ease: defaultTimingOut }, "foam");
+    return ltl;
+}
+
+// Assign scrollTriggers to cards
+export function setCardTriggers(cards: NodeListOf<Element>) {
+    const ground = document.querySelector(".ground");
+    let groundHeight = ground?.clientHeight ? ground?.clientHeight - 50 : 250;
+    let contentAreaHeight = window.innerHeight - groundHeight;
+    cards.forEach((item, i) => {
+        if (!(item instanceof HTMLElement)) {
+            return
+        }
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: item,
+                start: `30% ${contentAreaHeight}`,
+                end: `top top`,
+                scrub: true,
+                markers: true,
+            },
+        });
+
+        // show the content
+        tl.from(item, { opacity: 0, duration: 0.5, ease: defaultTimingIn }, "entry")
+            // .from(h3, { opacity: 0, x: 20, duration: 0.5, delay:.25 }, "entry")
+            .addLabel("entry")
+            .to(item, { opacity: 0, duration: 1, delay: 1.5, ease: defaultTimingOut });
+
+        // Make sure focused element gets snapped to
+        item.addEventListener("focusin", () => {
+            gsap.to(window, {
+                scrollTo: tl.scrollTrigger?.labelToScroll("entry"),
+            });
+        });
+    });
+}
+
+export function mapTimeline() {
+    const maptl = gsap.timeline({ paused: false, repeat: 0 });
+    const icons = gsap.utils.toArray('#map [data-icon]');
+    maptl.from(icons, { opacity: 0, duration: 1, delay: .25, ease: defaultTimingIn });
+    return maptl;
+}
+
