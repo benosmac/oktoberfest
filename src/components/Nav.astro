@@ -18,33 +18,58 @@
 </button>
 <nav id="nav">
   <ul>
-    <li><a href="#whats-on">What's on</a></li>
-    <li><a href="#">Info</a></li>
-    <li><a href="#">Tickets</a></li>
+    <li><a href="/#things-to-do">Things to do</a></li>
+    <li><a href="/#info">Info</a></li>
+    <li><a href="/map">Map</a></li>
+    <li><a href="/#">Tickets</a></li>
   </ul>
 </nav>
 
 <script>
-  const navToggle = document.querySelector<HTMLLinkElement>("#nav-toggle");
-  const navLinks = document.querySelectorAll("#nav a");
-  const contentArea = document.querySelectorAll(".content-area")[0];
+  import { scrollTargetToCenter } from "../lib/modules";
+  let navLinks = document.querySelectorAll("#nav a");
+  let navToggle = document.querySelector<HTMLLinkElement>("#nav-toggle");
+  let contentArea = document.querySelectorAll(".content-area")[0];
 
-  window.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
+    navToggle = document.querySelector<HTMLLinkElement>("#nav-toggle");
+    navLinks = document.querySelectorAll("#nav a");
+    contentArea = document.querySelectorAll(".content-area")[0];
+
+    navToggle?.addEventListener("click", toggleNav);
+    setupNav();
+  });
+
+  function setupNav() {
     // Make nav items unfocusable when offscreen
     if (window.matchMedia("(max-width: 749px)").matches) {
       navLinks.forEach((link) => {
         link.setAttribute("tabindex", "-1");
       });
     }
-  });
-
+    // Scroll # anchors to center of first child element (ensure gsap transition doesn't hide first item in section)
+    //TODO: Not needs refactoring to work on any page
+    navLinks.forEach((link) => {
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+      const url = new URL(link.href);
+      // if (url.pathname === localStorage.pathname) {
+      // }
+      if (url.hash && url.pathname === location.pathname) {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          toggleNav();
+          scrollTargetToCenter(url);
+        });
+      }
+    });
+  }
   function toggleNav() {
     // Nav is open
     if (document.body.dataset.navOpen == "true") {
       //close it
       document.body.dataset.navOpen = "false";
-      // nav?.classList.remove("open");
-      // navToggle?.classList.remove("open");
       navLinks.forEach((link, index) => {
         link.setAttribute("tabindex", "-1");
       });
@@ -58,35 +83,33 @@
       navLinks.forEach((link) => {
         link.setAttribute("tabindex", "0");
       });
-      // nav?.classList.add("open");
-      // navToggle?.classList.add("open");
       navToggle?.focus();
       navToggle?.setAttribute("aria-expanded", "true");
     }
   }
-  navToggle?.addEventListener("click", toggleNav);
 </script>
 <style is:global>
   #nav-toggle {
     display: none;
     @media (max-width: 749px) {
       display: flex;
+      inset: 0 0 auto auto;
       position: fixed;
       background: none;
       border: none;
-      justify-self: end;
-      align-self: start;
       z-index: 5;
       padding: 1rem;
+
       & svg path {
         fill: var(--brightblue);
+        transition: fill 0.5s var(--defaultTimingIn);
       }
     }
   }
   main > *:not([aria-hidden="true"]) {
     transition:
-      transform 0.25s ease-in,
-      opacity 0.24s ease-in;
+      transform 0.25s var(--defaultTimingIn),
+      opacity 0.24s var(--defaultTimingIn);
   }
   body[data-nav-open="true"] {
     @media (max-width: 749px) {
@@ -123,7 +146,6 @@
           text-decoration: none;
           color: var(--brightblue);
           font-weight: 700;
-          /* text-transform: uppercase; */
           padding: 0.5rem;
         }
       }
@@ -135,32 +157,19 @@
       height: var(--contentAreaHeight);
       align-items: center;
       transform: translateX(16rem);
-      transition: transform 0.25s ease-in;
-      /* border-left: 2px dotted #fff; */
+      transition: transform 0.25s var(--defaultTimingIn);
       z-index: 10;
       & ul {
         align-items: end;
         flex-direction: column;
         gap: 1.5rem;
         font-size: 2rem;
-
-        & li {
-          & a {
-            /* color: #fff; */
-          }
-        }
       }
     }
     @media (min-width: 750px) {
       & ul {
         justify-content: end;
         gap: 1rem;
-        & li {
-          & a {
-            /* border: 2px solid var(--brightblue); */
-            /* border-radius: 0.25em; */
-          }
-        }
       }
     }
   }
