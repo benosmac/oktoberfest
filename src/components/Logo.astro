@@ -2,7 +2,41 @@
 
 ---
 
-<script></script>
+<script>
+  import { gsap } from "gsap/gsap-core";
+  import { defaultTimingIn } from "../lib/timelines";
+  const banner = document.querySelector('[data-name="text-banner"]');
+  const ribbonR = document.querySelector('[data-name="ribbon-right"]');
+  const ribbonL = document.querySelector('[data-name="ribbon-left"]');
+  // LOGO - WAVY RIBBON
+  gsap.to(ribbonR, {
+    skewX: -5,
+    skewY: -5,
+    transformOrigin: "left center",
+    duration: 0.8,
+    repeat: -1,
+    yoyo: true,
+    ease: defaultTimingIn,
+  });
+
+  // LOGO - WAVY RIBBON
+  gsap.to(ribbonL, {
+    skewX: 5,
+    skewY: 5,
+    transformOrigin: "right center",
+    duration: 0.8,
+    repeat: -1,
+    yoyo: true,
+    ease: defaultTimingIn,
+  });
+
+  // LOGO - BANNER MOVEMENT
+  gsap.fromTo(
+    banner,
+    { y: 2 },
+    { y: -2, transformOrigin: "center", duration: 2, repeat: -1, yoyo: true }
+  );
+</script>
 <style>
   svg {
     overflow: visible;
@@ -73,7 +107,7 @@
   }
 
   .p {
-    fill: var(--redShade10);
+    fill: var(--redShade20);
   }
 
   .q {

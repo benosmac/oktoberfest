@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<h3 class="content-heading" data-scrolltrigger="heading">{title}</h3>
+<script>
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { gsap } from "gsap";
+  gsap.registerPlugin(ScrollTrigger);
+  document.addEventListener("astro:page-load", () => {
+    const headings = document.querySelectorAll(
+      '[data-scrolltrigger="heading"]'
+    );
+    headings.forEach((item, i) => {
+      if (!(item instanceof HTMLElement)) {
+        return;
+      }
+      let trigger = item.parentElement ? item.parentElement : item;
+      let toggle = (self: ScrollTrigger) => {
+        self.isActive
+          ? item.classList.add("active")
+          : item.classList.remove("active");
+      };
+
+      ScrollTrigger.create({
+        trigger: trigger,
+        start: "top center",
+        end: "bottom center",
+        onToggle: toggle,
+      });
+    });
+  });
+</script>
+<style>
+  .content-heading {
+    font-size: 1.5rem;
+    font-family: var(--sans);
+    color: var(--contentHeadingTextColour);
+    opacity: 0;
+    transition:
+      opacity 0.25s var(--defaultTimingIn),
+      color 0.5s var(--defaultTimingIn);
+    position: fixed;
+    inset: 0 auto auto 0;
+    /* text-align: left; */
+    margin-bottom: 2rem;
+    grid-column: 1 / -1;
+    padding: 2rem 2rem 0 2rem;
+    &.active {
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,0 +1,194 @@
+@layer base {
+  :root {
+    --brightblue: oklch(52% 0.126 222.75);
+    --brightblueTint50: oklch(75% 0.1 209.4);
+    --brightblueTint70: oklch(87.91% 0.064 203.58);
+    --brightblueShade20: oklch(39.12% 0.0959 222.75);
+    --darkSand: oklch(80% 0.0755 84.45);
+    --sand: oklch(87.12% 0.0755 84.45);
+    --lightSand: oklch(95% 0.0609 84.45);
+    --sky: oklch(79.91% 0.064 203.58);
+    --water: oklch(66.8% 0.087 198.2);
+    --sandGradient: linear-gradient(
+      180deg in oklab,
+      var(--darkSand) 16%,
+      var(--sand) 50%,
+      var(--lightSand) 100%
+    );
+    --blackAlpha5: rgba(0, 0, 0, 0.05);
+
+    --darkred: oklch(46.58% 0.187 33.88);
+    --red: oklch(41.77% 0.1686 33.88);
+    --redShade20: oklch(35.55% 0.1436 33.88);
+    --redTint10: color-mix(in oklab, var(--red), #fff 10%);
+    --redTint30: oklab(57.93% 0.13 0.09);
+    --darkBrown: #231f20;
+    --white: oklch(98.82% 0.0118 84.45);
+    --offWhiteLAB: 0.935324 0.00400399 0.0372972;
+    --offWhite: oklab(var(--offWhiteLAB) / 1);
+    --bodyTextColour: var(--darkBrown);
+    --contentHeadingTextColour: #fff;
+    --borderDottedLight: 2px dotted rgba(255, 255, 255, 0.33);
+    --borderLight: 2px solid rgba(255, 255, 255, 0.25);
+
+    --sans: "Source Sans 3", sans-serif;
+    --serif: "Lora", serif;
+
+    --defaultTimingIn: cubic-bezier(0.47, 0, 0.75, 0.72);
+    --defaultTimingOut: cubic-bezier(0.39, 0.57, 0.56, 1);
+
+    --groundHeight: 220px;
+    --contentAreaHeight: calc(100vh - var(--groundHeight));
+
+    @media (min-width: 750px) and (min-height: 900px) {
+      --groundHeight: 250px;
+    }
+    @media (min-width: 900px) and (min-height: 1000px) {
+      --groundHeight: 300px;
+    }
+  }
+  ::view-transition-group(*) {
+    animation-duration: 0.666s;
+  }
+  html {
+    font-family: var(--sans);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.4;
+    background: #13151a;
+    background-size: 224px;
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    color: var(--bodyTextColour);
+    background: var(--sky) url(/texture.png);
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--serif);
+    font-weight: 700;
+    color: var(--brightblue);
+    margin: 0 0 1rem 0;
+  }
+
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+  p {
+    font-weight: 350;
+    letter-spacing: 0.025em;
+  }
+  a {
+    text-decoration: none;
+    color: var(--brightblue);
+    font-weight: 500;
+    &:hover,
+    &:focus-visible {
+      color: var(--brightblueShade20);
+    }
+  }
+  main {
+    position: relative;
+    display: grid;
+    z-index: 11;
+    padding: 1rem 2rem;
+  }
+  .content-area {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: auto;
+    z-index: 30;
+  }
+  header {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 16rem;
+    justify-items: start;
+    z-index: 12;
+    width: 100%;
+    @media (min-width: 750px) {
+      grid-template-columns: min-content 1fr;
+      position: relative;
+    }
+  }
+  .logo {
+    grid-row: 1;
+    grid-column: 1;
+    width: 180px;
+    margin: 0 2rem 0.5rem 2rem;
+    @media (min-width: 750px) {
+      width: 220px;
+    }
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    min-width: max-content;
+    justify-self: start;
+    align-self: start;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.025em;
+    color: var(--offWhite);
+    padding: 0.5rem 2rem;
+    background: var(--red);
+    border-radius: 0.25em;
+  }
+  .btn-red--small {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+  }
+  .btn--small {
+    background-color: transparent;
+    border: 2px solid var(--brightblue);
+    color: var(--brightblue);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+  }
+  .btn--xs {
+    background-color: transparent;
+    border: 2px solid var(--brightblue);
+    color: var(--brightblue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+  }
+  .btn svg {
+    font-size: 1rem;
+  }
+
+  .card {
+    display: grid;
+    gap: 1rem;
+    padding: 2rem;
+    border: var(--borderLight);
+    border-radius: 0.5em;
+  }
+  .info-card {
+    align-content: start;
+    & .card-title {
+      font-size: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.section-wrapper {
+  z-index: 10;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  margin-bottom: 4rem;
+}

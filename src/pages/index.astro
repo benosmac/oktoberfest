@@ -4,43 +4,50 @@ import Logo from "../components/Logo.astro";
 import BackgroundScene from "../components/BackgroundScene.astro";
 import TimeCard from "../components/TimeCard.astro";
 import Nav from "../components/Nav.astro";
+import ContentHeading from "../components/ContentHeading.astro";
 
 const timeCardData = [
   {
-    title: "Brezeln",
-    body: "Enjoy food stalls, rides and entertainment on Cunningham Pier",
-    def: "(noun) Pretzel",
+    title: "Zweites Frühstück",
+    body: "Food stalls and entertainment on Cunningham Pier. Come and enjoy a fresh brezeln on the beach.",
+    def: "/ˈtsvaitəs ˈfʁyːˌʃtʏk/ Second breakfast",
     href: "#map",
     time: "10am",
   },
   {
     title: "Frühschoppen",
-    body: "From Amber Ale to Weizenbock, you will find a huge variety of beer in the 3 Bierhalles.",
+    body: '"O\'zapft is!" will be called at midday. From Amber Ale to Weizenbock, you will find a huge variety of beer on tap in the 3 Beer Tents along the waterfront.',
     def: "(noun) /ˈfryːʃɔpən/ Morning drink",
     href: "#map",
     time: "12pm",
   },
   {
-    title: "Schuhplattler",
-    body: "Live performances on the main stage, featuring traditional folk dancing and music.",
-    def: "(noun)  ˈshüˌplätlə(r) a Bavarian courtship dance",
+    title: "Kaffee und Kuchen",
+    body: "Sit down and enjoy delicious cakes and coffee. You will find stalls by acclaimed German bakeries Hootsen's and Bretzel Biz in Steampacket Gardens",
+    def: "/ˈkafe ʌnd ˈkuːxn̩/ Cofee and cake",
     href: "#map",
     time: "3pm",
   },
   {
+    title: "Schuhplattler",
+    body: "Live performances on the main stage, featuring traditional folk dancing and music.",
+    def: "(noun) /ˈshüˌplätlə(r)/ a Bavarian courtship dance",
+    href: "#map",
+    time: "5pm",
+  },
+
+  {
     title: "Abendessen",
-    body: "Explore food stalls along the waterfront, or sit for a traditional Oktoberfest meal at one of the 3 Bierhalles.",
+    body: "Explore food stalls along the waterfront, or sit for a traditional Oktoberfest meal at one of the 3 Beer Tents.",
     def: "(noun) /ˈaːbənt|ɛsən/ Evening meal",
     href: "#map",
     time: "7pm",
   },
 ];
-console.log(timeCardData);
 ---
 
-<script src="../lib/timelines.ts"></script>
-
 <Layout title="Oktoberfest Geelong">
+  <!-- <header transition:name="header" transition:persist="true"> -->
   <header>
     <div class="logo">
       <a href="/" title="Oktoberfest Geelong Homepage">
@@ -50,9 +57,9 @@ console.log(timeCardData);
     <Nav />
   </header>
 
-  <main id="main">
+  <main id="main" data-outAnimation="slideFgDown">
     <div class="content-area">
-      <section class="content hero">
+      <section class="hero">
         <h2 class="hero-headline">
           <span>Beer,</span>
           <span>Bratwurst,</span>
@@ -66,51 +73,260 @@ console.log(timeCardData);
           </span>
         </div>
       </section>
+      <section class="section-wrapper">
+        <ContentHeading title="Things to do" />
+        <ul class="time-cards-list" id="things-to-do">
+          {
+            timeCardData.map((card) => (
+              <TimeCard
+                title={card.title}
+                body={card.body}
+                def={card.def}
+                href={card.href}
+                time={card.time}
+              />
+            ))
+          }
+        </ul>
+      </section>
 
-      <div class="content time-cards-wrapper" id="whats-on">
-        <h3 class="content-heading scroll-trigger">What's on</h3>
-
-        {
-          timeCardData.map((card) => (
-            <TimeCard
-              title={card.title}
-              body={card.body}
-              def={card.def}
-              href={card.href}
-              time={card.time}
-            />
-          ))
-        }
-      </div>
+      <section class="section-wrapper">
+        <ContentHeading title="Info" />
+        <ul class="info-cards-wrapper" id="info">
+          <li class="card info-card" data-scrolltrigger="card" data-time="end">
+            <h4 class="card-title">Getting here</h4>
+            <p>
+              Getting to Oktoberfest Geelong is easy, whether you're driving or
+              coming by public transport.
+            </p>
+            <a
+              class="btn btn-red--small"
+              title="Where to park"
+              href="/map/#parking">Parking</a
+            >
+            <a
+              class="btn btn-red--small"
+              title="Public Transport"
+              href="/map/#transport">Public Transport</a
+            >
+          </li>
+          <li class="card info-card" data-scrolltrigger="card">
+            <h4 class="card-title">Tickets</h4>
+            <p>
+              Oktoberfest Geelong is a free event for the whole family, but we
+              recommend booking your tickets in advance in save time on the day.
+              Tickets will also be available at the gate, subject to capacity
+              limits.
+            </p>
+            <a class="btn btn-red--small" title="Book tickets" href="/tickets"
+              >Book now</a
+            >
+          </li>
+          <li class="card info-card" data-scrolltrigger="card">
+            <h4 class="card-title">Safety</h4>
+            <p>
+              We want everyone to have a fantastic time and get home safely, so
+              there are a few rules in place:
+            </p>
+            <ol>
+              <li>No glass bottles</li>
+              <li>No drinking outside designated areas</li>
+              <li>Behave yourself, be nice and have fun</li>
+            </ol>
+            <p>
+              Security and Victoria Police will be stationed around the
+              festival. Police will be conducting Random Breath Testing on
+              surrounding roads, so if you are drinking please take the bus,
+              train, an uber or just walk.
+            </p>
+            <a class="btn btn-red--small" title="Conditions of entry" href="/#"
+              >Conditions of entry</a
+            >
+          </li>
+        </ul>
+      </section>
     </div>
     <BackgroundScene />
   </main>
 
   <script>
-    // Setting scrollRestoration to manual to avoid scrollTrigger weirdness
-    window.history.scrollRestoration = "manual";
+    import {
+      panInTimeline,
+      slideFgUpTimeline,
+      logoTimeline,
+      heroDetailsTimeline,
+      slideFgDownTimeline,
+      setCardTriggers,
+      birdTimeline,
+      boatTimeline,
+      wheelTimeline,
+      wavesTimeline,
+    } from "../lib/timelines.ts";
+    import { scrollTargetToCenter } from "../lib/modules";
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+    // COMPOSE HOMEPADE LOAD TIMELINE
+    let intialLoadTimeline = gsap.timeline({ repeat: 0, paused: false });
+    // This part only runs on full page refresh
+
+    intialLoadTimeline
+      .add(panInTimeline(), "panIn")
+      .add("content", ">+0.25")
+      .add(logoTimeline(), "content")
+      .add(heroDetailsTimeline(), "content");
+
+    document.addEventListener("astro:before-preparation", (ev) => {
+      const outAnimation = document.querySelector("main")?.dataset.outanimation;
+      const originalLoader = ev.loader;
+      let tl: GSAPTimeline;
+      if (outAnimation === "slideFgUp") {
+        tl = slideFgUpTimeline();
+      }
+      if (outAnimation === "slideFgDown") {
+        tl = slideFgDownTimeline();
+      }
+      ev.loader = async function () {
+        if (tl !== undefined) {
+          await tl.play();
+        }
+        await originalLoader();
+      };
+    });
+    // Executes after every view-transition triggered by Astro's router
+    document.addEventListener("astro:page-load", () => {
+      if (location.hash) {
+        let url = new URL(location.href);
+        scrollTargetToCenter(url);
+      }
+      intialLoadTimeline
+        .add(wavesTimeline(), "content")
+        .add(birdTimeline(), "content")
+        .add(boatTimeline(), "content")
+        .add(wheelTimeline(), "content");
+
+      // SETUP CARD TRIGGERS
+      const cards = document.querySelectorAll('[data-scrolltrigger="card"]');
+      setCardTriggers(cards);
+
+      // FADE OUT HERO ON SCROLL
+      const hero = document.querySelector(".hero");
+      if (hero) {
+        let heroOutTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: hero,
+            start: "top 150",
+            end: "bottom center",
+            scrub: 0.1,
+            pin: false,
+          },
+        });
+        heroOutTL.to(
+          hero,
+          {
+            opacity: 0,
+          },
+          "out"
+        );
+      }
+
+      // STATUE SHADOWS
+      const statuesShadows = document.querySelector(".statues-shadows");
+      const timecardWrapper = document.querySelector("#things-to-do");
+      if (statuesShadows && timecardWrapper) {
+        gsap.to(statuesShadows, {
+          skewX: "-70deg",
+          ease: "none",
+          scrollTrigger: {
+            trigger: timecardWrapper,
+            start: "top bottom",
+            end: "bottom center",
+            scrub: 0.5,
+            markers: false,
+          },
+        });
+      }
+
+      const duskTrigger = document.querySelector('[data-time="5pm"]');
+      const nightTrigger = document.querySelector('[data-time="7pm"]');
+      const lateNightTrigger = document.querySelector('[data-time="end"]');
+
+      function setNightColours(self: ScrollTrigger) {
+        if (!self.isActive) {
+          document.body.classList.remove("night");
+          return;
+        }
+        document.body.classList.add("night");
+      }
+      function setDuskColours(self: ScrollTrigger) {
+        if (!self.isActive) {
+          document.body.classList.remove("dusk");
+          return;
+        }
+        document.body.classList.add("dusk");
+      }
+      function setLateNightColours(self: ScrollTrigger) {
+        if (!self.isActive) {
+          document.body.classList.remove("late-night");
+          return;
+        }
+        document.body.classList.add("late-night");
+      }
+      ScrollTrigger.getById("duskTrigger")?.kill();
+      ScrollTrigger.getById("nightTrigger")?.kill();
+      ScrollTrigger.getById("lateNightTrigger")?.kill();
+
+      if (duskTrigger) {
+        ScrollTrigger.create({
+          trigger: duskTrigger,
+          endTrigger: nightTrigger,
+          start: "top center",
+          end: "bottom center",
+          id: "duskTrigger",
+          onToggle: setDuskColours,
+        });
+      }
+      if (nightTrigger) {
+        ScrollTrigger.create({
+          trigger: nightTrigger,
+          endTrigger: lateNightTrigger,
+          start: "top center",
+          end: "bottom -10",
+          id: "nightTrigger",
+          onToggle: setNightColours,
+        });
+      }
+      if (lateNightTrigger) {
+        ScrollTrigger.create({
+          trigger: lateNightTrigger,
+          endTrigger: document.body,
+          start: "top center",
+          end: "bottom -10",
+          id: "lateNightTrigger",
+          onToggle: setLateNightColours,
+        });
+      }
+    }); //end astro:page-load
   </script>
   <style is:global>
-    :root {
-      --groundHeight: 220px;
-      --contentAreaHeight: calc(100vh - var(--groundHeight));
-    }
-    @media (min-width: 750px) and (min-height: 700px) {
-      :root {
-        --groundHeight: 250px;
+    .info-cards-wrapper {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: subgrid;
+      row-gap: 2rem;
+      @media (min-width: 750px) {
+        grid-template-columns: 1fr minmax(16em, 40em) 1fr;
+        /* gap: 2rem; */
       }
     }
-    @media (min-width: 900px) and (min-height: 900px) {
-      :root {
-        --groundHeight: 300px;
-      }
+    .info-card {
+      grid-column: 2;
     }
     main {
-      padding: 2rem 2rem var(--groundHeight) 2rem;
-      position: relative;
-      z-index: 11;
-      display: grid;
       grid-template-columns: 1fr auto 1fr;
+      padding: 2rem 2rem var(--groundHeight) 2rem;
+      z-index: 11;
     }
     .content-area {
       display: grid;
@@ -140,74 +356,16 @@ console.log(timeCardData);
       }
     }
 
-    .content {
-      position: relative;
-      display: grid;
-      grid-template-columns: subgrid;
-      gap: 2rem;
-      z-index: 11;
-      color: var(--brightblue);
-
-      & h2 {
-        font-size: 3rem;
-        line-height: 1.125;
-        /* margin: 0; */
-        color: var(--brightblue);
-      }
-      & h3 {
-        font-weight: 700;
-        line-height: 1.25;
-        /* margin: 0; */
-        font-size: 2rem;
-        /* color: var(--brightblue); */
-      }
-      & h4,
-      h5 {
-        font-family: "Source Sans 3";
-        font-weight: 500;
-        font-size: 1.25rem;
-        line-height: 1.33;
-        /* margin: 0; */
-      }
-      @media (min-width: 600px) {
-        & h2 {
-          font-size: 3.5rem;
-        }
-        & h3 {
-          font-size: 2.5rem;
-        }
-      }
-
-      &:last-child {
-        margin-bottom: var(--groundHeight);
-      }
-    }
-    .content .content-heading {
-      font-size: 1.5rem;
-      font-family: var(--sans);
-      opacity: 0;
-      transition: opacity 0.25s ease-in;
-      position: fixed;
-      inset: 0 auto auto auto;
-      text-align: left;
-      margin-bottom: 2rem;
-      grid-column: 1 / -1;
-      padding: 1rem;
-      /* border-bottom: 2px dotted rgba(255, 255, 255, 0.33); */
-      /* border-top: 2px dotted rgba(255, 255, 255, 0.33); */
-      &.active {
-        opacity: 1;
-      }
-    }
-    .time-cards-wrapper {
-      z-index: 10;
+    .time-cards-list {
       display: grid;
       grid-template-columns: subgrid;
       grid-column: 1 / -1;
       justify-items: center;
+      gap: 2rem;
+      padding: 0;
     }
-
-    .hero.content {
+    .hero {
+      display: grid;
       height: calc(var(--contentAreaHeight) - (8rem + 120px));
       grid-template-columns: min-content 1fr;
       grid-template-rows: auto;
@@ -248,7 +406,7 @@ console.log(timeCardData);
         gap: 1rem;
         grid-column: 1 / -1;
         grid-row: 2;
-        /* text-shadow: 0em 0em 0.5em rgba(255, 255, 255, 0.25); */
+
         @media (min-width: 750px) {
           grid-column: 3;
           grid-row: 1;
@@ -257,11 +415,12 @@ console.log(timeCardData);
           align-self: end;
           gap: 2rem;
         }
+        & * {
+          font-family: var(--sans);
+        }
         & h3 {
-          font-family: "Source Sans 3";
           font-size: 1.25rem;
           font-weight: 600;
-          font-family: var(--);
         }
         & h4 {
           font-size: 1rem;

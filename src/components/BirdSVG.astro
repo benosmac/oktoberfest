@@ -4,23 +4,6 @@ interface Props {}
 const {} = Astro.props;
 ---
 
-<script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-  gsap.registerPlugin(ScrollTrigger);
-  // Flappy flappy
-  const wings = document.querySelectorAll('[data-name="wing"]');
-  wings.forEach((wing) => {
-    gsap.to(wing, {
-      scaleY: ".4",
-      transformOrigin: "bottom center",
-      duration: 1,
-      repeat: -1,
-      yoyo: true,
-      ease: "linear",
-    });
-  });
-</script>
 <style>
   svg {
     width: 100%;
@@ -39,7 +22,7 @@ const {} = Astro.props;
     fill: #e75600;
   }
 </style>
-<svg viewBox="0 0 48 23.63">
+<svg id="bird" viewBox="0 0 48 23.63">
   <path
     class="c"
     d="m42.02,20.56c.5.86-8.3,1.81-18.54,1.81s-18.54,3.8-18.54-1.81c0-1,8.3-1.81,18.54-1.81s16.07-2.47,18.54,1.81Z"
