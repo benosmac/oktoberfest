@@ -59,6 +59,7 @@ export default function TicketForm() {
   // Wrapped in flushSync to force synchronous DOM updates (required for View Transitions to work properly)
   async function addGuestFields() {
     flushSync(() => {
+      // @ts-ignore
       append<GuestInputs>(
         { guests: [{ defaultValues }], i: guestId },
         { focusIndex: numberOfGuests }
