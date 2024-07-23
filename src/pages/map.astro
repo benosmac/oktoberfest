@@ -1,11 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Logo from "../components/Logo.astro";
-import BackgroundScene from "../components/BackgroundScene.astro";
-import Nav from "../components/Nav.astro";
 import MapSVG from "../components/MapSVG.astro";
 import MapCard from "../components/MapCard.astro";
-
 const icons = [
   {
     title: "Cunningham Pier Tent",
@@ -119,79 +115,74 @@ const icons = [
 ---
 
 <Layout title="Map - Oktoberfest Geelong">
-  <header>
-    <div class="logo">
-      <a href="/" title="Oktoberfest Geelong Homepage">
-        <Logo />
-      </a>
-    </div>
-    <Nav />
-  </header>
+  <!-- <main id="main" transition:name="main" transition:animate={downOutUpIn}> -->
   <main id="main">
     <div class="content-area">
-      <section class="section-wrapper">
-        <div class="map-info">
-          <h2>Event map</h2>
-          <menu class="map-key">
-            <li data-name="Beer Tents">
-              <a href="#beer-tents" title="Beer Tents"
-                ><svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#beer-tent-icon"></use></svg
-                ><span>Beer Tents</span></a
+      <section class="section-wrapper map-wrapper">
+        <!-- <h2>Event map</h2> -->
+        <menu class="map-key">
+          <li data-name="Beer Tents">
+            <a href="#beer-tents" title="Beer Tents"
+              ><svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#beer-tent-icon"></use></svg
+              ><span>Beer Tents</span></a
+            >
+          </li>
+          <li data-name="Food stalls">
+            <a href="#stalls" title="Food Stalls">
+              <svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#stall-icon"></use></svg
               >
-            </li>
-            <li data-name="Food stalls">
-              <a href="#stalls" title="Food Stalls">
-                <svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#stall-icon"></use></svg
-                >
-                <span>Food Stalls</span>
-              </a>
-            </li>
-            <li data-name="Main Stage">
-              <a href="#stage" title="Main Stage">
-                <svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#stage-icon"></use></svg
-                ><span>Main Stage</span></a
-              >
-            </li>
-            <li data-name="Parking">
-              <a href="#parking" title="Parking">
-                <svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#parking-icon"></use></svg
-                ><span>Parking</span></a
-              >
-            </li>
-            <li data-name="Toilets">
-              <a href="#toilets" title="Toilets">
-                <svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#toilet-icon"></use></svg
-                ><span>Toilets</span></a
-              >
-            </li>
-            <li data-name="Public Transport">
-              <a href="#trains" title="Public Transport">
-                <svg viewBox="0 0 60 60" width="60" height="60"
-                  ><use href="#trains-icon"></use></svg
-                ><span>Public Transport</span></a
-              >
-            </li>
-          </menu>
-          <section class="map-cards">
-            {
-              icons.map((card) => (
-                <MapCard
-                  name={card.title}
-                  id={card.id}
-                  type={card.type}
-                  gmaps={card.gmaps}
-                  location={card.location}
-                  content={card.content}
-                />
-              ))
-            }
-          </section>
-        </div>
+              <span>Food Stalls</span>
+            </a>
+          </li>
+          <li data-name="Main Stage">
+            <a href="#stage" title="Main Stage">
+              <svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#stage-icon"></use></svg
+              ><span>Main Stage</span></a
+            >
+          </li>
+          <li data-name="Parking">
+            <a href="#parking" title="Parking">
+              <svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#parking-icon"></use></svg
+              ><span>Parking</span></a
+            >
+          </li>
+          <li data-name="Toilets">
+            <a href="#toilets" title="Toilets">
+              <svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#toilet-icon"></use></svg
+              ><span>Toilets</span></a
+            >
+          </li>
+          <li data-name="Public Transport">
+            <a href="#trains" title="Public Transport">
+              <svg viewBox="0 0 60 60" width="60" height="60"
+                ><use href="#trains-icon"></use></svg
+              ><span>Public Transport</span></a
+            >
+          </li>
+        </menu>
+        <header class="map-header">
+          <h1>Festival map</h1>
+        </header>
+        <section class="map-cards">
+          {
+            icons.map((card) => (
+              <MapCard
+                name={card.title}
+                id={card.id}
+                type={card.type}
+                gmaps={card.gmaps}
+                location={card.location}
+                content={card.content}
+              />
+            ))
+          }
+        </section>
+
         <div id="map">
           <MapSVG />
         </div>
@@ -214,7 +205,6 @@ const icons = [
       const loadTimeline = gsap.timeline({ paused: false, repeat: 0 });
       const mapCards = gsap.utils.toArray(".map-card");
       const hash = location.hash;
-      console.log(hash);
 
       // Hide the map cards initially
       loadTimeline.set(mapCards, { autoAlpha: 0 });
@@ -226,12 +216,6 @@ const icons = [
       icons && registerIcons(icons);
     });
 
-    // function setTargetGroupFromHash(hash: string) {
-    //   const targetGroup: HTMLAnchorElement | null =
-    //     document.querySelector(hash);
-    //   console.log(targetGroup);
-    //   targetGroup && focusGroup(null, targetGroup);
-    // }
     // Set click handlers for map keys
     function registerMapKeyItems(keys: NodeListOf<HTMLAnchorElement>) {
       keys.forEach((key) => {
@@ -248,7 +232,7 @@ const icons = [
         icon.addEventListener("click", (ev) => {
           ev.preventDefault();
           // Check if there is an active icon
-          if (icon instanceof SVGElement) {
+          if (icon instanceof SVGAElement) {
             focusIcon(icon);
           }
         });
@@ -260,16 +244,19 @@ const icons = [
       const anchor = key ? key.getAttribute("href") : hash;
       // select the icon group using the url fragment
       if (anchor) {
-        const group: SVGAElement | null = document.querySelector(`${anchor}`);
-
-        if (group) {
-          // select the first icon in the group and make it the active icon
+        const target: SVGAElement | null = document.querySelector(`${anchor}`);
+        if (target && target.dataset.icongroup === undefined) {
+          // If the target is a single icon, focus it
+          focusIcon(target);
+        } else if (target) {
+          // focus the first icon in the group
           const firstIcon: SVGAElement | null =
-            group.querySelector("[data-icon]");
+            target.querySelector("[data-icon]");
           firstIcon && focusIcon(firstIcon);
           // set the active state for the icon group
-          group.dataset.activeGroup = "true";
+          target.dataset.activeGroup = "true";
         }
+      } else {
       }
     }
 
@@ -279,7 +266,7 @@ const icons = [
     }
 
     // Sets the current active icon, unfocus current icon and group
-    function focusIcon(icon: SVGElement) {
+    async function focusIcon(icon: SVGAElement) {
       // Check for current group selection
       const currentGroup: SVGAElement | null = document.querySelector(
         '[data-active-group="true"]'
@@ -350,41 +337,61 @@ const icons = [
     }
   </script>
   <style is:global>
-    body {
-      background: var(--sky) url(/texture.png);
-      /* background: linear-gradient(
-          180deg in oklab,
-          var(--darkSand) 0%,
-          var(--sand) 20%,
-          var(--sand) 50%
-        ),
-        url(/texture.png); */
+    ::view-transition-old(main) {
+      animation: slideUpOut 0.666s var(--defaultTimingIn);
+    }
+    ::view-transition-new(main) {
+      animation: slideUpIn 0.666s var(--defaultTimingIn);
     }
     #main {
       padding: 0;
+      background: linear-gradient(
+          in oklab,
+          var(--sand) 0%,
+          var(--offWhite) 100%
+        ),
+        url(/texture-2.png);
+      background-blend-mode: hard-light;
+      min-height: calc(100vh - 100px);
     }
     .content-area {
-      border-radius: 1rem 1rem 0 0;
-      border-radius: 1em;
-      grid-template-columns: 1fr 20em;
-      /* padding: 2rem; */
+      grid-template-columns: minmax(min-content, max-content) minmax(
+          min-content,
+          1fr
+        );
+    }
+    .map-wrapper {
+      grid-template-rows: min-content 1fr min-content;
+      margin: 1rem 0;
+      border-top: var(--borderLight);
+    }
+    .map-header {
+      display: flex;
+      padding: 1rem;
+      grid-column: 1;
+      grid-row: 1;
+      align-items: center;
+      border-bottom: var(--borderLight);
+      border-right: var(--borderLight);
+
+      & h1 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: var(--red);
+      }
     }
     #map {
       display: grid;
-      justify-items: start;
-      grid-row: 2 / 3;
+      justify-items: end;
+      grid-row: 2 / -1;
       grid-column: 1 / -1;
       overflow: hidden;
-      background-image: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0),
-        var(--lightSand) 50%
-      );
+      margin: 1rem;
 
       & svg {
         height: auto;
         width: auto;
-        max-width: 620px;
+        max-width: 650px;
         transition: transform 0.25s var(--defaultTimingIn);
 
         & .icon-outline {
@@ -398,77 +405,78 @@ const icons = [
       will-change: transform;
       transform-box: border-box;
       transform-origin: center;
-      fill: var(--brightblueTint70);
+      fill: var(--white);
     }
     /* Apply highlight styles to map icons on hover, focus-visible or when the  parent group is the current target as set by the url fragment (allows linking to icon groups and highlighting when interacting with map key) */
 
     #map [data-active-group="true"] [data-icon] {
-      transform: scale(1.1);
+      transform: scale(1.3);
       & use {
         fill: var(--brightblueTint50);
       }
     }
     #map [data-icon]:is(:hover, :focus-visible, [data-active="true"]) {
-      transform: scale(1.1);
+      transform: scale(1.3);
       & use {
         fill: var(--brightblue);
       }
     }
-    .map-info {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      z-index: 20;
-      padding: 2rem 2rem 0 2rem;
-      & h2 {
-        color: var(--red);
-      }
-    }
-    .map-cards,
-    .map-key {
-      margin: 0;
-      padding: 1rem 0;
-    }
     .map-cards {
-      position: fixed;
-      inset: auto 0 0 0;
-      background: var(--white);
-      padding: 2rem;
+      position: sticky;
+      inset-block-end: 0;
       display: grid;
-      align-items: start;
-      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+      grid-column: 1 / -1;
+      grid-row: 3;
+      opacity: 0;
+      background: radial-gradient(
+          circle at 0 0 in oklab,
+          var(--offWhite) 0%,
+          var(--offWhite) 100%
+        ),
+        url(/texture-2.png);
+      background-blend-mode: hard-light;
+      transition: opacity 0.25s var(--defaultTimingIn) 0.25s;
+      z-index: 20;
+      overflow: clip;
+      &:has([aria-current="location"]) {
+        opacity: 1;
+        transition-delay: 0s;
+      }
 
       .map-card {
         grid-row: 1;
-        grid-column: 1;
-        align-content: start;
-        align-self: start;
-        border: none;
-        padding: 0;
+        grid-column: 1 / -1;
+        text-wrap: balance;
       }
     }
     .map-key {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: 1fr 1fr;
+      grid-row: 1;
+      grid-column: 2 / -1;
       list-style: none;
       column-gap: 1em;
       row-gap: 0.5em;
-      margin: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5em;
-      /* box-shadow: 0px 0.75rem 0.75rem rgba(0, 0, 0, 0.1); */
-      /* background: var(--sand); */
-      /* border: var(--borderDottedLight); */
+      margin: 0;
+      padding: 1rem;
+      border-bottom: var(--borderLight);
+
       & li {
         display: contents;
       }
       & li a {
         display: grid;
-        grid-template-columns: 28px 1fr;
+        grid-template-columns: 30px 1fr;
         align-items: center;
         gap: 0.5em;
-        fill: #8ccad0;
+        fill: var(--white);
         font-size: 0.75rem;
+        color: var(--bodyTextColour);
+        &:hover,
+        &:focus-visible {
+          fill: var(--brightblue);
+        }
         & span {
         }
         & svg {
@@ -478,6 +486,9 @@ const icons = [
       }
     }
     @media (min-width: 750px) {
+      #map {
+        margin: 2rem;
+      }
       .map-key {
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: 1fr;
@@ -486,78 +497,108 @@ const icons = [
       }
     }
     @media (min-width: 900px) {
+      .content-area {
+        grid-template-columns: 1fr 20em;
+      }
+      .map-key {
+        position: sticky;
+        grid-row: 3;
+        grid-column: 1 / -1;
+        inset-block-end: 0;
+        background: radial-gradient(
+            circle at 0 0 in oklab,
+            var(--offWhite) 0%,
+            var(--offWhite) 100%
+          ),
+          url(/texture-2.png);
+        border-bottom: none;
+        border-top: var(--borderLight);
+        z-index: 50;
+      }
       #map {
-        grid-row: 2;
-        padding: 0 0 0 2rem;
+        grid-row: 1 / -1;
+        justify-items: end;
+        grid-column: 1;
+      }
+      /* .map-wrapper {
+        border-top: var(--borderLight);
+      } */
+      .map-header {
+        grid-column: 2;
+        grid-row: 1;
+        padding: 1rem 2rem;
+        border-left: var(--borderLight);
+        & h1 {
+          font-size: 2rem;
+        }
       }
       .map-info {
-        /* grid-column: 2; */
-        /* align-self: start; */
-        /* margin: 1rem; */
-        /* border-radius: 0.5em; */
-        /* box-shadow: 0px 0.75rem 0.75rem rgba(0, 0, 0, 0.1); */
-        /* background: var(--sand); */
         padding: 0 2rem;
         display: grid;
-        /* grid-template-rows: min-content */
         grid-auto-flow: column;
       }
       .map-cards {
-        /* position: relative; */
-        /* padding: 2rem 0; */
-        /* background: transparent; */
-        opacity: 0;
-        border-radius: 0.5rem 0 0 0;
-        inset: auto 0 0 auto;
-        max-width: 20em;
-        /* Delay transition when animating out to avoid flash between cards */
-        transition: opacity 0.25s var(--defaultTimingIn) 0.25s;
-        &:has([aria-current="location"]) {
-          opacity: 1;
-          /* Remove delay for animating card in */
-          transition-delay: 0s;
-        }
-      }
-      .map-key {
-        /* grid-template-columns: 1fr 1fr; */
-        /* grid-auto-flow: initial; */
-        padding: 0.5rem 1rem;
-        /* border-bottom: var(--borderLight); */
-        margin: 0;
-        /* border-radius: .5rem; */
-        /* box-shadow: none; */
-        /* background: transparent; */
-        /* max-width: 700px; */
-        justify-self: end;
+        opacity: 1;
+        grid-row: 2 / -1;
+        grid-column: 2;
+        position: relative;
+        border-left: var(--borderLight);
+        /* border-top: var(--borderDotted); */
+        background: transparent;
       }
     }
     @media (min-width: 1100px) {
+      .map-key {
+        li a {
+          grid-template-columns: 3em 1fr;
+        }
+      }
+      .map-header {
+        & h1 {
+          font-size: 2.25rem;
+        }
+      }
       #map [data-icon] {
         transform: rotateZ(90deg);
       }
       #map [data-icon]:is(:hover, :focus-visible, [data-active="true"]),
       #map [data-active-group="true"] [data-icon] {
-        transform: rotateZ(90deg) scale(1.1);
-        box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.25);
+        transform: rotateZ(90deg) scale(1.3);
       }
       [data-flip="true"] {
         transform: rotate(180deg);
         transform-origin: center;
         transform-box: border-box;
       }
-      /* .map-cards {
-        grid-row: 2;
-      } */
       #map {
-        padding: 0 4rem 4rem 0;
-        max-height: 620px;
-        min-height: 100vh;
+        /* padding: 0 4rem 4rem 0; */
+        max-height: 650px;
         justify-items: start;
         & svg {
-          max-height: calc(100dvw - 2rem);
           transform: rotateZ(-90deg) translateX(-100%);
           transform-origin: top left;
         }
+      }
+    }
+    @media (min-width: 1400px) {
+      .content-area {
+        grid-template-columns: 1fr 24em;
+      }
+      .map-header {
+        & h1 {
+          font-size: 2.5rem;
+        }
+      }
+      #map {
+        max-height: 750px;
+        & svg {
+          max-width: 750px;
+        }
+      }
+    }
+    @media (min-width: 1600px) {
+      .content-area {
+        grid-template-columns: 1fr 28em;
       }
     }
   </style>

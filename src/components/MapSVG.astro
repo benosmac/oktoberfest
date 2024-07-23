@@ -6,10 +6,6 @@ const {} = Astro.props;
 
 <script></script>
 <style>
-  .u {
-    stroke: #fff;
-  }
-
   .u,
   .v {
     stroke-miterlimit: 10;
@@ -18,7 +14,7 @@ const {} = Astro.props;
 
   .u,
   .w {
-    fill: #8ccad0;
+    fill: var(--sky);
   }
 
   .x {
@@ -51,7 +47,9 @@ const {} = Astro.props;
 
   .v {
     fill: none;
-    stroke: #42280e;
+    /* stroke: #42280e; */
+    stroke: url(#road);
+    isolation: isolate;
   }
 
   .ap {
@@ -67,11 +65,15 @@ const {} = Astro.props;
   }
 
   .aa {
-    fill: #63b07b;
+    fill: oklch(62.62% 0.1433 162.99);
+    fill: url(#grass);
+    /* mask: url(#ocean-gradient);
+    filter: url(#noise) contrast(130%) brightness(100%); */
   }
 
   .ab {
     fill: #42280e;
+    fill: url(#road);
   }
 
   .ac {
@@ -100,6 +102,7 @@ const {} = Astro.props;
 
   .ai {
     fill: #e7a355;
+    opacity: 0.7;
   }
 
   .aj {
@@ -140,19 +143,37 @@ const {} = Astro.props;
       y1="2806.81"
       x2="-975.5"
       y2="2302.4"
-      gradientTransform="translate(3143.4 1868) rotate(90)"
+      gradientTransform="translate(3143.4 1868) rotate(100)"
       gradientUnits="userSpaceOnUse"
     >
-      <stop offset="0" stop-color="#4aa59f" stop-opacity=".9"></stop>
-      <stop offset=".1" stop-color="rgba(74, 165, 159, .81)" stop-opacity=".81"
-      ></stop>
-      <stop offset="1" stop-color="#4aa59f" stop-opacity="0"></stop>
+      <stop offset="0" stop-color="#0098a1" stop-opacity=".7"></stop>
+
+      <stop offset=".7" stop-color="#0098a1" stop-opacity=".05"></stop>
     </linearGradient>
+    <linearGradient
+      id="grass"
+      gradientTransform="rotate(90), translate(900, 0)"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#00a170" stop-opacity="1"></stop>
+
+      <stop offset="1" stop-color="#00a170" stop-opacity=".1"></stop>
+    </linearGradient>
+    <linearGradient
+      id="road"
+      gradientTransform="rotate(90), translate(700, 0)"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#42280e" stop-opacity="1"></stop>
+
+      <stop offset="1" stop-color="#42280e" stop-opacity=".1"></stop>
+    </linearGradient>
+
     <symbol id="trains-icon" viewBox="0 0 60 60" width="60" height="60">
       <g>
-        <circle class="u icon-outline" cx="30" cy="30" r="28.91"></circle>
+        <circle class="u" cx="30" cy="30" r="30"></circle>
         <path
-          class="ae"
+          class="ae icon-outline"
           d="m30,60C13.46,60,0,46.54,0,30S13.46,0,30,0s30,13.46,30,30-13.46,30-30,30Zm0-57.82C14.66,2.19,2.19,14.66,2.19,30s12.48,27.82,27.81,27.82,27.82-12.48,27.82-27.82S45.34,2.19,30,2.19Z"
         ></path>
       </g>
@@ -192,9 +213,9 @@ const {} = Astro.props;
 
     <symbol id="toilet-icon" viewBox="0 0 60 60" width="60" height="60">
       <g>
-        <circle class="u icon-outline" cx="30.02" cy="30.02" r="28.92"></circle>
+        <circle class="u" cx="30.02" cy="30.02" r="30"></circle>
         <path
-          class="ae"
+          class="ae icon-outline"
           d="m30.02,60.03C13.46,60.03,0,46.57,0,30.02S13.46,0,30.02,0s30.02,13.47,30.02,30.02-13.47,30.02-30.02,30.02Zm0-57.85C14.67,2.19,2.19,14.67,2.19,30.02s12.48,27.83,27.83,27.83,27.83-12.48,27.83-27.83S45.36,2.19,30.02,2.19Z"
         ></path>
       </g>
@@ -225,9 +246,9 @@ const {} = Astro.props;
 
     <symbol id="parking-icon" viewBox="0 0 60 60" width="60" height="60">
       <g>
-        <circle class="u icon-outline" cx="30" cy="30" r="28.91"></circle>
+        <circle class="u" cx="30" cy="30" r="30"></circle>
         <path
-          class="ae"
+          class="ae icon-outline"
           d="m30,60C13.46,60,0,46.54,0,30S13.46,0,30,0s30,13.46,30,30-13.46,30-30,30Zm0-57.81C14.66,2.19,2.19,14.66,2.19,30s12.48,27.81,27.81,27.81,27.81-12.48,27.81-27.81S45.34,2.19,30,2.19Z"
         ></path>
         <path
@@ -239,14 +260,9 @@ const {} = Astro.props;
 
     <symbol id="stall-icon" viewBox="0 0 60 60" width="60" height="60">
       <g id="b">
-        <circle
-          class="u icon-outline"
-          stroke-width="2px"
-          cx="30"
-          cy="30"
-          r="28.91"></circle>
+        <circle class="u" stroke-width="2px" cx="30" cy="30" r="30"></circle>
         <path
-          class="ae"
+          class="ae icon-outline"
           d="m30,60C13.46,60,0,46.54,0,30S13.46,0,30,0s30,13.46,30,30-13.46,30-30,30Zm0-57.81C14.66,2.19,2.19,14.66,2.19,30s12.48,27.81,27.82,27.81,27.81-12.48,27.81-27.81S45.34,2.19,30,2.19Z"
         ></path>
         <path
@@ -271,9 +287,9 @@ const {} = Astro.props;
     <symbol id="stage-icon" viewBox="0 0 60 60" width="60" height="60">
       <g id="b">
         <g>
-          <circle class="u icon-outline" cx="30" cy="30" r="28.91"></circle>
+          <circle class="u" cx="30" cy="30" r="30"></circle>
           <path
-            class="ae"
+            class="ae icon-outline"
             d="m30,60C13.46,60,0,46.54,0,30S13.46,0,30,0s30,13.46,30,30-13.46,30-30,30Zm0-57.81C14.66,2.19,2.19,14.66,2.19,30s12.48,27.81,27.82,27.81,27.81-12.48,27.81-27.81S45.34,2.19,30,2.19Z"
           ></path>
         </g>
@@ -301,9 +317,9 @@ const {} = Astro.props;
     <symbol id="beer-tent-icon" viewBox="0 0 60 60" width="60" height="60">
       <g id="b">
         <g>
-          <circle class="u icon-outline" cx="30" cy="30" r="28.96"></circle>
+          <circle class="u" cx="30" cy="30" r="30"></circle>
           <path
-            class="af"
+            class="ae icon-outline"
             d="m30,60C13.46,60,0,46.54,0,30S13.46,0,30,0s30,13.46,30,30-13.46,30-30,30Zm0-57.93C14.6,2.07,2.07,14.6,2.07,30s12.53,27.93,27.93,27.93,27.93-12.53,27.93-27.93S45.4,2.07,30,2.07Z"
           ></path>
         </g>
@@ -484,31 +500,27 @@ const {} = Astro.props;
       <g class="aq">
         <polygon
           class="aa"
-          points="452.58 357.73 409.29 349.39 379.1 468.22 419.36 477.97 452.58 357.73"
+          points="452.58 358.06 409.29 349.72 379.1 468.54 419.36 478.3 452.58 358.06"
         ></polygon>
         <polygon
           class="aa"
-          points="330.76 519.53 278.75 515.97 264.46 698.55 282.4 701.4 330.76 519.53"
+          points="330.76 519.86 278.75 516.3 264.46 698.88 282.4 701.73 330.76 519.86"
         ></polygon>
         <path
           class="aa"
-          d="m219.84,742.96c12.13,8.88,2.65,30.69-5.22,37.58-13.66,11.98-55.6,1.04-60.49-2.62-4.88-3.66-2.94-40.87,5.11-43.69,19.03-6.68,46.67-1.47,60.6,8.73Z"
+          d="M219.84,743.29c12.13,8.88,2.65,30.69-5.22,37.58-13.66,11.98-55.6,1.04-60.49-2.62-4.88-3.66-2.94-40.87,5.11-43.69,19.03-6.68,46.67-1.47,60.6,8.73Z"
         ></path>
         <path
           class="aa"
-          d="m247.53,715.1l-.6,21.56-4.75,72.63s-11,193.91-4.29,274.9c8.51,102.74,41.31,243.57,56.38,298.4,3.72,13.55,6.05,21.39,6.05,21.39,0,0,115.76,3.48,154.75-48.08.1-.14.12-25.49-15.39-41.83-33.37-35.13-59.14-24.1-59.14-24.1,0,0-18.53-43.5-8.34-47.49,15.72-6.15,23.65-71.13,12.97-101.39-10.69-30.26-48.26-54.63-48.26-54.63,0,0-8.61-61.25-14.75-77.14s-15.45-90.97-15.45-90.97l6.88-112.7,39.95-36.91,8.61-62.93-58.96-11.92-14.57,21.86-41.07-.66Z"
+          d="M439.67,1314.4c-33.37-35.13-59.14-24.1-59.14-24.1,0,0-18.53-43.5-8.34-47.49,15.72-6.15,23.65-71.13,12.97-101.39s-48.26-54.63-48.26-54.63c0,0-8.61-61.25-14.75-77.14-6.14-15.89-15.45-90.97-15.45-90.97l6.88-112.7,39.95-36.91,8.61-62.93-58.96-11.92-14.57,21.86-41.07-.66-.6,21.56-4.75,72.63s-11,193.91-4.29,274.9c7.71,93.04,35.33,217.3,51.67,280.66L0,1354l2,423h826s-216-106-372.95-420.77c-.08-.16.12-25.49-15.39-41.83Z"
         ></path>
         <path
           class="aa"
-          d="m315.89,1365.86L0,1353.67l2,73,148.93,22.86s35.92,23.41,93.85,9.98c23-5.33,72.38-60.68,72.38-60.68l-1.28-32.97Z"
-        ></path>
-        <path
-          class="aa"
-          d="m112.43,1136.3l-1.28,62.49s-42.64,35.06-52.1,37.22c-9.46,2.16-49.83,2.18-49.83,2.18l7.51-101.59,95.69-.29Z"
+          d="M112.43,1136.63l-1.28,62.49s-42.64,35.06-52.1,37.22c-9.46,2.16-49.83,2.18-49.83,2.18l7.51-101.59,95.69-.29Z"
         ></path>
         <polygon
           class="aa"
-          points="485.52 244.1 437.99 243.68 435.49 278.67 412.32 273.57 483.35 118.02 504.35 129.82 529.96 115.35 485.52 244.1"
+          points="485.52 244.43 437.99 244.01 435.49 279 412.32 273.9 483.35 118.35 504.35 130.15 529.96 115.68 485.52 244.43"
         ></polygon>
       </g>
       <path
@@ -702,55 +714,91 @@ const {} = Astro.props;
     </g>
   </g>
   <g id="c" data-name="Icons">
-    <a href="#parking" id="parking" data-name="Parking" data-icongroup>
-      <g data-name="Smythe St Carpark" data-icon>
+    <g id="parking" data-name="Parking" data-icongroup>
+      <a
+        href="#parking"
+        id="smythe-parking"
+        data-name="Smythe St Carpark"
+        data-icon
+      >
         <use href="#parking-icon" x="457.06" y="20"></use>
-      </g>
-    </a>
+      </a>
+    </g>
+
     <g id="stalls" data-name="Stalls" data-icongroup>
       <a
         href="#stalls"
-        id="e"
+        id="east-beach-stalls"
         data-name="Eastern Beach Reserve Market"
         data-icon
       >
         <use href="#stall-icon" x="249.52" y="854.54"></use>
       </a>
-      <a href="#stalls" id="f" data-name="Steampacket Gardens Market" data-icon>
+      <a
+        href="#stalls"
+        id="steampacket-gardens-stalls"
+        data-name="Steampacket Gardens Market"
+        data-icon
+      >
         <use href="#stall-icon" x="393.27" y="336.5"></use>
       </a>
-      <a href="#stalls" id="g" data-name="Cunningham Pier Market" data-icon>
+      <a
+        href="#stalls"
+        id="cunningham-pier-stalls"
+        data-name="Cunningham Pier Market"
+        data-icon
+      >
         <use href="#stall-icon" x="520" y="185.46"></use>
       </a>
     </g>
     <g id="beer-tents" data-name="Beer tents" data-icongroup>
       <a
         href="#beer-tents"
-        id="i"
+        id="east-beach-tent"
         data-name="Eastern Beach Reserve Tent"
         data-icon
       >
         <use href="#beer-tent-icon" x="277.34" y="753.85"></use>
       </a>
-      <a href="#beer-tents" id="k" data-name="Transvaal Square Tent" data-icon>
+      <a
+        href="#beer-tents"
+        id="transvaal-square-tent"
+        data-name="Transvaal Square Tent"
+        data-icon
+      >
         <use href="#beer-tent-icon" x="303.18" y="518.68"></use>
       </a>
-      <a href="#beer-tents" id="m" data-name="Cunningham Pier Tent" data-icon>
+      <a
+        href="#beer-tents"
+        id="cunningham-pier-tent"
+        data-name="Cunningham Pier Tent"
+        data-icon
+      >
         <use href="#beer-tent-icon" x="459.52" y="215.94"></use>
       </a>
     </g>
     <g id="stage" data-name="Stage" data-icongroup>
-      <a href="#stage" id="o" data-name="Steampacket Gardens Stage" data-icon>
+      <a
+        href="#stage"
+        id="main-stage"
+        data-name="Steampacket Gardens Stage"
+        data-icon
+      >
         <use href="#stage-icon" x="408.18" y="478.27"></use>
       </a>
     </g>
     <g id="toilets" data-name="Toilets" data-icongroup>
-      <a href="#toilets" id="q" data-name="Cunningham Pier Toilets" data-icon>
+      <a
+        href="#toilets"
+        id="cunningham-pier-toilets"
+        data-name="Cunningham Pier Toilets"
+        data-icon
+      >
         <use href="#toilet-icon" x="495.46" y="127.16"></use>
       </a>
       <a
         href="#toilets"
-        id="r"
+        id="east-beach-toilets"
         data-name="Eastern Beach Reserve Toilets"
         data-icon
       >
