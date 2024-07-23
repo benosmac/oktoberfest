@@ -3,7 +3,8 @@
   <defs>
     <style>
       .b {
-        fill: #49a5a7;
+        fill: #0098a1;
+        fill: oklch(61.94% 0.1235 201.8);
         stroke-width: 0px;
       }
     </style>

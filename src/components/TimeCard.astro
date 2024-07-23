@@ -17,8 +17,10 @@ const { href, title, body, time, def } = Astro.props;
     <span class="define">{def}</span>
   </span>
   <div>
-    <a class="btn btn--small icon-map" href={href} title="View location on map"
-      >Details</a
+    <a
+      class="btn btn--blue btn--outline btn--small icon-map"
+      href={href}
+      title="View location on map">Details</a
     >
     <p>
       {body}
@@ -32,9 +34,9 @@ const { href, title, body, time, def } = Astro.props;
     grid-column: 2 / 3;
     gap: 2rem;
     align-content: center;
-    padding: 3rem 2rem 3rem 2rem;
+    /* padding: 3rem 2rem 3rem 2rem;
     border: var(--borderLight);
-    border-radius: 0.5em;
+    border-radius: 0.5em; */
 
     & * {
       transition: color 0.5s var(--defaultTimingIn);

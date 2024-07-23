@@ -51,10 +51,11 @@ const {} = Astro.props;
     background-blend-mode: overlay;
     transition: filter 0.5s var(--defaultTimingIn);
     will-change: filter;
+    overflow-x: clip;
   }
   .fg {
-    inset: auto 0 0 0;
-    grid-template-rows: var(--groundHeight) 2rem;
+    inset: calc(calc((100vh - var(--groundHeight)) - 2rem)) 0 0 0;
+    grid-template-rows: var(--groundHeight) 2rem 100vh;
     z-index: 30;
   }
   .bg {
@@ -111,8 +112,8 @@ const {} = Astro.props;
   .water {
     grid-column: 1 / -1;
     grid-row: 2 / 4;
-    background: var(--water) url(/texture-i.png);
-    background-blend-mode: overlay;
+    background: var(--water) url(/texture-2.png);
+    background-blend-mode: soft-light;
   }
   .boat {
     width: 40px;
@@ -126,7 +127,7 @@ const {} = Astro.props;
 
   .sand {
     /* position: relative; */
-    background: var(--sand) url(/texture.png);
+    background: var(--sand) url(/texture-2.png);
     background-blend-mode: overlay;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

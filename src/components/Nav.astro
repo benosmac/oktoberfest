@@ -8,20 +8,26 @@
   aria-label="Open Menu"
   aria-expanded="false"
   aria-controls="nav"
+  aria-haspopup="true"
   class="nav-toggle"
   data-target="#nav"
 >
-  <svg viewBox="0 0 24 24" class="astro-dmqpwcec" width="48" height="48"
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    class="astro-dmqpwcec"
+    width="48"
+    height="48"
     ><path fill="#fff" d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"
     ></path></svg
   >
 </button>
-<nav id="nav">
+<nav id="nav" transition:name="nav">
   <ul>
     <li><a href="/#things-to-do">Things to do</a></li>
     <li><a href="/#info">Info</a></li>
     <li><a href="/map">Map</a></li>
-    <li><a href="/#">Tickets</a></li>
+    <li><a href="/tickets">Tickets</a></li>
   </ul>
 </nav>
 
@@ -54,8 +60,7 @@
         return;
       }
       const url = new URL(link.href);
-      // if (url.pathname === localStorage.pathname) {
-      // }
+
       if (url.hash && url.pathname === location.pathname) {
         link.addEventListener("click", (event) => {
           event.preventDefault();

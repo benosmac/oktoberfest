@@ -4,6 +4,8 @@ interface Props {
   title: string;
 }
 import { ViewTransitions } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 const { title } = Astro.props;
 ---
@@ -24,6 +26,7 @@ const { title } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://use.typekit.net/fbx2nko.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,25 +46,68 @@ const { title } = Astro.props;
         }
       </style>
     </noscript>
-
+    <ViewTransitions />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <ViewTransitions />
   </head>
-  <body>
+  <body transition:name="main">
+    <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 
 <script>
   import { gsap } from "gsap";
+  import { scrollTargetToCenter } from "../lib/modules";
   document.addEventListener("astro:page-load", () => {
-    // Setting scrollRestoration to manual to avoid scrollTrigger weirdness
+    // Nuke the scroll position to avoid GSAP ScrollTrigger funkiness
     window.history.scrollRestoration = "manual";
+    // window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+
     // Avoid FOUC - https://gsap.com/resources/fouc/
-    gsap.to(document.body, {
+    // {visibility: hidden} is on the inline style tags in the <head>
+    gsap.set(document.body, {
       autoAlpha: 1,
-      duration: 0.1,
     });
+
+    // if (location.hash) {
+    //   let url = new URL(location.href);
+    //   scrollTargetToCenter(url);
+    // }
+  });
+  document.addEventListener("astro:before-preparation", (ev) => {
+    const contentArea = document.querySelector(".content-area");
+    gsap.set(contentArea, { opacity: 0 });
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+  });
+  document.addEventListener("astro:before-swap", (ev) => {
+    const oldPage = ev.from.pathname;
+    const newPage = ev.to.pathname;
+    const updateStyle = (style: Node) => {
+      console.log(ev.newDocument);
+      ev.newDocument.head.appendChild(style);
+    };
+    const style = document.createElement("style");
+
+    if (oldPage == "/tickets" && newPage == "/") {
+      style.innerHTML = `
+            ::view-transition-old(main) {
+              animation: slideUpOut 0.666s var(--defaultTimingIn);
+            }
+            ::view-transition-new(main) {
+              animation: slideUpIn 0.666s var(--defaultTimingIn);
+            }
+                  body {
+      background: var(--sky) url(/texture.png);
+    }
+          `;
+    }
+    updateStyle(style);
+  });
+
+  document.addEventListener("astro:after-swap", () => {
+    // Nuke the scroll position before the page is displayed if we can
+    // window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   });
 </script>

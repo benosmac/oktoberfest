@@ -1,14 +1,17 @@
 @layer base {
   :root {
-    --brightblue: oklch(52% 0.126 222.75);
+    --brightblue: oklch(47.95% 0.1175 222.75);
     --brightblueTint50: oklch(75% 0.1 209.4);
     --brightblueTint70: oklch(87.91% 0.064 203.58);
     --brightblueShade20: oklch(39.12% 0.0959 222.75);
+    --brightblueAlpha20: oklch(39.12% 0.0959 222.75 / 0.7);
     --darkSand: oklch(80% 0.0755 84.45);
+    --darkSandAlpha90: oklch(80% 0.0755 84.45 / 0.9);
     --sand: oklch(87.12% 0.0755 84.45);
+    --sandAlpha70: oklch(87.12% 0.0755 84.45 / 0.7);
     --lightSand: oklch(95% 0.0609 84.45);
     --sky: oklch(79.91% 0.064 203.58);
-    --water: oklch(66.8% 0.087 198.2);
+    --water: oklch(61.94% 0.1235 201.8);
     --sandGradient: linear-gradient(
       180deg in oklab,
       var(--darkSand) 16%,
@@ -23,47 +26,57 @@
     --redTint10: color-mix(in oklab, var(--red), #fff 10%);
     --redTint30: oklab(57.93% 0.13 0.09);
     --darkBrown: #231f20;
+    --darkBrownAlpha60: oklch(13.83% 0.0402 52.23 / 49.87%);
     --white: oklch(98.82% 0.0118 84.45);
-    --offWhiteLAB: 0.935324 0.00400399 0.0372972;
+    --offWhiteLAB: 0.945324 0.00400399 0.0372972;
     --offWhite: oklab(var(--offWhiteLAB) / 1);
+    --coolGrey: oklch(83.09% 0.0106 203.58);
     --bodyTextColour: var(--darkBrown);
     --contentHeadingTextColour: #fff;
-    --borderDottedLight: 2px dotted rgba(255, 255, 255, 0.33);
+    --borderDotted: 2px dotted var(--darkSandAlpha90);
+    --borderDottedLight: 3px dotted rgba(255, 255, 255, 0.33);
     --borderLight: 2px solid rgba(255, 255, 255, 0.25);
-
+    --btnColour: var(--red);
+    --btnText: var(--offWhite);
+    --btnBgColour: var(--btnColour);
     --sans: "Source Sans 3", sans-serif;
     --serif: "Lora", serif;
 
     --defaultTimingIn: cubic-bezier(0.47, 0, 0.75, 0.72);
     --defaultTimingOut: cubic-bezier(0.39, 0.57, 0.56, 1);
 
-    --groundHeight: 220px;
+    --groundHeight: 14rem;
     --contentAreaHeight: calc(100vh - var(--groundHeight));
 
     @media (min-width: 750px) and (min-height: 900px) {
-      --groundHeight: 250px;
+      --groundHeight: 16rem;
     }
     @media (min-width: 900px) and (min-height: 1000px) {
-      --groundHeight: 300px;
+      --groundHeight: 18rem;
     }
   }
-  ::view-transition-group(*) {
+  /* ::view-transition-group(*) {
     animation-duration: 0.666s;
-  }
+  } */
   html {
     font-family: var(--sans);
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
     line-height: 1.4;
-    background: #13151a;
-    background-size: 224px;
+    @media (min-width: 1800px) {
+      font-size: 120%;
+    }
     scroll-behavior: smooth;
   }
+
   body {
     margin: 0;
     color: var(--bodyTextColour);
-    background: var(--sky) url(/texture.png);
+    background: var(--sand) url(/texture-2.png);
+    background-blend-mode: soft-light;
+    background-attachment: scroll;
+    min-height: 100vh;
   }
   h1,
   h2,
@@ -73,6 +86,7 @@
   h6 {
     font-family: var(--serif);
     font-weight: 700;
+    line-height: 1.2;
     color: var(--brightblue);
     margin: 0 0 1rem 0;
   }
@@ -94,6 +108,43 @@
       color: var(--brightblueShade20);
     }
   }
+  label {
+    color: var(--darkBrown);
+  }
+  input,
+  select,
+  button {
+    font-family: var(--sans);
+  }
+  input {
+    font-size: 1rem;
+    font-family: var(--sans);
+    border: 1px solid transparent;
+    line-height: 2;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--white);
+    &:focus-visible {
+      outline-color: var(--brightblue);
+    }
+    &::placeholder {
+      color: var(--darkBrown);
+    }
+  }
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    cursor: pointer;
+  }
+  .vhidden {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+  }
   main {
     position: relative;
     display: grid;
@@ -106,27 +157,6 @@
     grid-template-columns: auto;
     z-index: 30;
   }
-  header {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 16rem;
-    justify-items: start;
-    z-index: 12;
-    width: 100%;
-    @media (min-width: 750px) {
-      grid-template-columns: min-content 1fr;
-      position: relative;
-    }
-  }
-  .logo {
-    grid-row: 1;
-    grid-column: 1;
-    width: 180px;
-    margin: 0 2rem 0.5rem 2rem;
-    @media (min-width: 750px) {
-      width: 220px;
-    }
-  }
   .btn {
     display: inline-flex;
     align-items: center;
@@ -138,42 +168,62 @@
     font-weight: 700;
     font-size: 1.25rem;
     letter-spacing: 0.025em;
-    color: var(--offWhite);
+    color: var(--btnText);
     padding: 0.5rem 2rem;
-    background: var(--red);
+    background-color: var(--btnBgColour);
     border-radius: 0.25em;
+    border: 2px solid transparent;
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      background-color: color-mix(in oklch, var(--btnBgColour), #000 10%);
+      color: var(--btnText);
+      transition: background-color 0.125s var(--defaultTimingIn);
+    }
+    &:focus-visible {
+      border-color: var(--btnText);
+    }
+    &:disabled {
+      cursor: not-allowed;
+      filter: grayscale(1);
+      opacity: 0.5;
+    }
   }
-  .btn-red--small {
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
+  .btn--blue {
+    --btnColour: var(--brightblue);
+    --btnBgColour: var(--btnColour);
+  }
+  .btn--outline {
+    --btnText: var(--btnColour);
+    --btnBgColour: transparent;
+    border: 2px solid var(--btnColour);
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      background-color: color-mix(in oklch, var(--btnBgColour), #fff 15%);
+    }
   }
   .btn--small {
-    background-color: transparent;
-    border: 2px solid var(--brightblue);
-    color: var(--brightblue);
     font-size: 1rem;
+    line-height: 1;
     font-weight: 600;
     padding: 0.5rem 1rem;
   }
   .btn--xs {
-    background-color: transparent;
-    border: 2px solid var(--brightblue);
-    color: var(--brightblue);
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.25rem 0.5rem;
   }
   .btn svg {
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .card {
     display: grid;
     gap: 1rem;
     padding: 2rem;
-    border: var(--borderLight);
-    border-radius: 0.5em;
+    /* border: var(--borderLight);
+    border-radius: 0.5em; */
   }
   .info-card {
     align-content: start;
@@ -191,4 +241,53 @@
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   margin-bottom: 4rem;
+}
+
+@keyframes slideDownOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+@keyframes slideDownIn {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes slideUpOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100vh);
+  }
+}
+@keyframes slideUpIn {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
 }

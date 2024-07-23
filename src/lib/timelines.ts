@@ -1,6 +1,8 @@
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 gsap.registerPlugin(CustomEase);
+gsap.registerPlugin(ScrollToPlugin)
 
 
 // Custom easings 
@@ -112,20 +114,6 @@ export function wheelTimeline() {
     });
     return wheeltl;
 }
-export function slideFgUpTimeline() {
-    const fg = document.querySelector('.fg');
-    let slideFgUpTimeline = gsap.timeline({ paused: false });
-    slideFgUpTimeline.to(fg, { y: 0, duration: .5, ease: defaultTimingOut });
-    return slideFgUpTimeline;
-}
-export function slideFgDownTimeline() {
-    const fg = document.querySelector('.fg');
-    const content = document.querySelector('.content-area');
-    const slideFgDownTimeline = gsap.timeline({ paused: false });
-    slideFgDownTimeline.to(content, { opacity: 0, duration: .25, ease: defaultTimingOut });
-    slideFgDownTimeline.to(fg, { yPercent: 100, duration: 1, ease: defaultTimingOut });
-    return slideFgDownTimeline;
-}
 // PAN DOWN SCENE REVEAL
 export function panInTimeline() {
     const hero = document.querySelectorAll(".hero");
@@ -188,6 +176,12 @@ export function heroDetailsTimeline() {
     return herodtl;
 
 }
+export function showHeaderTimeline() {
+    let htl = gsap.timeline();
+    htl.fromTo("header", { opacity: 0 }, { opacity: 1, duration: .5, ease: defaultTimingIn }, "start");
+    htl.add(logoTimeline(), "logoAnimation");
+    return htl;
+}
 
 // LOGO SHOW ANIMATION
 export function logoTimeline() {
@@ -196,7 +190,7 @@ export function logoTimeline() {
     const foamR = document.querySelector('[data-name="foam-r"]');
     const foamL = document.querySelector('[data-name="foam-l"]');
     let ltl = gsap.timeline();
-    ltl.fromTo("header", { opacity: 0 }, { opacity: 1, duration: .5, ease: defaultTimingIn }, "start");
+    // ltl.fromTo("header", { opacity: 0 }, { opacity: 1, duration: .5, ease: defaultTimingIn }, "start");
     ltl.fromTo(
         steinL,
         { x: -20, y: -3 },
@@ -252,23 +246,22 @@ export function setCardTriggers(cards: NodeListOf<Element>) {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: item,
-                start: `30% ${contentAreaHeight}`,
-                end: `top top`,
+                start: `center ${contentAreaHeight}`,
+                end: `center top`,
                 scrub: true,
-                markers: true,
             },
         });
 
         // show the content
-        tl.from(item, { opacity: 0, duration: 0.5, ease: defaultTimingIn }, "entry")
-            // .from(h3, { opacity: 0, x: 20, duration: 0.5, delay:.25 }, "entry")
-            .addLabel("entry")
-            .to(item, { opacity: 0, duration: 1, delay: 1.5, ease: defaultTimingOut });
+        tl.from(item, { opacity: 0 })
+            .addLabel("middle")
+            .to(item, { opacity: 0 });
+
 
         // Make sure focused element gets snapped to
         item.addEventListener("focusin", () => {
             gsap.to(window, {
-                scrollTo: tl.scrollTrigger?.labelToScroll("entry"),
+                scrollTo: tl.scrollTrigger?.labelToScroll("middle"),
             });
         });
     });
