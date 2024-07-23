@@ -1,0 +1,151 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TicketForm from "../components/TicketForm";
+
+export const prerender = false;
+---
+
+<Layout title="Tickets - Oktoberfest Geelong">
+  <main id="main">
+    <div class="content-area">
+      <div class="content">
+        <h1>Book your tickets</h1>
+        <p>
+          Oktoberfest Geelong is a free event, however pre-registration is
+          required for entry to the beer tents.
+        </p>
+      </div>
+      <TicketForm client:load />
+    </div>
+  </main>
+</Layout>
+<script>
+  // import gsap from "gsap";
+  document.addEventListener("astro:page-load", () => {
+    document.body.classList.add("loaded");
+  });
+</script>
+<style is:global>
+  ::view-transition-old(main) {
+    animation: slideDownOut 0.666s var(--defaultTimingIn);
+  }
+  ::view-transition-new(main) {
+    animation: slideDownIn 0.666s var(--defaultTimingIn);
+  }
+
+  /* These elements need to obey the parent view-transition for page navigation, but they need their own view-transition-name properties for local state changes*/
+  .loaded {
+    .guest-0 {
+      view-transition-name: guest-0;
+    }
+    .btn-panel {
+      view-transition-name: btn-panel;
+    }
+    .submit-wrapper {
+      view-transition-name: submit-wrapper;
+    }
+    .content {
+      view-transition-name: inner-content;
+    }
+  }
+  /* .loaded .guest-0 {
+    view-transition-name: guest-0;
+  }
+  .loaded .btn-panel {
+    view-transition-name: btn-panel;
+  }
+  .loaded .submit-wrapper {
+    view-transition-name: ubmit-wrapper;
+  } */
+
+  body {
+    background: var(--sky) url(/texture.png);
+  }
+  body {
+    min-height: 101vh;
+  }
+  .content-area {
+    max-width: 75ch;
+    justify-self: center;
+    row-gap: 2rem;
+  }
+  .content {
+    border-bottom: var(--borderLight);
+  }
+  .guest-form {
+    display: grid;
+    margin-bottom: 4rem;
+    /* max-width: 600px;
+    margin: 0 auto; */
+  }
+
+  .guests {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .guest {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    grid-template-rows: minmax(340px, min-content);
+    gap: 2rem;
+    & label {
+      position: relative;
+    }
+    & button {
+      margin-inline-start: 8rem;
+    }
+    svg {
+      transform: rotate(-90deg);
+      transform-origin: bottom;
+      width: auto;
+      height: 166px;
+      align-self: start;
+    }
+  }
+  .guest-inputs {
+    margin-block-start: 1rem;
+    padding: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: end;
+    align-content: center;
+    border-bottom: var(--borderLight);
+  }
+  input[aria-required="false"]::placeholder {
+    color: rgba(0, 0, 0, 0.75);
+    font-weight: 300;
+    font-style: italic;
+  }
+  /* label:not(.required) {
+  &::after {
+    content: "optional";
+    position: absolute;
+    inset: auto 0 -1rem auto;
+    font-size: 0.825rem;
+    font-style: italic;
+
+  }
+} */
+  .btn-panel {
+    display: flex;
+    flex-basis: 150px;
+    border: var(--borderLight);
+    border-radius: 0.5rem;
+    margin: 1rem 0 2rem 0;
+    .add-guest {
+      align-self: center;
+      margin: 2rem auto;
+    }
+  }
+
+  .error {
+    position: absolute;
+    inset: auto auto 0 0;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--red);
+  }
+</style>
