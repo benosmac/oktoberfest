@@ -1,9 +1,5 @@
-import * as React from "react";
-import { useState } from "react";
-import { flushSync } from "react-dom";
-import { useForm, useFieldArray, useWatch } from "react-hook-form";
-import "../lib/ticketForm.css";
-import type { Control, FieldValues } from "react-hook-form";
+import { useWatch } from "react-hook-form";
+import type { Control } from "react-hook-form";
 import type { GuestInputs } from "./TicketForm";
 
 function getFirstName(control: Control<GuestInputs>, index: number) {

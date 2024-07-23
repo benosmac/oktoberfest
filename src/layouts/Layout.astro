@@ -85,6 +85,8 @@ const { title } = Astro.props;
   });
 
   document.addEventListener("astro:before-swap", (ev) => {
+    //TODO: Refactor to use data attribute on current page to set animation on newDocument
+    // Changing view-transition animation direction on the fly for specific routes
     const oldPage = ev.from.pathname;
     const newPage = ev.to.pathname;
     const updateStyle = (style: Node) => {
@@ -93,7 +95,6 @@ const { title } = Astro.props;
     const style = document.createElement("style");
 
     if (oldPage == "/tickets" && newPage == "/") {
-      console.log("updating view transition");
       style.innerHTML = `
             ::view-transition-old(main) {
               animation: slideUpOut 0.666s var(--defaultTimingIn);
@@ -107,10 +108,5 @@ const { title } = Astro.props;
           `;
       updateStyle(style);
     }
-  });
-
-  document.addEventListener("astro:after-swap", () => {
-    // Nuke the scroll position before the page is displayed if we can
-    // window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   });
 </script>
