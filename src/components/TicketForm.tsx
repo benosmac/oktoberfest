@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { flushSync } from "react-dom";
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
-import "../lib/ticketForm.css";
 import TicketGraphic from "./TicketGraphic";
 import type { Control, FieldErrors, FieldValues } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
