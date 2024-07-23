@@ -92,6 +92,13 @@ export default function TicketForm() {
     document.startViewTransition(() => removeGuestFields(index));
   };
 
+  const isRequiredText = (index: number, text: string) => {
+    if (index == 0) {
+      return { required: text };
+    }
+    return {};
+  };
+
   return (
     <form
       className="guest-form"
@@ -129,13 +136,14 @@ export default function TicketForm() {
                     </span>
                   )}
                 </label>
-                <label className={index === 0 ? "required" : ""}>
+                <label className={index == 0 ? "required" : ""}>
                   <span className="vhidden">Last Name</span>
                   <input
                     type="text"
-                    {...register(`guests.${index}.lastName` as const, {
-                      required: "Last Name is required",
-                    })}
+                    {...register(
+                      `guests.${index}.lastName` as const,
+                      isRequiredText(index, "Last Name is required")
+                    )}
                     placeholder={`Last name ${index == 0 ? "" : "(optional)"}`}
                     autoComplete="on"
                     aria-required={index == 0}
@@ -153,9 +161,10 @@ export default function TicketForm() {
                   <span className="vhidden">Email</span>
                   <input
                     type="email"
-                    {...register(`guests.${index}.email` as const, {
-                      required: "Email is required",
-                    })}
+                    {...register(
+                      `guests.${index}.email` as const,
+                      isRequiredText(index, "Email is required")
+                    )}
                     placeholder={`Email ${index == 0 ? "" : "(optional)"}`}
                     autoComplete="on"
                     aria-required={index == 0}
@@ -173,9 +182,10 @@ export default function TicketForm() {
                   <span className="vhidden">Phone</span>
                   <input
                     type="number"
-                    {...register(`guests.${index}.phone` as const, {
-                      required: "Phone is required",
-                    })}
+                    {...register(
+                      `guests.${index}.phone` as const,
+                      isRequiredText(index, "Phone is required")
+                    )}
                     placeholder={`Phone ${index == 0 ? "" : "(optional)"}`}
                     autoComplete="on"
                     aria-required={index == 0}

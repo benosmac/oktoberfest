@@ -122,14 +122,14 @@ const icons = [
         <!-- <h2>Event map</h2> -->
         <menu class="map-key">
           <li data-name="Beer Tents">
-            <a href="#beer-tents" title="Beer Tents"
+            <a href="#beer-tents" title="Beer Tents" id="beer-tents-group"
               ><svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#beer-tent-icon"></use></svg
               ><span>Beer Tents</span></a
             >
           </li>
           <li data-name="Food stalls">
-            <a href="#stalls" title="Food Stalls">
+            <a href="#stalls" title="Food Stalls" id="stalls-group">
               <svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#stall-icon"></use></svg
               >
@@ -137,28 +137,28 @@ const icons = [
             </a>
           </li>
           <li data-name="Main Stage">
-            <a href="#stage" title="Main Stage">
+            <a href="#stage" title="Main Stage" id="stage-group">
               <svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#stage-icon"></use></svg
               ><span>Main Stage</span></a
             >
           </li>
           <li data-name="Parking">
-            <a href="#parking" title="Parking">
+            <a href="#parking" title="Parking" id="parking-group">
               <svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#parking-icon"></use></svg
               ><span>Parking</span></a
             >
           </li>
           <li data-name="Toilets">
-            <a href="#toilets" title="Toilets">
+            <a href="#toilets" title="Toilets" id="toilets-group">
               <svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#toilet-icon"></use></svg
               ><span>Toilets</span></a
             >
           </li>
           <li data-name="Public Transport">
-            <a href="#trains" title="Public Transport">
+            <a href="#trains" title="Public Transport" id="transport-group">
               <svg viewBox="0 0 60 60" width="60" height="60"
                 ><use href="#trains-icon"></use></svg
               ><span>Public Transport</span></a
@@ -197,6 +197,7 @@ const icons = [
       defaultTimingOut,
       mapTimeline,
     } from "../lib/timelines";
+
     document.addEventListener("astro:page-load", () => {
       const iconsGroup = document.querySelector('#map [data-name="Icons"]');
       const icons = iconsGroup?.querySelectorAll("[data-icon]");
@@ -387,6 +388,7 @@ const icons = [
       grid-column: 1 / -1;
       overflow: hidden;
       margin: 1rem;
+      aspect-ratio: 0.8;
 
       & svg {
         height: auto;
@@ -548,6 +550,16 @@ const icons = [
       }
     }
     @media (min-width: 1100px) {
+      #map {
+        /* padding: 0 4rem 4rem 0; */
+        max-height: 650px;
+        justify-items: start;
+        aspect-ratio: initial;
+        & svg {
+          transform: rotateZ(-90deg) translateX(-100%);
+          transform-origin: top left;
+        }
+      }
       .map-key {
         li a {
           grid-template-columns: 3em 1fr;
@@ -569,15 +581,6 @@ const icons = [
         transform: rotate(180deg);
         transform-origin: center;
         transform-box: border-box;
-      }
-      #map {
-        /* padding: 0 4rem 4rem 0; */
-        max-height: 650px;
-        justify-items: start;
-        & svg {
-          transform: rotateZ(-90deg) translateX(-100%);
-          transform-origin: top left;
-        }
       }
     }
     @media (min-width: 1400px) {

@@ -5,7 +5,6 @@ interface Props {
 }
 import { ViewTransitions } from "astro:transitions";
 import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 
 const { title } = Astro.props;
 ---
@@ -50,20 +49,24 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body transition:name="main">
+  <body transition:name="main" transition:animate="initial">
     <Header />
     <slot />
-    <Footer />
   </body>
 </html>
-
+<style is:global>
+  ::view-transition-old(main) {
+    animation: slideDownOut 0.666s var(--defaultTimingIn);
+  }
+  ::view-transition-new(main) {
+    animation: slideDownIn 0.666s var(--defaultTimingIn);
+  }
+</style>
 <script>
   import { gsap } from "gsap";
   import { scrollTargetToCenter } from "../lib/modules";
   document.addEventListener("astro:page-load", () => {
-    // Nuke the scroll position to avoid GSAP ScrollTrigger funkiness
     window.history.scrollRestoration = "manual";
-    // window.scrollTo({ left: 0, top: 0, behavior: "instant" });
 
     // Avoid FOUC - https://gsap.com/resources/fouc/
     // {visibility: hidden} is on the inline style tags in the <head>
@@ -71,26 +74,26 @@ const { title } = Astro.props;
       autoAlpha: 1,
     });
 
-    // if (location.hash) {
-    //   let url = new URL(location.href);
-    //   scrollTargetToCenter(url);
-    // }
+    if (location.hash) {
+      let url = new URL(location.href);
+      scrollTargetToCenter(url);
+    }
   });
-  document.addEventListener("astro:before-preparation", (ev) => {
-    const contentArea = document.querySelector(".content-area");
-    gsap.set(contentArea, { opacity: 0 });
+
+  document.addEventListener("astro:after-preparation", () => {
     window.scrollTo({ left: 0, top: 0, behavior: "instant" });
   });
+
   document.addEventListener("astro:before-swap", (ev) => {
     const oldPage = ev.from.pathname;
     const newPage = ev.to.pathname;
     const updateStyle = (style: Node) => {
-      console.log(ev.newDocument);
       ev.newDocument.head.appendChild(style);
     };
     const style = document.createElement("style");
 
     if (oldPage == "/tickets" && newPage == "/") {
+      console.log("updating view transition");
       style.innerHTML = `
             ::view-transition-old(main) {
               animation: slideUpOut 0.666s var(--defaultTimingIn);
@@ -102,8 +105,8 @@ const { title } = Astro.props;
       background: var(--sky) url(/texture.png);
     }
           `;
+      updateStyle(style);
     }
-    updateStyle(style);
   });
 
   document.addEventListener("astro:after-swap", () => {

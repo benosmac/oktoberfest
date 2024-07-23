@@ -207,7 +207,7 @@ const {} = Astro.props;
   .night,
   .late-night {
     --contentHeadingTextColour: var(--offWhite);
-    --borderDottedLight: 2px dotted oklab(var(--offWhiteLAB) / 0.33);
+    --borderDottedLight: 3px dotted oklab(var(--offWhiteLAB) / 0.33);
     .lines > rect {
       animation: flash 2s var(--defaultTimingIn) infinite;
       transition: fill 0.5s var(--defaultTimingIn);
@@ -224,7 +224,7 @@ const {} = Astro.props;
   .dusk {
     --brightblue: var(--brightblueShade20);
     --red: var(--redShade20);
-    --borderLight: 2px solid oklab(var(--offWhiteLAB) / 0.25);
+    --borderLight: 3px solid oklab(var(--offWhiteLAB) / 0.25);
 
     .fg {
       /* filter: brightness(0.8) contrast(1); */
@@ -238,7 +238,7 @@ const {} = Astro.props;
       opacity: 0.3;
     }
     .clouds {
-      filter: blur(2px);
+      filter: blur(px);
       /* transform: scale(1.1); */
     }
   }
@@ -247,7 +247,7 @@ const {} = Astro.props;
     --bodyTextColour: var(--offWhite);
     --brightblue: var(--brightblueTint50);
     --red: var(--redTint30);
-    --borderLight: 2px solid oklab(var(--offWhiteLAB) / 0.125);
+    --borderLight: 3px solid oklab(var(--offWhiteLAB) / 0.125);
   }
   .night {
     .fg {
